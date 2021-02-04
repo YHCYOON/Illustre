@@ -4,11 +4,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<!-- 반응형 웹에 사용되는 메타태그 -->
-<meta name="viewport" content="width=device-width" , initial-scale="1">
-<link rel="stylesheet" href="css/join.css">
-<title>일러스트리 - 내가 그려가는 세상</title>
+	<meta charset="UTF-8">
+	<!-- 반응형 웹에 사용되는 메타태그 -->
+	<meta name="viewport" content="width=device-width" , initial-scale="1">
+	<link rel="stylesheet" href="css/join.css">
+	<title>일러스트리 - 내가 그려가는 세상</title>
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 <script>
@@ -82,7 +82,7 @@
 			<!-- 회원가입 Form -->
 			<form id="joinForm" action="joinAction.jsp" method="POST">
 				<input type="text" id="userID" class="fadeIn third" name="userID" placeholder="ID"> 
-				<input type="password" id="userPassword" class="fadeIn fourth" name="password" placeholder="Password">
+				<input type="password" id="userPassword" class="fadeIn fourth" name="userPassword" placeholder="Password">
 				<input type="text" id="userName" class="fadeIn fifth"	name="userName" placeholder="이름">
 				<input type="text" id="userNickname" class="fadeIn sixth"	name="userNickname" placeholder="닉네임">
 				<input type="text" id="userEmail" class="fadeIn seventh"	name="userEmail" placeholder="이메일">
