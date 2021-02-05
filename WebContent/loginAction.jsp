@@ -17,12 +17,13 @@
 		UserDAO userDAO = new UserDAO();
 		int result = userDAO.login(user.getUserID(), user.getUserPassword());
 		String[] userContent = userDAO.getUserContent(user.getUserID(), user.getUserPassword());
+		String userNickname = userContent[2];
 		if(result == 1){
 			session.setAttribute("userID", user.getUserID());
-			
-			RequestDispatcher dispatch = request.getRequestDispatcher("main.jsp");
-			dispatch.forward(request, response);
-			request.setAttribute("userNickname", userContent[2]);
+			session.setAttribute("userNickname", userNickname);
+//			RequestDispatcher dispatch = request.getRequestDispatcher("main.jsp");
+//			dispatch.forward(request, response);
+//			request.setAttribute("userNickname", userContent[2]);
 			
 			PrintWriter script = response.getWriter();
 			script.println("<script>");

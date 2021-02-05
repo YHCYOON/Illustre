@@ -20,7 +20,7 @@
 		String userNickname =null;
 		if (session.getAttribute("userID") != null){
 			userID = (String) session.getAttribute("userID");
-			userNickname = (String) request.getAttribute("userNickname");
+			userNickname = (String) session.getAttribute("userNickname");
 			System.out.println(userNickname);
 		}
 	%>
@@ -55,7 +55,7 @@
 	                <div class="user"><%=userNickname %>님!</div>
 	            </div>
 	            <div class="logOutBtn">
-	                <button type="button" style="background-color:white;" onclick="onClickLogOut()" class="btn btn-outline-primary btn-sm">로그아웃</button>
+	                <a href="logoutAction.jsp"><button type="button" style="background-color:white;" class="btn btn-outline-primary btn-sm">로그아웃</button></a>
 	            </div>
             <%
             	}else{
