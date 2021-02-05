@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ page import="user.User" %>
+<%@ page import="user.UserDAO"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +15,15 @@
 	<script src="js/bootstrap.js"></script>
 </head>
 <body>
+	<%
+		String userID = null;
+		String userNickname =null;
+		if (session.getAttribute("userID") != null){
+			userID = (String) session.getAttribute("userID");
+			userNickname = (String) request.getAttribute("userNickname");
+			System.out.println(userNickname);
+		}
+	%>
 <div class="wrap">
     <nav class="navBar">
         <div class="navBarContent">
@@ -21,28 +32,38 @@
             </a>
             <div class="navContent">
                 <div class="gallery">
-                    <a href="gallery.jsp">&nbsp&nbsp&nbsp&nbsp 갤러리 &nbsp&nbsp&nbsp&nbsp</a>
+                    <a href="gallery.jsp">갤러리</a>
                 </div>
                 <div class="ranking">
-                    <a href="ranking.jsp">&nbsp&nbsp&nbsp&nbsp&nbsp 랭킹 &nbsp&nbsp&nbsp&nbsp&nbsp</a>
+                    <a href="ranking.jsp">랭킹</a>
                 </div>
                 <div class="pictureRegist">
-                    <a href="regist.jsp">&nbsp&nbsp&nbsp 그림등록 &nbsp&nbsp&nbsp</a>
+                    <a href="regist.jsp">그림등록</a>
                 </div>
                 <div class="myPicture">
-                    <a href="myPicture.jsp">&nbsp&nbsp&nbsp 나의그림 &nbsp&nbsp&nbsp</a>
+                    <a href="myPicture.jsp">나의그림</a>
                 </div>
                 <div class="community">
-                    <a href="community.jsp">&nbsp&nbsp&nbsp 커뮤니티 &nbsp&nbsp&nbsp</a>
+                    <a href="community.jsp">커뮤니티</a>
                 </div>
             </div>
-            <div class="helloUser">
-                <div class="hello">안녕하세요</div>
-                <div class="user">{{ nickname }}님!</div>
-            </div>
-            <div class="logOutBtn">
-                <button type="button" style="background-color:white;" onclick="onClickLogOut()" class="btn btn-outline-primary btn-sm">회원관리</button>
-            </div>
+            <%
+            	if(userID != null){
+            %>
+	            <div class="helloUser">
+	                <div class="hello">안녕하세요</div>
+	                <div class="user"><%=userNickname %>님!</div>
+	            </div>
+	            <div class="logOutBtn">
+	                <button type="button" style="background-color:white;" onclick="onClickLogOut()" class="btn btn-outline-primary btn-sm">로그아웃</button>
+	            </div>
+            <%
+            	}else{
+            %>
+            	<button type="button" style="background-color:white;" onclick="onClickLogOut()" class="btn btn-outline-primary btn-sm">로그인</button>
+            <%
+            	}
+            %>
         </div>
     </nav>
     <!-- 일러스트리 설명 점보트론 -->

@@ -3,7 +3,7 @@
 <%@ page import="user.UserDAO" %>    
 <%@ page import="java.io.PrintWriter" %>
 <% request.setCharacterEncoding("UTF-8"); %>
-<jsp:useBean id="user" class="user.User" scope="page"/>
+<jsp:useBean id="user" class="user.User" scope="session"/>
 <jsp:setProperty name="user" property="userID" />
 <jsp:setProperty name="user" property="userPassword" />
 <jsp:setProperty name="user" property="userName" />
@@ -26,6 +26,7 @@
 			script.println("history.back()");
 			script.println("</script>");
 		}else{
+			session.setAttribute("userID", user.getUserID());
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('회원가입이 완료되었습니다')");

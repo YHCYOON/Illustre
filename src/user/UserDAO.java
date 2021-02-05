@@ -63,4 +63,26 @@ public class UserDAO {
 		}
 		return -2;	// 데이터베이스 오류
 	}
+
+	// 유저 회원정보 리턴 메서드
+	public String[] getUserContent(String userID, String userPassword) {
+		String SQL = "SELECT * FROM USER WHERE userID = ? AND userPassword = ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			pstmt.setString(2, userPassword);
+			rs = pstmt.executeQuery();
+			String userContent[] = new String[5];
+			userContent[0] = rs.getString(1);
+			userContent[1] = rs.getString(2);
+			userContent[2] = rs.getString(3);
+			userContent[3] = rs.getString(4);
+			userContent[4] = rs.getString(5);
+			return userContent;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;	// 데이터베이스 오류
+	}
+	
 }
