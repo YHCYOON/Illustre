@@ -4,10 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class UserDAO {
 
 	Connection conn;
+	PreparedStatement pstmt;
+	ResultSet rs;
 	
 	// MySQL 접속
 	public UserDAO() {
@@ -25,7 +28,6 @@ public class UserDAO {
 	// 회원가입 메서드
 	public int join(User user) {
 		String SQL = "INSERT INTO USER VALUES (?, ?, ?, ?, ?)";
-		PreparedStatement pstmt;
 		try {	
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, user.getUserID());
@@ -33,6 +35,7 @@ public class UserDAO {
 			pstmt.setString(3, user.getUserName()); 
 			pstmt.setString(4, user.getUserNickname());
 			pstmt.setString(5, user.getUserEmail());
+			
 			return pstmt.executeUpdate();		// 회원가입 완료 - 0이상의 값을 리턴
 			
 		}catch (Exception e) {
@@ -40,12 +43,43 @@ public class UserDAO {
 		}
 		return -1;	// 이미 존재하는 아이디
 	}
+	// 아이디 중복 체크 메서드
+	public int userIDCheck(String userID) {
+		String SQL = "SELECT userID FROM USER WHERE userID = ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return 1;	// 이미 있는 아이디
+			}
+			return 0;	// 사용 가능한 아이디
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;	//데이터베이스 오류	
+	}
+	
+	// 닉네임 중복 체크 메서드
+	public int userNicknameCheck(String userNickname) {
+		String SQL = "SELECT userNickname FROM USER WHERE userNickname = ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userNickname);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return 1;	// 이미 있는 닉네임
+			}
+			return 0;	// 사용 가능한 닉네임
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;	//데이터베이스 오류	
+	}
 	
 	// 로그인 메서드
 	public int login(String userID, String userPassword) {
 		String SQL = "SELECT userPassword FROM USER WHERE userID = ?";
-		PreparedStatement pstmt;
-		ResultSet rs;
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
@@ -66,15 +100,11 @@ public class UserDAO {
 	}
 
 	// 닉네임 리턴 메서드
-	public String getNickname(String userID, String userPassword) {
-		String SQL = "SELECT userNickname FROM USER WHERE userID = ? AND userPassword = ?";
-		
-		PreparedStatement pstmt;
-		ResultSet rs;
+	public String getNickname(String userID) {
+		String SQL = "SELECT userNickname FROM USER WHERE userID = ?";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
-			pstmt.setString(2, userPassword);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				return rs.getString(1);
@@ -83,5 +113,27 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 		return "";	// 데이터베이스 오류
+	}
+	
+	// 회원정보 리턴 메서드
+	public User getUserInfo(String userID) {
+		String SQL = "SELECT * FROM USER WHERE userID = ? ";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			rs = pstmt.executeQuery();
+			if( rs.next()) {
+				User user = new User();
+				user.setUserID(rs.getString(1));
+				user.setUserPassword(rs.getString(2));
+				user.setUserName(rs.getString(3));
+				user.setUserNickname(rs.getString(4));
+				user.setUserEmail(rs.getString(5));
+				return user;
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

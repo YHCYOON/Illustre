@@ -16,7 +16,7 @@
 	<%
 		UserDAO userDAO = new UserDAO();
 		int result = userDAO.login(user.getUserID(), user.getUserPassword());
-		String userNickname = userDAO.getNickname(user.getUserID(), user.getUserPassword());
+		String userNickname = userDAO.getNickname(user.getUserID());
 		if(result == 1){
 			session.setAttribute("UserID", user.getUserID());
 			session.setAttribute("UserNickname", userNickname);

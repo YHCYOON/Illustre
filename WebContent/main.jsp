@@ -54,12 +54,26 @@
 	                <div class="user"><%=userNickname %>님!</div>
 	            </div>
 	            <div class="logOutBtn">
-	                <a href="logoutAction.jsp"><button type="button" style="background-color:white;" class="btn btn-outline-primary btn-sm">로그아웃</button></a>
+	                <div class="dropdown">
+  						<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+  						회원관리<span class="caret"></span></button>
+		  				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+						    <li role="presentation"><a href="userUpdate.jsp" role="menuitem" tabindex="-1" href="#">회원정보 수정</a></li>
+						    <li role="presentation" class="divider"></li>
+						    <li role="presentation"><a href="logoutAction.jsp" role="menuitem" tabindex="-1" href="#">로그아웃</a></li>
+						</ul>
+					</div>
 	            </div>
             <%
             	}else{
             %>
-            	<button type="button" style="background-color:white;" onclick="onClickLogOut()" class="btn btn-outline-primary btn-sm">로그인</button>
+            	<div class="helloUser">
+	                <div class="hello">안녕하세요</div>
+	                <div class="user">로그인이 필요합니다</div>
+	            </div>
+	            <div class="logOutBtn">
+	                <a href="login.jsp"><button type="button" style="background-color:white;" class="btn btn-outline-primary btn-sm">로그인</button></a>
+	            </div>
             <%
             	}
             %>
