@@ -8,8 +8,6 @@ import java.sql.ResultSet;
 public class UserDAO {
 
 	Connection conn;
-	PreparedStatement pstmt;
-	ResultSet rs;
 	
 	// MySQL 접속
 	public UserDAO() {
@@ -27,6 +25,7 @@ public class UserDAO {
 	// 회원가입 메서드
 	public int join(User user) {
 		String SQL = "INSERT INTO USER VALUES (?, ?, ?, ?, ?)";
+		PreparedStatement pstmt;
 		try {	
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, user.getUserID());
@@ -45,6 +44,8 @@ public class UserDAO {
 	// 로그인 메서드
 	public int login(String userID, String userPassword) {
 		String SQL = "SELECT userPassword FROM USER WHERE userID = ?";
+		PreparedStatement pstmt;
+		ResultSet rs;
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
@@ -64,25 +65,23 @@ public class UserDAO {
 		return -2;	// 데이터베이스 오류
 	}
 
-	// 유저 회원정보 리턴 메서드
-	public String[] getUserContent(String userID, String userPassword) {
-		String SQL = "SELECT * FROM USER WHERE userID = ? AND userPassword = ?";
+	// 닉네임 리턴 메서드
+	public String getNickname(String userID, String userPassword) {
+		String SQL = "SELECT userNickname FROM USER WHERE userID = ? AND userPassword = ?";
+		
+		PreparedStatement pstmt;
+		ResultSet rs;
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, userID);
 			pstmt.setString(2, userPassword);
 			rs = pstmt.executeQuery();
-			String userContent[] = new String[5];
-			userContent[0] = rs.getString(1);
-			userContent[1] = rs.getString(2);
-			userContent[2] = rs.getString(3);
-			userContent[3] = rs.getString(4);
-			userContent[4] = rs.getString(5);
-			return userContent;
+			if (rs.next()) {
+				return rs.getString(1);
+			}
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;	// 데이터베이스 오류
+		return "";	// 데이터베이스 오류
 	}
-	
 }

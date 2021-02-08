@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="user.User" %>
 <%@ page import="user.UserDAO"%>
-
+<% request.setCharacterEncoding("UTF-8"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,11 +17,10 @@
 <body>
 	<%
 		String userID = null;
-		String userNickname =null;
-		if (session.getAttribute("userID") != null){
-			userID = (String) session.getAttribute("userID");
-			userNickname = (String) session.getAttribute("userNickname");
-			System.out.println(userNickname);
+		String userNickname = null;
+		if (session.getAttribute("UserID") != null){
+			userID = (String) session.getAttribute("UserID");
+			userNickname = (String) session.getAttribute("UserNickname");
 		}
 	%>
 <div class="wrap">

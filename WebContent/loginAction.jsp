@@ -16,15 +16,10 @@
 	<%
 		UserDAO userDAO = new UserDAO();
 		int result = userDAO.login(user.getUserID(), user.getUserPassword());
-		String[] userContent = userDAO.getUserContent(user.getUserID(), user.getUserPassword());
-		String userNickname = userContent[2];
+		String userNickname = userDAO.getNickname(user.getUserID(), user.getUserPassword());
 		if(result == 1){
-			session.setAttribute("userID", user.getUserID());
-			session.setAttribute("userNickname", userNickname);
-//			RequestDispatcher dispatch = request.getRequestDispatcher("main.jsp");
-//			dispatch.forward(request, response);
-//			request.setAttribute("userNickname", userContent[2]);
-			
+			session.setAttribute("UserID", user.getUserID());
+			session.setAttribute("UserNickname", userNickname);
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("location.href='main.jsp'");
