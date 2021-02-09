@@ -16,59 +16,129 @@
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 <script>
-	// 이메일 유효성 검사
-	function emailCheck(userEmail){                                                 
-		var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-		if(!reg_email.test(userEmail)) {                            
-			return false;         
-		}                            
-		else {                       
-			return true;        
-     	}                            
-	}         
+//이메일 유효성 검사
+function emailCheck(userEmail){                                                 
+	var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+	if(!reg_email.test(userEmail)) {                            
+		return false;         
+	}                            
+	else {                       
+		return true;        
+ 	}                            
+}         
 
-	// 회원정보 수정 유효성 검사
-	function userUpdateTest(){
-		var userID = $('#userID').val();
-		var userPassword = $('#userPassword').val();
-		var userName = $('#userName').val();
+
+// 닉네임 중복체크
+$(function(){
+	$('#userNickname').blur(function(){
 		var userNickname = $('#userNickname').val();
-		var userEmail = $('#userEmail').val();
-		
-		if(userID == ""){
-			alert("아이디를 입력해주세요");
-			$('#userID').focus();
-			return;
-		}
-		else if(userPassword == ""){
-			alert("비밀번호를 입력해주세요");
-			$('#userPassword').focus();
-			return;
-		}
-		else if(userName == ""){
-			alert("이름을 입력해주세요");
-			$('#userName').focus();
-			return;
-		}
-		else if(userNickname == ""){
-			alert("닉네임을 입력해주세요");
-			$('#userNickname').focus();
-			return;
-		}
-		else if(userEmail == "" || userEmail == 'undefined'){
-			alert("이메일을 입력해주세요");
-			$('#userEmail').focus();
-			return;
-		}
-		else if(! emailCheck(userEmail)){
-			$('#emailError').text("이메일 형식으로 입력해주세요!");
-			$('#userEmail').focus();
-			return;
-		}
-		else{
-			$('#userUpdateForm').submit();
-		}
+		$.ajax({
+			type:"post",
+			url:"./NicknameCheckAction",
+			data:{userNickname : userNickname},
+			success: function(result){
+				var blank_pattern = /^\s+|\s+$/g;
+				var special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+				if(userNickname == "" || userNickname == null ){
+					$('#nicknameCheck').css('color','red');
+					$('#nicknameCheck').text("닉네임을 입력해주세요!");
+					
+				}
+				else if( blank_pattern.test(userNickname) == true){
+					$('#nicknameCheck').css('color','red');
+					$('#nicknameCheck').text("공백은 사용할수 없습니다!");
+				}
+				else if( special_pattern.test(userNickname) == true ){
+					$('#nicknameCheck').css('color','red');
+					$('#nicknameCheck').text("특수문자는 사용할수 없습니다!");
+				
+				}else{
+					 if(result == 1){
+						$('#nicknameCheck').css('color','red');
+						$('#nicknameCheck').text("이미 존재하는 닉네임입니다!");
+					}
+					 else if(result ==0){
+						$('#nicknameCheck').css('color','blue');
+						$('#nicknameCheck').text("사용 가능한 닉네임입니다!");
+					}
+					else{
+						$('#nicknameCheck').css('color','red');
+						$('#nicknameCheck').text("데이터베이스 오류입니다!");
+					}
+				}
+			}
+		});
+	});
+});
+
+// 회원정보 수정 유효성 검사
+function userUpdateTest(){
+	var userPassword = $('#userPassword').val();
+	var userName = $('#userName').val();
+	var userNickname = $('#userNickname').val();
+	var userEmail = $('#userEmail').val();
+	var blank_pattern = /^\s+|\s+$/g;
+	var special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+	
+	if(userPassword == "" || userPassword == null){
+		alert("비밀번호를 입력해주세요");
+		$('#userPassword').focus();
+		return;
 	}
+	else if(blank_pattern.test(userPassword) == true ){
+		alert("비밀번호에 공백을 사용할수 없습니다");
+		$('#userPassword').focus();
+		return;
+	}
+	else if(special_pattern.test(userPassword) == true){
+		alert("비밀번호에 특수문자를 사용할수 없습니다");
+		$('#userPassword').focus();
+		return;
+	}
+	else if(userName == "" || userName == null){
+		alert("이름을 입력해주세요");
+		$('#userName').focus();
+		return;
+	}
+	else if(blank_pattern.test(userName) == true ){
+		alert("이름에 공백을 사용할수 없습니다");
+		$('#userName').focus();
+		return;
+	}
+	else if(special_pattern.test(userName) == true){
+		alert("이름에 특수문자를 사용할수 없습니다");
+		$('#userName').focus();
+		return;
+	}
+	else if(userNickname == "" || userNickname == null){
+		alert("닉네임을 입력해주세요");
+		$('#userNickname').focus();
+		return;
+	}
+	else if(blank_pattern.test(userNickname) == true ){
+		alert("닉네임에 공백을 사용할수 없습니다");
+		$('#userNickname').focus();
+		return;
+	}
+	else if(special_pattern.test(userNickname) == true){
+		alert("닉네임에 특수문자를 사용할수 없습니다");
+		$('#userNickname').focus();
+		return;
+	}
+	else if(userEmail == "" || userEmail == 'undefined'){
+		alert("이메일을 입력해주세요");
+		$('#userEmail').focus();
+		return;
+	}
+	else if(! emailCheck(userEmail)){
+		$('#emailCheck').text("이메일 형식으로 입력해주세요!");
+		$('#userEmail').focus();
+		return;
+	}
+	else{
+		$('#userUpdateForm').submit();
+	}
+}
 </script>
 </head>
 <body>
@@ -98,11 +168,15 @@
 			<!-- 회원가입 Form -->
 			<form id="userUpdateForm" action="userUpdateAction.jsp" method="POST">
 				<input type="text" id="userID" class="fadeIn third" name="userID" value="<%=user.getUserID() %>" readonly> 
+				<div id="idCheck"></div> 
 				<input type="password" id="userPassword" class="fadeIn fourth" name="userPassword" value="<%=user.getUserPassword() %>">
+				<div id="passwordCheck"></div> 
 				<input type="text" id="userName" class="fadeIn fifth"	name="userName" value="<%=user.getUserName() %>">
+				<div id="nameCheck"></div> 
 				<input type="text" id="userNickname" class="fadeIn sixth"	name="userNickname" value="<%=user.getUserNickname() %>">
+				<div id="nicknameCheck"></div> 
 				<input type="text" id="userEmail" class="fadeIn seventh"	name="userEmail" value="<%=user.getUserEmail() %>">
-				<div id="emailError"></div> 
+				<div id="emailCheck"></div> 
 				<input type="button" onclick="userUpdateTest()" class="fadeIn eighth" value="회원정보 수정">
 			</form>
 		</div>
