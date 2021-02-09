@@ -58,9 +58,9 @@
   						<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
   						회원관리<span class="caret"></span></button>
 		  				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-						    <li role="presentation"><a href="userUpdate.jsp" role="menuitem" tabindex="-1" href="#">회원정보 수정</a></li>
+						    <li role="presentation"><a href="userUpdate.jsp" role="menuitem" tabindex="-1">회원정보 수정</a></li>
 						    <li role="presentation" class="divider"></li>
-						    <li role="presentation"><a href="logoutAction.jsp" role="menuitem" tabindex="-1" href="#">로그아웃</a></li>
+						    <li role="presentation"><a href="logoutAction.jsp" role="menuitem" tabindex="-1">로그아웃</a></li>
 						</ul>
 					</div>
 	            </div>
