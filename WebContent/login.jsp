@@ -6,22 +6,24 @@
 <head>
 	<meta charset="UTF-8">
 	<!-- 반응형 웹에 사용되는 메타태그 -->
-	<meta name="viewport" content="width=device-width" , initial-scale="1">
+	<meta name="viewport" content="width=device-width" >
 	<link rel="stylesheet" href="css/login.css">
+	<link rel="stylesheet" href="css/bootstrap.css">
 	<title>일러스트리 - 내가 그려가는 세상</title>
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="js/bootstrap.js"></script>
 
 <script>
 	// 로그인 유효성 검사
 	function loginTest(){
 		var userID = $('#userID').val()
 		var userPassword = $('#userPassword').val()
-		if(userID == ""){
+		if(userID == "" || userID == null){
 			alert("아이디를 입력해주세요");
 			$('#userID').focus();
 			return;
 		}
-		else if(userPassword == ""){
+		else if(userPassword == "" || userPassword == null){
 			alert("비밀번호를 입력해주세요");
 			$('#userPassword').focus();
 			return;
@@ -53,7 +55,7 @@
 
 			<!-- 비밀번호 찾기 -->
 			<div id="formFooter">
-				<a class="underlineHover" href="#">Forgot Password?</a>
+				<a class="underlineHover"  href="forgotPassword.jsp">Forgot Password?</a>
 			</div>
 		</div>
 	</div>

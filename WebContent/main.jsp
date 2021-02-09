@@ -7,7 +7,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width", initial-scale="1">
+	<meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/main.css">
 	<title>일러스트리 - 내가 그려가는 세상</title>
@@ -113,7 +113,6 @@
 		</div>
 	</div>
 	<!-- 모달 -->
-	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	 	<div class="modal-dialog">
 	    	<div class="modal-content">

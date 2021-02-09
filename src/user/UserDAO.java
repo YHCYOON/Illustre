@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 
 public class UserDAO {
 
@@ -155,6 +154,24 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 		return -1;	// 데이터베이스 오류
+	}
+	
+	// 비밀번호 찾기 메서드
+	public String getPassword(String userID, String userName, String userEmail) {
+		String SQL = "SELECT userPassword FROM USER WHERE userID = ? AND userName = ? AND userEmail = ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, userID);
+			pstmt.setString(2, userName);
+			pstmt.setString(3, userEmail);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getString(1);		// 회원 비밀번호 반환
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "등록된 정보가 없습니다";	//일치하는 아이디 없음
 	}
 	
 }

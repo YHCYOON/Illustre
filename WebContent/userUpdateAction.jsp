@@ -31,8 +31,8 @@
 		}else {
 			UserDAO userDAO = new UserDAO();
 			int result = userDAO.updateUserInfo(user);
-			
 			if(result == 1){
+				session.setAttribute("UserNickname", user.getUserNickname());
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('수정이 완료되었습니다');");
@@ -42,7 +42,7 @@
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('수정이 실패하였습니다');");
-				script.println("history.back()");
+				script.println("location.href = 'main.jsp'");
 				script.println("</script>");
 			}
 		}

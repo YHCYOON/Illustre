@@ -23,7 +23,7 @@
 		if(result == -1){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('이미 존재하는 아이디입니다.')");
+			script.println("alert('회원가입에 실패했습니다')");
 			script.println("history.back()");
 			script.println("</script>");
 		}else{

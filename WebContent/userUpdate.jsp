@@ -10,7 +10,7 @@
 <head>
 	<meta charset="UTF-8">
 	<!-- 반응형 웹에 사용되는 메타태그 -->
-	<meta name="viewport" content="width=device-width" , initial-scale="1">
+	<meta name="viewport" content="width=device-width" >
 	<link rel="stylesheet" href="css/join.css">
 	<title>일러스트리 - 내가 그려가는 세상</title>
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -147,12 +147,15 @@ function userUpdateTest(){
 		if( session.getAttribute("UserID") != null){
 			userID = (String) session.getAttribute("UserID");
 		}
-	%>
-	
-	<%
-		if(userID != null){
-			User user = new UserDAO().getUserInfo(userID);
-			
+		if(userID ==null){
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('로그인이 필요합니다');");
+			script.println("location.href='login.jsp'");
+			script.println("</script>");
+		}else{
+			UserDAO userDAO = new UserDAO();
+			User user = userDAO.getUserInfo(userID);
 	%>
 	<a href="main.jsp" id="navLogo"> <img src="images/illustre_logo_white.png" alt="illustre"></a>
 	<div class="wrapper fadeInDown">
@@ -181,15 +184,12 @@ function userUpdateTest(){
 			</form>
 		</div>
 	</div>
+	
 	<%
-		}else{
-			PrintWriter script = response.getWriter();
-			script.println("<script>");
-			script.println("alert('로그인이 필요합니다')");
-			script.println("location.href='login.jsp");
-			script.println("</script>");
 		}
 	%>
+	
+	
 	
 </body>
 </html>
