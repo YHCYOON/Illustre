@@ -15,7 +15,7 @@ public class IDCheckAction extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String userID = request.getParameter("userID");
+		String userID = request.getParameter("userID").trim();
 		UserDAO userDAO = new UserDAO();
 		int isExist = userDAO.userIDCheck(userID);
 		

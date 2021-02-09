@@ -67,15 +67,6 @@
 		});
 	});
 	
-	$(function(){
-		$('#userPassword').blur(function(){
-			var userPassword = $('#userPassword').val();
-			if (userPassword == ""){
-				$('#passwordCheck').text("비밀번호를 입력해주세요!");
-			}
-		});
-	});
-	
 	// 닉네임 중복체크
 	$(function(){
 		$('#userNickname').blur(function(){
@@ -90,42 +81,34 @@
 					if(userNickname == "" || userNickname == null ){
 						$('#nicknameCheck').css('color','red');
 						$('#nicknameCheck').text("닉네임을 입력해주세요!");
-						return;
+						
 					}
 					else if( blank_pattern.test(userNickname) == true){
 						$('#nicknameCheck').css('color','red');
 						$('#nicknameCheck').text("공백은 사용할수 없습니다!");
-						return;
 					}
 					else if( special_pattern.test(userNickname) == true ){
 						$('#nicknameCheck').css('color','red');
 						$('#nicknameCheck').text("특수문자는 사용할수 없습니다!");
-						return;
+					
 					}else{
 						 if(result == 1){
 							$('#nicknameCheck').css('color','red');
 							$('#nicknameCheck').text("이미 존재하는 닉네임입니다!");
-							return;
 						}
 						 else if(result ==0){
 							$('#nicknameCheck').css('color','blue');
 							$('#nicknameCheck').text("사용 가능한 닉네임입니다!");
-							return;
 						}
 						else{
 							$('#nicknameCheck').css('color','red');
 							$('#nicknameCheck').text("데이터베이스 오류입니다!");
-							return;							
 						}
 					}
 				}
 			});
 		});
 	});
-	
-
-	
-	
 	
 	// 회원가입 유효성 검사
 	function joinTest(){
@@ -134,24 +117,66 @@
 		var userName = $('#userName').val();
 		var userNickname = $('#userNickname').val();
 		var userEmail = $('#userEmail').val();
+		var blank_pattern = /^\s+|\s+$/g;
+		var special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
 		
-		if(userID == ""){
+		if(userID == "" || userID == null){
 			alert("아이디를 입력해주세요");
 			$('#userID').focus();
 			return;
 		}
-		else if(userPassword == ""){
+		else if(blank_pattern.test(userID) == true ){
+			alert("아이디에 공백을 사용할수 없습니다");
+			$('#userID').focus();
+			return;
+		}
+		else if(special_pattern.test(userID) == true){
+			alert("아이디에 특수문자를 사용할수 없습니다");
+			$('#userID').focus();
+			return;
+		}
+		else if(userPassword == "" || userPassword == null){
 			alert("비밀번호를 입력해주세요");
 			$('#userPassword').focus();
 			return;
 		}
-		else if(userName == ""){
+		else if(blank_pattern.test(userPassword) == true ){
+			alert("비밀번호에 공백을 사용할수 없습니다");
+			$('#userPassword').focus();
+			return;
+		}
+		else if(special_pattern.test(userPassword) == true){
+			alert("비밀번호에 특수문자를 사용할수 없습니다");
+			$('#userPassword').focus();
+			return;
+		}
+		else if(userName == "" || userName == null){
 			alert("이름을 입력해주세요");
 			$('#userName').focus();
 			return;
 		}
-		else if(userNickname == ""){
+		else if(blank_pattern.test(userName) == true ){
+			alert("이름에 공백을 사용할수 없습니다");
+			$('#userName').focus();
+			return;
+		}
+		else if(special_pattern.test(userName) == true){
+			alert("이름에 특수문자를 사용할수 없습니다");
+			$('#userName').focus();
+			return;
+		}
+		else if(userNickname == "" || userNickname == null){
 			alert("닉네임을 입력해주세요");
+			$('#userNickname').focus();
+			return;
+		}
+		else if(blank_pattern.test(userNickname) == true ){
+			alert("닉네임에 공백을 사용할수 없습니다");
+			$('#userNickname').focus();
+			return;
+		}
+		else if(special_pattern.test(userNickname) == true){
+			alert("닉네임에 특수문자를 사용할수 없습니다");
 			$('#userNickname').focus();
 			return;
 		}
