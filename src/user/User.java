@@ -6,6 +6,7 @@ public class User {
 	private String userName;
 	private String userNickname;
 	private String userEmail;
+	private int userLikeCount;
 	
 	public String getUserID() {
 		return userID;
@@ -36,6 +37,12 @@ public class User {
 	}
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
+	}
+	public int getUserLikeCount() {
+		return userLikeCount;
+	}
+	public void setUserLikeCount(int userLikeCount) {
+		this.userLikeCount = userLikeCount;
 	}
 	
 	

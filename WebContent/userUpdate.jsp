@@ -27,7 +27,6 @@ function emailCheck(userEmail){
  	}                            
 }         
 
-
 // 닉네임 중복체크
 $(function(){
 	$('#userNickname').blur(function(){
@@ -39,6 +38,7 @@ $(function(){
 			success: function(result){
 				var blank_pattern = /^\s+|\s+$/g;
 				var special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+				var userNickname = $('#userNickname').val();
 				if(userNickname == "" || userNickname == null ){
 					$('#nicknameCheck').css('color','red');
 					$('#nicknameCheck').text("닉네임을 입력해주세요!");
@@ -54,7 +54,7 @@ $(function(){
 				
 				}else{
 					 if(result == 1){
-						$('#nicknameCheck').css('color','red');
+				     	$('#nicknameCheck').css('color','red');
 						$('#nicknameCheck').text("이미 존재하는 닉네임입니다!");
 					}
 					 else if(result ==0){
