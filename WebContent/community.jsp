@@ -94,19 +94,14 @@
 					</tr>
 				</thead>
 				<tbody>
-					
 					<tr>
 						<td></td>
 						<td><a href="#"></a></td>
 						<td></td>
 						<td></td>
-
 					</tr>
-					
-
 				</tbody>
 			</table>
-					
 			<a href="write.jsp" class="btn btn-primary pull-right">글쓰기</a>
 		</div>
 	</div>

@@ -155,7 +155,6 @@ public class UserDAO {
 		}
 		return -1;	// 데이터베이스 오류
 	}
-	
 	// 비밀번호 찾기 메서드
 	public String getPassword(String userID, String userName, String userEmail) {
 		String SQL = "SELECT userPassword FROM USER WHERE userID = ? AND userName = ? AND userEmail = ?";
