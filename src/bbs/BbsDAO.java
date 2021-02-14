@@ -80,7 +80,7 @@ public class BbsDAO {
 	
 	
 
-	// 게시글 보여주기 메서드
+	// 게시글 리스트 보여주기 메서드
 	public ArrayList<Bbs> getBbsList(int pageNumber){
 		PreparedStatement pstmt;
 		ResultSet rs;
@@ -105,5 +105,45 @@ public class BbsDAO {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	// 게시글 view 메서드
+	public Bbs getBbs(int bbsID) {
+		PreparedStatement pstmt;
+		ResultSet rs;
+		String SQL = "SELECT * FROM BBS WHERE bbsID = ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, bbsID);
+			rs = pstmt.executeQuery();
+			Bbs bbs = new Bbs();
+			if(rs.next()) {
+				bbs.setBbsID(rs.getInt(1));
+				bbs.setBbsTitle(rs.getString(2));
+				bbs.setBbsContent(rs.getString(3));
+				bbs.setUserID(rs.getString(4));
+				bbs.setBbsDate(rs.getString(5));
+				bbs.setBbsLikeCount(rs.getInt(6));
+				bbs.setBbsAvailable(rs.getInt(7));
+				return bbs;
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	// 게시글 delete 메서드
+	public int deleteBbs(int bbsID) {
+		PreparedStatement pstmt;
+		String SQL = "UPDATE BBS SET bbsAvailable = 0 WHERE bbsID = ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, bbsID);
+			return pstmt.executeUpdate();		// 성공시 1 반환
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;	//데이터베이스 오류
 	}
 }

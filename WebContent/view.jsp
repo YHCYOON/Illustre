@@ -1,11 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="user.UserDAO" %>
-<%@page import="bbs.BbsDAO" %>
+<%@page import="java.io.PrintWriter" %>    
 <%@page import="bbs.Bbs" %>
-<%@page import="java.util.ArrayList" %>
-<%request.setCharacterEncoding("UTF-8"); %>
-    
+<%@page import="bbs.BbsDAO" %>
+<%@page import="user.UserDAO" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,19 +16,27 @@
 	<script src="js/bootstrap.js"></script>
 </head>
 <body>
-
 <%
 	String userID = null;
-	String userNickname = null;
+	String userNickname= null;
 	if(session.getAttribute("UserID") != null){
 		userID = (String) session.getAttribute("UserID");
 		UserDAO userDAO = new UserDAO();
 		userNickname = userDAO.getNickname(userID);
 	}
-	int pageNumber = 1;
-	if(request.getParameter("pageNumber") != null){
-		pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+	
+	int bbsID = 0;
+	if(request.getParameter("bbsID") != null){
+		bbsID = Integer.parseInt(request.getParameter("bbsID"));
 	}
+	if(bbsID == 0){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('유효하지 않은 글입니다');");
+		script.println("location.href='bbs.jsp'");
+		script.println("</script>");
+	}
+	Bbs bbs = new BbsDAO().getBbs(bbsID);
 	
 %>
 <div class="wrap">
@@ -89,38 +95,48 @@
             %>
         </div>
     </nav>
+    
     <div class="container">
 		<div class="row">
-			<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd;">
-				<thead>
-					<tr>
-						<td style="background-color: #eeeeee; text-align: center;">번호</td>
-						<td style="background-color: #eeeeee; text-align: center;">제목</td>
-						<td style="background-color: #eeeeee; text-align: center;">작성자</td>
-						<td style="background-color: #eeeeee; text-align: center;">작성일</td>
-					</tr>
-				</thead>
-				<tbody>
+				<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd;">
+					<thead>
+						<tr>
+							<th colspan="3" style="background-color: #eeeeee; text-align: center;">게시판 글 보기</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="width: 20%;">글 제목</td>
+							<td colspan="2"><%=bbs.getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %></td>
+						</tr>
+						<tr>
+							<td>작성자</td>
+							<td colspan="2"><%=bbs.getUserID() %></td>
+						</tr>
+						<tr>
+							<td>작성일자</td>
+							<td colspan="2"><%=bbs.getBbsDate().substring(0, 11) + bbs.getBbsDate().substring(11, 13) + "시 " + bbs.getBbsDate().substring(14, 16) + "분" %></td>
+						</tr>
+						
+						<tr>
+							<td style="width: 20%;">내용</td>
+							<td colspan="2" style="min-height: 200px; text-align: left;"><%=bbs.getBbsContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %></td>
+							
+						</tr>
+					</tbody>
+				</table>
+				<a href="community.jsp" class="btn btn-default">목록</a>
 				<%
-					BbsDAO bbsDAO = new BbsDAO();
-					ArrayList<Bbs> list = bbsDAO.getBbsList(pageNumber);
-					for(int i = 0; i < list.size(); i++){
+					if(userID != null && userID.equals(bbs.getUserID())){
 				%>
-					<tr>
-						<td><%=list.get(i).getBbsID() %></td>
-						<td><a href="view.jsp?bbsID=<%=list.get(i).getBbsID() %>"><%=list.get(i).getBbsTitle() %></a></td>
-						<td><%=list.get(i).getUserID() %></td>
-						<td><%=list.get(i).getBbsDate() %></td>
-					</tr>
+					<a href="update.jsp?bbsID=<%=bbsID%>" class="btn btn-default">수정</a>
+					<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="deleteAction.jsp?bbsID=<%=bbsID%>" class="btn btn-default">삭제</a>
 				<%
 					}
 				%>
-				</tbody>
-			</table>
-			<a href="write.jsp" class="btn btn-default pull-right">글쓰기</a>
 		</div>
 	</div>
-    
 </div>
+    	
 </body>
 </html>
