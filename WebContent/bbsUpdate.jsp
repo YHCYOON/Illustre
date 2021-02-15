@@ -103,10 +103,10 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td colspan="2"><input type="text" class="form-control" value="<%=bbs.getBbsTitle() %>" name="bbsTitle" maxlength="50"></td>
+									<td colspan="2"><input type="text" class="form-control" value="<%=bbs.getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %>" name="bbsTitle" maxlength="50"></td>
 								</tr>
 								<tr>	
-									<td colspan="2"><textarea class="form-control" name="bbsContent" maxlength="2048" style="height: 350px; resize: none;"><%=bbs.getBbsContent() %></textarea></td>
+									<td colspan="2"><textarea class="form-control" name="bbsContent" maxlength="2048" style="height: 350px; resize: none;"><%=bbs.getBbsContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %></textarea></td>
 								</tr>
 							</tbody>
 						</table>
