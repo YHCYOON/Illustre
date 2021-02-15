@@ -146,4 +146,20 @@ public class BbsDAO {
 		}
 		return -1;	//데이터베이스 오류
 	}
+	
+	// 게시글 수정 메서드
+	public int updateBbs(int bbsID, String bbsTitle, String bbsContent) {
+		PreparedStatement pstmt;
+		String SQL = "UPDATE BBS SET bbsTitle = ? , bbsContent = ? WHERE bbsID = ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, bbsTitle);
+			pstmt.setString(2, bbsContent);
+			pstmt.setInt(3, bbsID);
+			return pstmt.executeUpdate();		// 성공시 1 반환
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;	//데이터베이스 오류
+	}
 }

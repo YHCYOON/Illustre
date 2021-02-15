@@ -94,7 +94,7 @@
 		    </nav>
 		    <div class="container">
 				<div class="row">
-					<form method="post" action="bbsUpdateAction.jsp">
+					<form method="post" action="bbsUpdateAction.jsp?bbsID=<%=bbsID%>">
 						<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd;">
 							<thead>
 								<tr>
