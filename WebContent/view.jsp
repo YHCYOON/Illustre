@@ -101,7 +101,7 @@
 				<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd;">
 					<thead>
 						<tr>
-							<th colspan="3" style="background-color: #eeeeee; text-align: center;">게시판 글 보기</th>
+							<td colspan="3" style="background-color: #eeeeee; text-align: center;">게시판 글 보기</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -129,7 +129,7 @@
 				<%
 					if(userID != null && userID.equals(bbs.getUserID())){
 				%>
-					<a href="update.jsp?bbsID=<%=bbsID%>" class="btn btn-default">수정</a>
+					<a href="bbsUpdate.jsp?bbsID=<%=bbsID%>" class="btn btn-default">수정</a>
 					<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="deleteAction.jsp?bbsID=<%=bbsID%>" class="btn btn-default">삭제</a>
 				<%
 					}
