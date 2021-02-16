@@ -7,7 +7,7 @@
 <html>
 <head>
 	<meta name="viewport" content="width=device-width">
-	<link rel="stylesheet" href="css/writeBootstrap.css">
+	<link rel="stylesheet" href="css/customBootstrap.css">
 	<link rel="stylesheet" href="css/write.css">
 	<title>일러스트리 - 내가 그려가는 세상</title>
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -60,7 +60,7 @@
 			            </div>
 			            <div class="logOutBtn">
 			                <div class="dropdown">
-		  						<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+		  						<button class="btn btn-Skyblue dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
 		  						회원관리<span class="caret"></span></button>
 				  				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 								    <li role="presentation"><a href="userUpdate.jsp" role="menuitem" tabindex="-1">회원정보 수정</a></li>
@@ -89,7 +89,7 @@
 								</tr>
 							</tbody>
 						</table>
-						<input type="submit" class="btn btn-default pull-right" value="등록하기">
+						<input type="submit" class="btn btn-Skyblue pull-right" value="등록하기">
 					</form>
 				</div>
 			</div>

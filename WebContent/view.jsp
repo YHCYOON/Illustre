@@ -9,7 +9,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width">
-	<link rel="stylesheet" href="css/writeBootstrap.css">
+	<link rel="stylesheet" href="css/customBootstrap.css">
 	<link rel="stylesheet" href="css/community.css">
 	<title></title>
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -71,7 +71,7 @@
 	            </div>
 	            <div class="logOutBtn">
 	                <div class="dropdown">
-  						<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+  						<button class="btn btn-Skyblue dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
   						회원관리<span class="caret"></span></button>
 		  				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 						    <li role="presentation"><a href="userUpdate.jsp" role="menuitem" tabindex="-1" >회원정보 수정</a></li>
@@ -88,7 +88,7 @@
 	                <div class="user">로그인이 필요합니다</div>
 	            </div>
 	            <div class="logOutBtn">
-	                <a href="login.jsp"><button type="button" style="background-color:white;" class="btn btn-outline-primary btn-sm">로그인</button></a>
+	                <a href="login.jsp"><button type="button" style="background-color:white;" class="btn btn-Skyblue btn-sm">로그인</button></a>
 	            </div>
             <%
             	}
@@ -125,12 +125,12 @@
 						</tr>
 					</tbody>
 				</table>
-				<a href="community.jsp" class="btn btn-default">목록</a>
+				<a href="community.jsp" class="btn btn-Skyblue">목록</a>
 				<%
 					if(userID != null && userID.equals(bbs.getUserID())){
 				%>
-					<a href="bbsUpdate.jsp?bbsID=<%=bbsID%>" class="btn btn-default">수정</a>
-					<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="deleteAction.jsp?bbsID=<%=bbsID%>" class="btn btn-default">삭제</a>
+					<a href="bbsUpdate.jsp?bbsID=<%=bbsID%>" class="btn btn-Skyblue">수정</a>
+					<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="deleteAction.jsp?bbsID=<%=bbsID%>" class="btn btn-Red">삭제</a>
 				<%
 					}
 				%>

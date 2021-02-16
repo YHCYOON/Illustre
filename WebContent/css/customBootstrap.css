@@ -3114,6 +3114,118 @@ fieldset[disabled] .btn-default.focus {
   color: #fff;
   background-color: #333;
 }
+
+/* Custom Red Btn */
+.btn-Red {
+  color: #FF5D5D;
+  background-color: #ffffff;
+  border-color: #FF5D5D;
+}
+.btn-Red:focus,
+.btn-Red.focus {
+  color: #ffffff;
+  background-color: #FF5D5D;
+}
+.btn-Red:hover {
+  color: #ffffff;
+  background-color: #FF5D5D;
+}
+.btn-Red:active,
+.btn-Red.active,
+.open > .dropdown-toggle.btn-Red {
+  color: #ffffff;
+  background-color: #FF5D5D;
+}
+.btn-Red:active:hover,
+.btn-Red.active:hover,
+.open > .dropdown-toggle.btn-Red:hover,
+.btn-Red:active:focus,
+.btn-Red.active:focus,
+.open > .dropdown-toggle.btn-Red:focus,
+.btn-Red:active.focus,
+.btn-Red.active.focus,
+.open > .dropdown-toggle.btn-Red.focus {
+  color: #ffffff;
+  background-color: #FF5D5D;
+}
+.btn-Red:active,
+.btn-Red.active,
+.open > .dropdown-toggle.btn-Red {
+  background-image: none;
+}
+.btn-Red.disabled:hover,
+.btn-Red[disabled]:hover,
+fieldset[disabled] .btn-Red:hover,
+.btn-Red.disabled:focus,
+.btn-Red[disabled]:focus,
+fieldset[disabled] .btn-Red:focus,
+.btn-Red.disabled.focus,
+.btn-Red[disabled].focus,
+fieldset[disabled] .btn-Red.focus {
+  background-color: #fff;
+  border-color: #ccc;
+}
+.btn-Red .badge {
+  color: #ffffff;
+  background-color: #FF5D5D;
+}
+
+
+/* Custom Skyblue Btn */
+.btn-Skyblue {
+  color: #1CAFF4;
+  background-color: #ffffff;
+  border-color: #1CAFF4;
+}
+.btn-Skyblue:focus,
+.btn-Skyblue.focus {
+  color: #ffffff;
+  background-color: #1CAFF4;
+}
+.btn-Skyblue:hover {
+  color: #ffffff;
+  background-color: #1CAFF4;
+}
+.btn-Skyblue:active,
+.btn-Skyblue.active,
+.open > .dropdown-toggle.btn-Skyblue {
+  color: #ffffff;
+  background-color: #1CAFF4;
+}
+.btn-Skyblue:active:hover,
+.btn-Skyblue.active:hover,
+.open > .dropdown-toggle.btn-Skyblue:hover,
+.btn-Skyblue:active:focus,
+.btn-Skyblue.active:focus,
+.open > .dropdown-toggle.btn-Skyblue:focus,
+.btn-Skyblue:active.focus,
+.btn-Skyblue.active.focus,
+.open > .dropdown-toggle.btn-Skyblue.focus {
+  color: #ffffff;
+  background-color: #1CAFF4;
+}
+.btn-Skyblue:active,
+.btn-Skyblue.active,
+.open > .dropdown-toggle.btn-Skyblue {
+  background-image: none;
+}
+.btn-Skyblue.disabled:hover,
+.btn-Skyblue[disabled]:hover,
+fieldset[disabled] .btn-Skyblue:hover,
+.btn-Skyblue.disabled:focus,
+.btn-Skyblue[disabled]:focus,
+fieldset[disabled] .btn-Skyblue:focus,
+.btn-Skyblue.disabled.focus,
+.btn-Skyblue[disabled].focus,
+fieldset[disabled] .btn-Skyblue.focus {
+  background-color: #fff;
+  border-color: #ccc;
+}
+.btn-Skyblue .badge {
+  color: #ffffff;
+  background-color: #1CAFF4;
+}
+
 .btn-primary {
   color: #fff;
   background-color: #337ab7;
@@ -4759,8 +4871,8 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   z-index: 3;
   color: #fff;
   cursor: default;
-  background-color: #337ab7;
-  border-color: #337ab7;
+  background-color: #1CAFF4;
+  border-color: #1CAFF4;
 }
 .pagination > .disabled > span,
 .pagination > .disabled > span:hover,

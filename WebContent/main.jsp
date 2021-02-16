@@ -72,7 +72,7 @@
 	                <div class="user">로그인이 필요합니다</div>
 	            </div>
 	            <div class="logOutBtn">
-	                <a href="login.jsp"><button type="button" style="background-color:white;" class="btn btn-outline-primary btn-sm">로그인</button></a>
+	                <a href="login.jsp"><button type="button" style="background-color:white;" class="btn btn-default btn-sm">로그인</button></a>
 	            </div>
             <%
             	}
