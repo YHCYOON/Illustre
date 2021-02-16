@@ -119,6 +119,24 @@
 			</table>
 			<a href="write.jsp" class="btn btn-default pull-right">글쓰기</a>
 		</div>
+		
+		<!-- 페이징 처리  -->
+		<div class="text-center">
+			<ul class="pagination">
+		    	<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">이전</a></li>
+				<%
+					int startPage = bbsDAO.getStartPage(pageNumber);
+					int endPage = bbsDAO.getEndPage(pageNumber);
+					for(int iCount = startPage; iCount <= endPage; iCount++){
+						
+				%>
+			    <li class="page-item"><a class="page-link" href="#"><%=iCount %></a></li>
+			    <%
+					}
+			    %>
+			    <li class="page-item"><a class="page-link" href="#">다음</a></li>
+			</ul>
+		</div>
 	</div>
     
 </div>

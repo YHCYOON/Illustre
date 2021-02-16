@@ -78,17 +78,54 @@ public class BbsDAO {
 		return -1;	//데이터베이스 오류
 	}
 	
+	// 총 페이지 개수를 가져오는 메서드
+	public int getTotalPage(){
+		PreparedStatement pstmt;
+		ResultSet rs;
+		int countList = 10;	// 한 페이지에 나타내는 게시글 수가 10개
+		String SQL = "SELECT COUNT(IF(bbsAvailable = 1, bbsAvailable, null)) FROM BBS";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				int totalPage = rs.getInt(1) / countList;
+				if(rs.getInt(1) % countList > 0) {
+					return totalPage + 1;
+				}else {
+					return totalPage;
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;	// 데이터베이스 오류
+	}
 	
-
-	// 게시글 리스트 보여주기 메서드
+	// 페이지 시작 범위 보여주는 메서드
+	public int getStartPage(int pageNumber) {
+		int startPage = pageNumber / 10 + 1;
+		return startPage;
+	}
+	// 페이지 끝 범위 보여주는 메서드
+	public int getEndPage(int pageNumber) {
+		int endPage = getStartPage(pageNumber) + 9;
+		if(endPage > getTotalPage()) {
+			return getTotalPage();
+		}
+		return endPage;
+	}
+	
+	
+	// 페이지 게시글 리스트 보여주기 메서드
 	public ArrayList<Bbs> getBbsList(int pageNumber){
 		PreparedStatement pstmt;
 		ResultSet rs;
 		ArrayList<Bbs> list = new ArrayList<Bbs>();
-		String SQL = "SELECT * FROM BBS WHERE bbsID < ? AND bbsAvailable = 1 ORDER BY bbsID DESC LIMIT 10";
+		String SQL = "SELECT * FROM BBS WHERE bbsAvailable = 1 ORDER BY bbsID DESC LIMIT ? , ?";
 		try {
 			pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, getBbsID() - (pageNumber - 1) * 10);
+			pstmt.setInt(1, (pageNumber - 1) * 10);		
+			pstmt.setInt(2, 10);		// 한 페이지당 게시글 수 countList = 10
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Bbs bbs = new Bbs();

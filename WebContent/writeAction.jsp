@@ -23,7 +23,8 @@
 			script.println("location.href='main.jsp'");
 			script.println("</script>");
 		}else{
-			if(request.getParameter("bbsTitle") == null || request.getParameter("bbsContent") == null){
+			if(request.getParameter("bbsTitle") == null || request.getParameter("bbsContent") == null || request.getParameter("bbsTitle") == "" 
+					|| request.getParameter("bbsContent") == "" ){
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('입력하지 않은 항목이 있습니다');");
