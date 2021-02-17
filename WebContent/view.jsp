@@ -150,15 +150,17 @@
 		<div class="container">
 				댓글 (123)
 			<table class="table" style="border: 1px solid #dddddd; margin-top:10px;">
-				<tbody>
+				<tbody >
 					<tr>
-						<td style="width: 20%;">세베라</td>
+						<td colspan="1" style="padding: 14px;">세베라</td>
+						<td style="padding-top:10px; width:60px;"><a href="login.jsp"><button type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
+						<td style="padding-top:10px; width:60px;"><a href="login.jsp"><button type="button" class="btn btn-Red btn-sm">삭제</button></a></td>
 					</tr>
 					<tr>
-						<td style="width: 20%;">2020-09-23 15-05-22</td>
+						<td colspan="3">2020-09-23 15-05-22</td>
 					</tr>
 					<tr>
-						<td style="width: 20%;">정말 좋은 생각이에요!</td>
+						<td colspan="3">정말 좋은 생각이에요!</td>
 					</tr>
 				</tbody>
 			</table>
