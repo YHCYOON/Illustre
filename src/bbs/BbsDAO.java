@@ -199,4 +199,22 @@ public class BbsDAO {
 		}
 		return -1;	//데이터베이스 오류
 	}
+	
+	// 커뮤니티 댓글 등록 메서드
+	public int writeBbsComment(int bbsID, String userID, String bbsComment) {
+		PreparedStatement pstmt;
+		String SQL = "INSERT INTO BbsComment VALUES (?, ?, ?, ?, ?)";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, bbsID);
+			pstmt.setString(2, userID);
+			pstmt.setString(3, bbsComment);
+			pstmt.setString(4, getDate());
+			pstmt.setInt(5, 1);
+			return pstmt.executeUpdate();		// 성공시 1 반환
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;	//데이터베이스 오류
+	}
 }

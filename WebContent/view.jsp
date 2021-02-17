@@ -98,7 +98,7 @@
     
     <div class="container">
 		<div class="row">
-				<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd;">
+				<table class="table" style="text-align: center; border: 1px solid #dddddd;">
 					<thead>
 						<tr>
 							<td colspan="3" style="background-color: #eeeeee; text-align: center;">게시판 글 보기</td>
@@ -135,8 +135,37 @@
 					}
 				%>
 		</div>
+		<form method="post" action="writeBbsCommentAction.jsp">
+			<table class="table" style="text-align: center; border: 1px solid #dddddd; margin-top:20px;">
+				<tbody>
+					<tr>	
+						<td colspan="2"><textarea class="form-control" placeholder="<%=userNickname %>님의 생각은 어떠신가요?" name="bbsContent" maxlength="2048" style="height: 100px; resize: none;"></textarea></td>
+					</tr>
+				</tbody>
+			</table>
+			<input type="submit" class="btn btn-Skyblue pull-right" value="댓글 작성하기">
+		</form>
+		</div>
+		
+		<div class="container">
+				댓글 (123)
+			<table class="table" style="border: 1px solid #dddddd; margin-top:10px;">
+				<tbody>
+					<tr>
+						<td style="width: 20%;">세베라</td>
+					</tr>
+					<tr>
+						<td style="width: 20%;">2020-09-23 15-05-22</td>
+					</tr>
+					<tr>
+						<td style="width: 20%;">정말 좋은 생각이에요!</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		
 	</div>
-</div>
     	
 </body>
 </html>
