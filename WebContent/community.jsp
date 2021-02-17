@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" %>
+
 <%@page import="user.UserDAO" %>
 <%@page import="bbs.BbsDAO" %>
 <%@page import="bbs.Bbs" %>
 <%@page import="java.util.ArrayList" %>
+<%@page import="java.io.PrintWriter" %>
 <%request.setCharacterEncoding("UTF-8"); %>
     
 <!DOCTYPE html>
@@ -123,24 +125,48 @@
 		<!-- 페이징 처리  -->
 		<div class="text-center">
 			<ul class="pagination">
-		    	<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">이전</a></li>
 				<%
 					int startPage = bbsDAO.getStartPage(pageNumber);
 					int endPage = bbsDAO.getEndPage(pageNumber);
-					for(int iCount = startPage; iCount <= endPage; iCount++){
-						if(pageNumber == iCount){
+					int totalPage = bbsDAO.getTotalPage();
+					if(pageNumber == 1){
 				%>
-			    <li class="page-item active"><a class="page-link" href="community.jsp?pageNumber=<%=iCount%>"><%=iCount %></a></li>
-			    
-			    <%
-						}else{
-			    %>
-			    <li class="page-item"><a class="page-link" href="community.jsp?pageNumber=<%=iCount%>"><%=iCount %></a></li>
-			    <%
-						}
+		    		<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">이전</a></li>
+		    	<%
+					}else{	
+		    	%>
+		    		<li class="page-item"><a class="page-link" href="community.jsp?pageNumber=<%=pageNumber -1 %> " tabindex="-1">이전</a></li>
+		    	<%
 					}
-			    %>
-			    <li class="page-item"><a class="page-link" href="#">다음</a></li>
+		    		for(int iCount = startPage; iCount <= endPage; iCount++){
+    					if(pageNumber == iCount){
+		    	%>
+		    				<li class="page-item active"><a class="page-link" href="community.jsp?pageNumber=<%=iCount%>"><%=iCount %></a></li>
+		    	<%
+		    			}else{
+		    	%>		
+		    				<li class="page-item"><a class="page-link" href="community.jsp?pageNumber=<%=iCount%>"><%=iCount %></a></li>
+		    	<%
+		    			}
+		    		}
+		    		if(pageNumber == totalPage){
+				%>	
+		    		<li class="page-item disabled"><a class="page-link" href="#">다음</a></li>
+		    	<%
+					}else{
+		    	%>
+		    		<li class="page-item"><a class="page-link" href="community.jsp?pageNumber=<%=pageNumber +1%>">다음</a></li>
+				<%
+					}
+		    		if(pageNumber > totalPage || pageNumber < 1 ){
+		    			PrintWriter script = response.getWriter();
+		    			script.println("<script>");
+		    			script.println("alert('올바르지 않은 페이지 번호입니다');");
+		    			script.println("history.back()");
+		    			script.println("</script>");
+		    		}
+				%>
+					
 			</ul>
 		</div>
 	</div>

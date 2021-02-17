@@ -103,7 +103,7 @@ public class BbsDAO {
 	
 	// 페이지 시작 범위 보여주는 메서드
 	public int getStartPage(int pageNumber) {
-		int startPage = pageNumber / 10 + 1;
+		int startPage = ((pageNumber - 1) / 10) * 10 + 1;
 		return startPage;
 	}
 	// 페이지 끝 범위 보여주는 메서드
