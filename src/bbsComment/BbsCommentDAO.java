@@ -63,7 +63,7 @@ Connection conn;
 		PreparedStatement pstmt;
 		ResultSet rs;
 		ArrayList<BbsComment> list = new ArrayList<BbsComment>();
-		String SQL = "SELECT * FROM BBSCOMMENT WHERE bbsID = ? , BBSAVAILABLE = 1";
+		String SQL = "SELECT * FROM bbsComment WHERE bbsID = ? AND bbsAvailable = 1";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, bbsID);
@@ -81,23 +81,6 @@ Connection conn;
 			e.printStackTrace();
 		}
 		return list;
-	}
-	
-	// 커뮤니티 댓글 개수 가져오는 메서드
-	public int countBbsComment(int bbsID) {
-		PreparedStatement pstmt;
-		ResultSet rs;
-		String SQL = "SELECT COUNT(IF(bbsAvailable = 1, bbsAvailable, null)) FROM BBSCOMMENT";
-		try {
-			pstmt = conn.prepareStatement(SQL);
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				return rs.getInt(1);		// 성공시 댓글 개수 반환
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return -1;		// 데이터베이스 오류
 	}
 	
 	

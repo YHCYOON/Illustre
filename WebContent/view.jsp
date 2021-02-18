@@ -102,7 +102,7 @@
         </div>
     </nav>
     
-    <div class="container" style="padding-left:0px;">
+    <div class="container">
 		<div class="row">
 				<table class="table" style="text-align: center; border: 1px solid #dddddd;">
 					<thead>
@@ -145,11 +145,11 @@
 		<% 
 			if(userID != null){
 		%>
-		<form method="post" action="writeBbsCommentAction.jsp">
+		<form method="post" action="writeBbsCommentAction.jsp?bbsID=<%=bbsID %>">
 			<table class="table" style="text-align: center; border: 1px solid #dddddd; margin-top:20px;">
 				<tbody>
 					<tr>	
-						<td colspan="2"><textarea class="form-control" placeholder="<%=userNickname %>님의 생각은 어떠신가요?" name="bbsContent" maxlength="2048" style="height: 100px; resize: none;"></textarea></td>
+						<td colspan="2"><textarea class="form-control" placeholder="<%=userNickname %>님의 생각은 어떠신가요?" name="bbsCommentContent" maxlength="2048" style="height: 100px; resize: none;"></textarea></td>
 					</tr>
 				</tbody>
 			</table>
@@ -176,18 +176,13 @@
 			BbsCommentDAO bbsCommentDAO = new BbsCommentDAO();
 			list = bbsCommentDAO.getBbsComment(bbsID);
 			
-			// 게시글 댓글 개수 처리
-			int countBbsComment = 0;
-			if(bbsCommentDAO.countBbsComment(bbsID) > 0){
-				countBbsComment = bbsCommentDAO.countBbsComment(bbsID);
-			}
-			%>
+		%>
 			
-		<div class="container" style="padding-left:0px;">
+		<div class="container">
 			<div class="row">
-					댓글 (<%=countBbsComment %>)
+				<div style="font-size:18px;">댓글 (<%=list.size() %>)</div>
 		<%
-			for(int i = 0; i <countBbsComment; i++ ){
+			for(int i = 0; i <list.size(); i++ ){
 		%>
 				<table class="table" style="border: 2px solid #dddddd; margin-top:10px;">
 					<tbody>
@@ -198,7 +193,7 @@
 							<button type="button" class="btn btn-Red btn-sm">삭제</button></a></td>
 						</tr>
 						<tr>
-							<td colspan="3"><%=list.get(i).getBbsCommentDate() %></td>
+							<td colspan="3"><%=list.get(i).getBbsCommentDate().substring(0, 11) + list.get(i).getBbsCommentDate().substring(11, 13) + "시 " + list.get(i).getBbsCommentDate().substring(14, 16) + "분" %></td>
 						</tr>
 						<tr>
 							<td colspan="3"><%=list.get(i).getBbsComment() %></td>
