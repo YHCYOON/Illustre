@@ -4,6 +4,11 @@
 <%@page import="bbs.Bbs" %>
 <%@page import="bbs.BbsDAO" %>
 <%@page import="user.UserDAO" %>
+<%@page import="bbsComment.BbsComment" %>
+<%@page import="bbsComment.BbsCommentDAO" %>
+
+<%@page import="java.util.ArrayList" %>
+<%request.setCharacterEncoding("UTF-8"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,6 +42,7 @@
 		script.println("</script>");
 	}
 	Bbs bbs = new BbsDAO().getBbs(bbsID);
+
 	
 %>
 <div class="wrap">
@@ -96,7 +102,7 @@
         </div>
     </nav>
     
-    <div class="container">
+    <div class="container" style="padding-left:0px;">
 		<div class="row">
 				<table class="table" style="text-align: center; border: 1px solid #dddddd;">
 					<thead>
@@ -131,10 +137,14 @@
 				%>
 					<a href="bbsUpdate.jsp?bbsID=<%=bbsID%>" class="btn btn-Skyblue">수정</a>
 					<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="deleteAction.jsp?bbsID=<%=bbsID%>" class="btn btn-Red">삭제</a>
-				<%
+				<% 
 					}
 				%>
 		</div>
+		
+		<% 
+			if(userID != null){
+		%>
 		<form method="post" action="writeBbsCommentAction.jsp">
 			<table class="table" style="text-align: center; border: 1px solid #dddddd; margin-top:20px;">
 				<tbody>
@@ -146,27 +156,61 @@
 			<input type="submit" class="btn btn-Skyblue pull-right" value="댓글 작성하기">
 		</form>
 		</div>
-		
-		<div class="container">
-				댓글 (123)
-			<table class="table" style="border: 1px solid #dddddd; margin-top:10px;">
-				<tbody >
-					<tr>
-						<td colspan="1" style="padding: 14px;">세베라</td>
-						<td style="padding-top:10px; width:60px;"><a href="login.jsp"><button type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
-						<td style="padding-top:10px; width:60px;"><a href="login.jsp"><button type="button" class="btn btn-Red btn-sm">삭제</button></a></td>
-					</tr>
-					<tr>
-						<td colspan="3">2020-09-23 15-05-22</td>
-					</tr>
-					<tr>
-						<td colspan="3">정말 좋은 생각이에요!</td>
+		<%
+			}else{
+		%>
+		<form action="login.jsp">
+			<table class="table" style="text-align: center; border: 1px solid #dddddd; margin-top:20px;">
+				<tbody>
+					<tr>	
+						<td colspan="2"><textarea class="form-control" placeholder="로그인이 필요합니다" name="bbsContent" maxlength="2048" style="height: 100px; resize: none;"></textarea></td>
 					</tr>
 				</tbody>
 			</table>
+		</form>
+		<%
+			}	
+		%>
+		<%
+			ArrayList<BbsComment> list = new ArrayList<BbsComment>();
+			BbsCommentDAO bbsCommentDAO = new BbsCommentDAO();
+			list = bbsCommentDAO.getBbsComment(bbsID);
+			
+			// 게시글 댓글 개수 처리
+			int countBbsComment = 0;
+			if(bbsCommentDAO.countBbsComment(bbsID) > 0){
+				countBbsComment = bbsCommentDAO.countBbsComment(bbsID);
+			}
+			%>
+			
+		<div class="container" style="padding-left:0px;">
+			<div class="row">
+					댓글 (<%=countBbsComment %>)
+		<%
+			for(int i = 0; i <countBbsComment; i++ ){
+		%>
+				<table class="table" style="border: 2px solid #dddddd; margin-top:10px;">
+					<tbody>
+						<tr>
+							<td colspan="1" style="padding: 14px;"><%=list.get(i).getUserID() %></td>
+							<td style="padding-top:10px; width:60px;"><a href="commentUpdate.jsp"><button type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
+							<td style="padding-top:10px; width:60px;"><a onclick="return confirm('정말로 삭제하시겠습니까?')" href="commentDeleteAction.jsp">
+							<button type="button" class="btn btn-Red btn-sm">삭제</button></a></td>
+						</tr>
+						<tr>
+							<td colspan="3"><%=list.get(i).getBbsCommentDate() %></td>
+						</tr>
+						<tr>
+							<td colspan="3"><%=list.get(i).getBbsComment() %></td>
+						</tr>
+					</tbody>
+				</table>
+		<%
+			}
+		%>		
+				
+			</div>
 		</div>
-		
-		
 	</div>
     	
 </body>
