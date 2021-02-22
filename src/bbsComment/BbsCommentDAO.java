@@ -40,17 +40,37 @@ Connection conn;
 		return null;	//데이터베이스 오류
 	}
 	
-	// 커뮤니티 댓글 등록 메서드
-	public int writeBbsComment(int bbsID, String userID, String bbsComment) {
+	// 댓글 번호 가져오는 메서드
+	public int getBbsCommentID(int bbsID, String userID) {
 		PreparedStatement pstmt;
-		String SQL = "INSERT INTO BBSCOMMENT VALUES (?, ?, ?, ?, ?)";
+		ResultSet rs;
+		String SQL = "SELECT bbsCommentID FROM bbsComment WHERE bbsID = ? , userID = ? ORDER BY bbsCommentID DESC LIMIT 1";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, bbsID);
 			pstmt.setString(2, userID);
-			pstmt.setString(3, bbsComment);
-			pstmt.setString(4, getDate());
-			pstmt.setInt(5, 1);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt(1) + 1;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return 1;		// 댓글이 없을때 
+	}
+	
+	// 커뮤니티 댓글 등록 메서드
+	public int writeBbsComment(int bbsID, String userID, String bbsComment) {
+		PreparedStatement pstmt;
+		String SQL = "INSERT INTO BBSCOMMENT VALUES (?, ?, ?, ?, ?, ?)";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, bbsID);
+			pstmt.setString(2, userID);
+			pstmt.setInt(3, getBbsCommentID(bbsID, userID));
+			pstmt.setString(4, bbsComment);
+			pstmt.setString(5, getDate());
+			pstmt.setInt(6, 1);
 			return pstmt.executeUpdate();		// 성공시 1 반환
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -72,9 +92,10 @@ Connection conn;
 				BbsComment bbsComment = new BbsComment();
 				bbsComment.setBbsID(rs.getInt(1));
 				bbsComment.setUserID(rs.getString(2));
-				bbsComment.setBbsComment(rs.getString(3));
-				bbsComment.setBbsCommentDate(rs.getString(4));
-				bbsComment.setBbsAvailable(rs.getInt(5));
+				bbsComment.setBbsCommentID(rs.getInt(3));
+				bbsComment.setBbsComment(rs.getString(4));
+				bbsComment.setBbsCommentDate(rs.getString(5));
+				bbsComment.setBbsAvailable(rs.getInt(6));
 				list.add(bbsComment);
 			}
 		}catch(Exception e) {
@@ -82,6 +103,5 @@ Connection conn;
 		}
 		return list;
 	}
-	
 	
 }

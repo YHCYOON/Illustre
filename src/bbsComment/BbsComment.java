@@ -4,6 +4,7 @@ public class BbsComment {
 
 	private int bbsID;
 	private String userID;
+	private int bbsCommentID;
 	private String bbsComment;
 	private String bbsCommentDate;
 	private int bbsAvailable;
@@ -19,6 +20,12 @@ public class BbsComment {
 	}
 	public void setUserID(String userID) {
 		this.userID = userID;
+	}
+	public int getBbsCommentID() {
+		return bbsCommentID;
+	}
+	public void setBbsCommentID(int bbsCommentID) {
+		this.bbsCommentID = bbsCommentID;
 	}
 	public String getBbsComment() {
 		return bbsComment;
