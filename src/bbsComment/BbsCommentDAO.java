@@ -41,22 +41,22 @@ Connection conn;
 	}
 	
 	// 댓글 번호 가져오는 메서드
-	public int getBbsCommentID(int bbsID, String userID) {
+	public int getBbsCommentID() {
 		PreparedStatement pstmt;
 		ResultSet rs;
-		String SQL = "SELECT bbsCommentID FROM bbsComment WHERE bbsID = ? , userID = ? ORDER BY bbsCommentID DESC LIMIT 1";
+		String SQL = "SELECT bbsCommentID FROM bbsComment ORDER BY bbsCommentID DESC LIMIT 1";
 		try {
 			pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, bbsID);
-			pstmt.setString(2, userID);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				return rs.getInt(1) + 1;
+			}else {
+				return 1;		// 댓글이 없을때
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return 1;		// 댓글이 없을때 
+		return -1;		// 데이터베이스 오류
 	}
 	
 	// 커뮤니티 댓글 등록 메서드
@@ -65,9 +65,9 @@ Connection conn;
 		String SQL = "INSERT INTO BBSCOMMENT VALUES (?, ?, ?, ?, ?, ?)";
 		try {
 			pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, bbsID);
-			pstmt.setString(2, userID);
-			pstmt.setInt(3, getBbsCommentID(bbsID, userID));
+			pstmt.setInt(1, getBbsCommentID());
+			pstmt.setInt(2, bbsID);
+			pstmt.setString(3, userID);
 			pstmt.setString(4, bbsComment);
 			pstmt.setString(5, getDate());
 			pstmt.setInt(6, 1);
@@ -90,9 +90,9 @@ Connection conn;
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				BbsComment bbsComment = new BbsComment();
-				bbsComment.setBbsID(rs.getInt(1));
-				bbsComment.setUserID(rs.getString(2));
-				bbsComment.setBbsCommentID(rs.getInt(3));
+				bbsComment.setBbsCommentID(rs.getInt(1));
+				bbsComment.setBbsID(rs.getInt(2));
+				bbsComment.setUserID(rs.getString(3));
 				bbsComment.setBbsComment(rs.getString(4));
 				bbsComment.setBbsCommentDate(rs.getString(5));
 				bbsComment.setBbsAvailable(rs.getInt(6));
@@ -102,6 +102,22 @@ Connection conn;
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	// 커뮤니티 댓글 수정하는 메서드
+	public int updateBbsComment(int bbsID, int bbsCommentID, String bbsComment) {
+		PreparedStatement pstmt;
+		String SQL = "UPDATE bbsComment SET bbsComment = ? WHERE bbsID = ? AND bbsCommentID = ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, bbsComment);
+			pstmt.setInt(2, bbsID);
+			pstmt.setInt(3, bbsCommentID);
+			return pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;	// 데이터베이스 오류
 	}
 	
 }

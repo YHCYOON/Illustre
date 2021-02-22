@@ -43,6 +43,18 @@
 	}
 	Bbs bbs = new BbsDAO().getBbs(bbsID);
 
+	int bbsCommentID = 0;
+	if(request.getParameter("bbsCommentID") != null){
+		bbsCommentID = Integer.parseInt(request.getParameter("bbsCommentID"));
+	}
+	
+	if(bbsCommentID == 0){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('유효하지 않은 댓글입니다');");
+		script.println("location.href='bbs.jsp'");
+		script.println("</script>");
+	}
 	
 %>
 <div class="wrap">
@@ -175,6 +187,7 @@
 			ArrayList<BbsComment> list = new ArrayList<BbsComment>();
 			BbsCommentDAO bbsCommentDAO = new BbsCommentDAO();
 			list = bbsCommentDAO.getBbsComment(bbsID);
+			
 		%>
 			
 		<div class="container">
@@ -204,9 +217,33 @@
 						<tr>
 							<td colspan="3"><%=list.get(i).getBbsCommentDate().substring(0, 11) + list.get(i).getBbsCommentDate().substring(11, 13) + "시 " + list.get(i).getBbsCommentDate().substring(14, 16) + "분" %></td>
 						</tr>
+						
+						<%
+							if(bbsCommentID == list.get(i).getBbsCommentID()){
+						%>
+						<tr>
+							<td colspan="3">
+								<form method="post" action="updateBbsCommentAction.jsp?bbsID=<%=bbsID %>&bbsCommentID=<%=bbsCommentID%>">
+									<table class="table" style="text-align: center; border: 1px solid #dddddd; margin-top:20px;">
+										<tbody>
+											<tr>	
+												<td colspan="2"><textarea class="form-control" placeholder="<%=list.get(i).getBbsComment() %>" name="bbsCommentContent" maxlength="2048" style="height: 100px; resize: none;"></textarea></td>
+											</tr>
+										</tbody>
+									</table>
+									<input type="submit" class="btn btn-Skyblue pull-right" value="댓글 수정하기">
+								</form>
+							</td>
+						</tr>
+						<%
+							}else{
+						%>
 						<tr>
 							<td colspan="3"><%=list.get(i).getBbsComment() %></td>
 						</tr>
+						<%
+							}
+						%>
 					</tbody>
 				</table>
 		<%
