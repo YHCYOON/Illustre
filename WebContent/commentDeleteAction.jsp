@@ -1,10 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.io.PrintWriter" %>   
-<%@page import="java.util.ArrayList" %>
-<%@page import="bbsComment.BbsComment" %>
-<%@page import="bbsComment.BbsCommentDAO" %>
-<%request.setCharacterEncoding("UTF-8"); %> 
+<%@page import="bbsComment.BbsCommentDAO" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,25 +21,14 @@
 			script.println("location.href='login.jsp'");
 			script.println("</script>");
 		}
-		int bbsID = 0;
 		int bbsCommentID = 0;
-		if(request.getParameter("bbsID") != null){
-			bbsID = Integer.parseInt(request.getParameter("bbsID"));
-		}
 		if(request.getParameter("bbsCommentID") != null){
 			bbsCommentID = Integer.parseInt(request.getParameter("bbsCommentID"));
 		}
-		if(bbsID == 0 || bbsCommentID == 0){
+		if(bbsCommentID == 0){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('유효하지 않은 글입니다');");
-			script.println("history.back()");
-			script.println("</script>");
-		}
-		if(request.getParameter("bbsCommentContent") == null || request.getParameter("bbsCommentContent") == " " ){
-			PrintWriter script = response.getWriter();
-			script.println("<script>");
-			script.println("alert('댓글을 작성해주세요');");
+			script.println("alert('유효하지 않은 댓글입니다');");
 			script.println("history.back()");
 			script.println("</script>");
 		}
@@ -53,9 +39,8 @@
 			script.println("alert('권한이 없습니다');");
 			script.println("location.href='community.jsp'");
 			script.println("</script>");
-		}
-		else{
-			int result = bbsCommentDAO.updateBbsComment(bbsID, bbsCommentID, request.getParameter("bbsCommentContent"));
+		}else{
+			int result = bbsCommentDAO.deleteBbsComment(bbsCommentID);
 			if(result == -1){
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
@@ -65,12 +50,11 @@
 			}else{
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
-				script.println("alert('성공적으로 수정되었습니다');");
+				script.println("alert('댓글이 삭제되었습니다');");
 				script.println("location.href='community.jsp'");
 				script.println("</script>");
 			}
 		}
-		
 	%>
 </body>
 </html>

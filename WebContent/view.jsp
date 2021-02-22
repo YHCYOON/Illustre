@@ -42,7 +42,7 @@
 		script.println("</script>");
 	}
 	Bbs bbs = new BbsDAO().getBbs(bbsID);
-
+	
 	
 %>
 <div class="wrap">
@@ -191,7 +191,7 @@
 							%>
 							<td colspan="1" style="padding: 14px;"><%=list.get(i).getUserID() %></td>
 							<td style="padding-top:10px; width:60px;"><a href="commentUpdate.jsp?bbsID=<%=bbsID %>&bbsCommentID=<%=list.get(i).getBbsCommentID()%>"><button type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
-							<td style="padding-top:10px; width:60px;"><a onclick="return confirm('정말로 삭제하시겠습니까?')" href="commentDeleteAction.jsp">
+							<td style="padding-top:10px; width:60px;"><a onclick="return confirm('정말로 삭제하시겠습니까?')" href="commentDeleteAction.jsp?bbsCommentID=<%=list.get(i).getBbsCommentID()%>">
 							<button type="button" class="btn btn-Red btn-sm">삭제</button></a></td>
 							<%
 								}else{

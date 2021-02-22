@@ -120,4 +120,35 @@ Connection conn;
 		return -1;	// 데이터베이스 오류
 	}
 	
+	// 커뮤니티 댓글 삭제하는 메서드
+	public int deleteBbsComment(int bbsCommentID) {
+		PreparedStatement pstmt;
+		String SQL = "UPDATE bbsComment SET bbsAvailable = 0 WHERE bbsCommentID = ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, bbsCommentID);
+			return pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;		// 데이터베이스 오류
+	}
+	
+	// 커뮤니티 댓글의 userID 가져오는 메서드
+	public String getBbsCommentUserID(int bbsCommentID) {
+		PreparedStatement pstmt;
+		ResultSet rs;
+		String SQL = "SELECT userID FROM bbsComment WHERE bbsCommentID = ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, bbsCommentID);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getString(1);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
