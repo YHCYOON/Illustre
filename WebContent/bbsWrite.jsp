@@ -51,7 +51,7 @@
 		                    <a href="myPicture.jsp">나의그림</a>
 		                </div>
 		                <div class="community">
-		                    <a href="community.jsp">커뮤니티</a>
+		                    <a href=bbs.jsp">커뮤니티</a>
 		                </div>
 		            </div>
 				<div class="helloUser">
@@ -73,7 +73,7 @@
 		    </nav>
 		    <div class="container">
 				<div class="row">
-					<form method="post" action="writeAction.jsp">
+					<form method="post" action="bbsWriteAction.jsp">
 						<table class="table table-striped" style="text-align: center; border: 1px solid #dddddd;">
 							<thead>
 								<tr>

@@ -56,7 +56,7 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('권한이 없습니다');");
-			script.println("location.href='community.jsp'");
+			script.println("location.href='bbs.jsp'");
 			script.println("</script>");
 		}
 		else{
@@ -72,7 +72,7 @@
 				/* response.sendRedirect("view.jsp?bbsID="+bbsID); */
 				script.println("<script>");
 				script.println("alert('성공적으로 수정되었습니다');");
-				script.println("location.href='view.jsp?bbsID="+bbsID+"'");
+				script.println("location.href='bbsView.jsp?bbsID="+bbsID+"'");
 				script.println("</script>");
 			}
 		}

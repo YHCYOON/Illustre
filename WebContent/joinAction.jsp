@@ -19,7 +19,6 @@
 	<%
 		UserDAO userDAO = new UserDAO();
 		int result = userDAO.join(user);
-		String userNickname = userDAO.getNickname(user.getUserID());
 		if(result == -1){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
@@ -28,7 +27,6 @@
 			script.println("</script>");
 		}else{
 			session.setAttribute("UserID", user.getUserID());
-			session.setAttribute("UserNickname", userNickname);
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('회원가입이 완료되었습니다')");

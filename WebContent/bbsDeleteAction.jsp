@@ -32,7 +32,7 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('유효하지 않은 글입니다');");
-			script.println("location.href = 'community.jsp'");
+			script.println("location.href = 'bbs.jsp'");
 			script.println("</script>");
 		}
 		Bbs bbs = new BbsDAO().getBbs(bbsID);
@@ -40,7 +40,7 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('권한이 없습니다');");
-			script.println("location.href = 'community.jsp'");
+			script.println("location.href = 'bbs.jsp'");
 			script.println("</script>");
 		}else{
 			BbsDAO bbsDAO = new BbsDAO();
@@ -55,7 +55,7 @@
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('글을 성공적으로 삭제했습니다');");
-				script.println("location.href = 'community.jsp'");
+				script.println("location.href = 'bbs.jsp'");
 				script.println("</script>");
 			}
 		}

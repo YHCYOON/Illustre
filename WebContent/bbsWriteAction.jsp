@@ -43,7 +43,7 @@
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
 					script.println("alert('글을 성공적으로 등록했습니다');");
-					script.println("location.href='community.jsp'");
+					script.println("location.href='bbs.jsp'");
 					script.println("</script>");
 				}
 			}

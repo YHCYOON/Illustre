@@ -65,7 +65,7 @@
                     <a href="myPicture.jsp">나의그림</a>
                 </div>
                 <div class="community">
-                    <a href="community.jsp">커뮤니티</a>
+                    <a href="bbs.jsp">커뮤니티</a>
                 </div>
             </div>
             <%
@@ -131,12 +131,12 @@
 						</tr>
 					</tbody>
 				</table>
-				<a href="community.jsp" class="btn btn-Skyblue">목록</a>
+				<a href="bbs.jsp" class="btn btn-Skyblue">목록</a>
 				<%
 					if(userID != null && userID.equals(bbs.getUserID())){
 				%>
 					<a href="bbsUpdate.jsp?bbsID=<%=bbsID%>" class="btn btn-Skyblue">수정</a>
-					<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="deleteAction.jsp?bbsID=<%=bbsID%>" class="btn btn-Red">삭제</a>
+					<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="bbsDeleteAction.jsp?bbsID=<%=bbsID%>" class="btn btn-Red">삭제</a>
 				<% 
 					}
 				%>
@@ -176,6 +176,7 @@
 			BbsCommentDAO bbsCommentDAO = new BbsCommentDAO();
 			list = bbsCommentDAO.getBbsComment(bbsID);
 		%>
+		
 		<!-- 댓글 부분  -->
 		<div class="container">
 			<div class="row">
@@ -186,7 +187,7 @@
 				<table class="table" style="border: 2px solid #dddddd; margin-top:10px;">
 					<tbody>
 						<tr>
-							<%
+							<%	// 로그인중인 회원일때 수정,삭제 버튼 표시
 								if(userID != null && userID.equals(list.get(i).getUserID())){
 							%>
 							<td colspan="1" style="padding: 14px;"><%=list.get(i).getUserID() %></td>
@@ -194,7 +195,7 @@
 							<td style="padding-top:10px; width:60px;"><a onclick="return confirm('정말로 삭제하시겠습니까?')" href="commentDeleteAction.jsp?bbsID=<%=list.get(i).getBbsID() %>&bbsCommentID=<%=list.get(i).getBbsCommentID()%>">
 							<button type="button" class="btn btn-Red btn-sm">삭제</button></a></td>
 							<%
-								}else{
+								}else{	// 비회원은 수정,삭제 표시하지 않음
 							%>
 							<td colspan="3" style="padding: 14px;"><%=list.get(i).getUserID() %></td>
 							<%

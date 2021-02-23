@@ -31,7 +31,7 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('유효하지 않은 글입니다');");
-			script.println("location.href='community.jsp'");
+			script.println("location.href='bbs.jsp'");
 			script.println("</script>");
 		}
 		Bbs bbs = new BbsDAO().getBbs(bbsID);
@@ -39,7 +39,7 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('글 수정 권한이 없습니다');");
-			script.println("location.href='community.jsp'");
+			script.println("location.href='bbs.jsp'");
 			script.println("</script>");
 		}else{
 			if(request.getParameter("bbsTitle") == null || request.getParameter("bbsContent") == null || request.getParameter("bbsTitle") == " " || 
@@ -62,7 +62,7 @@
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
 					script.println("alert('게시글이 수정되었습니다');");
-					script.println("location.href='community.jsp'");
+					script.println("location.href='bbsView.jsp?bbsID="+bbsID+"'");
 					script.println("</script>");
 				}
 			}

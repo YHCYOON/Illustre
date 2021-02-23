@@ -20,7 +20,9 @@
 		String userNickname = null;
 		if (session.getAttribute("UserID") != null){
 			userID = (String) session.getAttribute("UserID");
-			userNickname = (String) session.getAttribute("UserNickname");
+			UserDAO userDAO = new UserDAO();
+			User user = userDAO.getUserInfo(userID);
+			userNickname = user.getUserNickname();
 		}
 	%>
 <div class="wrap">
@@ -43,7 +45,7 @@
                     <a href="myPicture.jsp">나의그림</a>
                 </div>
                 <div class="community">
-                    <a href="community.jsp">커뮤니티</a>
+                    <a href="bbs.jsp">커뮤니티</a>
                 </div>
             </div>
             <%

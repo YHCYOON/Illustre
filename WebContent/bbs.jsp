@@ -56,7 +56,7 @@
                     <a href="myPicture.jsp">나의그림</a>
                 </div>
                 <div class="community">
-                    <a href="community.jsp">커뮤니티</a>
+                    <a href="bbs.jsp">커뮤니티</a>
                 </div>
             </div>
             <%
@@ -111,7 +111,7 @@
 				%>
 					<tr>
 						<td><%=list.get(i).getBbsID() %></td>
-						<td><a href="view.jsp?bbsID=<%=list.get(i).getBbsID() %>"><%=list.get(i).getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %>
+						<td><a href="bbsView.jsp?bbsID=<%=list.get(i).getBbsID() %>"><%=list.get(i).getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %>
 							<%
 								BbsCommentDAO bbsCommentDAO = new BbsCommentDAO();
 								int countComment = bbsCommentDAO.countBbsComment(list.get(i).getBbsID());
@@ -129,7 +129,7 @@
 				%>
 				</tbody>
 			</table>
-			<a href="write.jsp" class="btn btn-Skyblue pull-right">글쓰기</a>
+			<a href="bbsWrite.jsp" class="btn btn-Skyblue pull-right">글쓰기</a>
 		</div>
 		
 		<!-- 페이징 처리  -->
@@ -145,17 +145,17 @@
 		    	<%
 					}else{	
 		    	%>
-		    		<li class="page-item"><a class="page-link" href="community.jsp?pageNumber=<%=pageNumber -1 %> " tabindex="-1">이전</a></li>
+		    		<li class="page-item"><a class="page-link" href="bbs.jsp?pageNumber=<%=pageNumber -1 %> " tabindex="-1">이전</a></li>
 		    	<%
 					}
 		    		for(int iCount = startPage; iCount <= endPage; iCount++){
     					if(pageNumber == iCount){
 		    	%>
-		    				<li class="page-item active"><a class="page-link" href="community.jsp?pageNumber=<%=iCount%>"><%=iCount %></a></li>
+		    				<li class="page-item active"><a class="page-link" href="bbs.jsp?pageNumber=<%=iCount%>"><%=iCount %></a></li>
 		    	<%
 		    			}else{
 		    	%>		
-		    				<li class="page-item"><a class="page-link" href="community.jsp?pageNumber=<%=iCount%>"><%=iCount %></a></li>
+		    				<li class="page-item"><a class="page-link" href="bbs.jsp?pageNumber=<%=iCount%>"><%=iCount %></a></li>
 		    	<%
 		    			}
 		    		}
@@ -165,7 +165,7 @@
 		    	<%
 					}else{
 		    	%>
-		    		<li class="page-item"><a class="page-link" href="community.jsp?pageNumber=<%=pageNumber +1%>">다음</a></li>
+		    		<li class="page-item"><a class="page-link" href="bbs.jsp?pageNumber=<%=pageNumber +1%>">다음</a></li>
 				<%
 					}
 		    		if(pageNumber > totalPage || pageNumber < 1 ){

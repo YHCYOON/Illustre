@@ -35,7 +35,7 @@
 					int result = bbsCommentDAO.writeBbsComment(bbsID, userID, request.getParameter("bbsCommentContent"));
 					if(result == 1){
 						PrintWriter script = response.getWriter();
-						response.sendRedirect("view.jsp?bbsID="+bbsID);
+						response.sendRedirect("bbsView.jsp?bbsID="+bbsID);
 					}else{
 						PrintWriter script = response.getWriter();
 						script.println("<script>");
