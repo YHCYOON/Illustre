@@ -39,7 +39,7 @@
                     <a href="ranking.jsp">랭킹</a>
                 </div>
                 <div class="pictureRegist">
-                    <a href="regist.jsp">그림등록</a>
+                    <a href="galleryRegist.jsp">그림등록</a>
                 </div>
                 <div class="myPicture">
                     <a href="myPicture.jsp">나의그림</a>

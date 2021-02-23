@@ -51,7 +51,7 @@
 		                    <a href="myPicture.jsp">나의그림</a>
 		                </div>
 		                <div class="community">
-		                    <a href=bbs.jsp">커뮤니티</a>
+		                    <a href="bbs.jsp">커뮤니티</a>
 		                </div>
 		            </div>
 				<div class="helloUser">

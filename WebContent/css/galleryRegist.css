@@ -1,0 +1,202 @@
+@charset "UTF-8";
+
+* {
+    font-family: 'Nanum Gothic', sans-serif;
+}
+wrap {
+    min-width: 1330px;
+}
+
+/* Navbar */
+.navBar {
+    height: 70px;
+    background-color: white;
+    position: sticky;
+    top: 0px;
+    z-index: 3;
+}
+
+.navBarContent {
+    height: 70px;
+    width: 1330px;
+    margin: auto;
+    display: flex;
+}
+
+.navBarLogo {
+    height: 70px;
+    width: 162px;
+    padding-top: 18px;
+    display: inline-block;
+}
+
+.navContent {
+    width: 1000px;
+    height: 70px;
+    display: flex;
+    font-size: 18px;
+    padding-top: 12px;
+    padding-left: 20px;
+    text-align: center;
+}
+
+.gallery, .ranking, .pictureRegist, .myPicture, .community {
+    display: inline-block;
+    margin: auto;
+}
+
+.gallery > a:link, .ranking > a:link, .pictureRegist > a:link, .myPicture > a:link, .community > a:link {
+    color: #414141;
+    text-decoration: none;
+}
+
+.gallery > a:visited, .ranking > a:visited, .pictureRegist > a:visited, .myPicture > a:visited, .community > a:visited {
+    color: #414141;
+    text-decoration: none;
+}
+
+.gallery > a:hover, .ranking > a:hover, .pictureRegist > a:hover, .myPicture > a:hover, .community > a:hover {
+    color: #414141;
+    border: rgba(28, 175, 244, 0.8) solid;
+    border-width: 0 0 12px 0;
+
+}
+
+.helloUser {
+    width: 200px;
+    padding: 18px 10px 10px 0;
+    text-align: right;
+    font-size: 14px;
+}
+
+.logOutBtn {
+    padding-top: 23px;
+}
+
+.btn {
+    color: #1CAFF4 !important;
+    border-color: #1CAFF4 !important;
+}
+
+.btn:hover {
+    color: #ffffff !important;
+    background-color: #1CAFF4 !important;
+}
+
+.illustre{
+	font-size: 24px;
+}
+.illustreInfo{
+	font-size: 16px;
+	margin-bottom: 4px;
+}
+
+/* Picture Regist Section */
+
+.pictureRegistSectionWrap {
+    height: 899px;
+    background-color: white;
+    padding-top: 10px;
+}
+
+.pictureRegistSection {
+    width: 1330px;
+    margin: auto;
+    display: flex;
+}
+
+/* Picture Regist Left */
+
+.pictureRegistLeft {
+    height: 880px;
+    width: 880px;
+    display: inline-block;
+}
+
+.checkImage > img {
+    height: 830px;
+    width: 880px;
+}
+
+.UrlSection {
+    margin-top: 10px;
+    display: flex;
+}
+
+.inputURL {
+    width: 750px;
+}
+
+.checkURL {
+    width: 130px;
+    padding-left: 8px;
+}
+
+.checkURL > .btn {
+    height: 38px;
+    width: 120px;
+}
+
+
+/* Picture Regist Right */
+.pictureRegistRight {
+    height: 888px;
+    width: 450px;
+    padding-left: 20px;
+}
+
+.pictureCategory {
+	height: 30px;
+    display: flex;
+}
+
+.pictureCategory > .custom-select {
+    width: 330px;
+    margin-left: 10px;
+    border-radius: 5px;
+}
+
+.pictureTitle{
+	height: 30px;
+	margin-top: 10px;
+	display: flex;
+}
+
+.pictureComment, .pictureRegistBtn {
+    margin-top: 53px;
+}
+
+.pictureTitle > .input-group-prepend > .form-control {
+    width: 430px;
+    margin-top: 4px;
+}
+
+.input-group-text {
+	font-size: 15px;
+	font-weight: normal;
+	text-align: center;
+    background-color: white;
+    border: 1px solid #B7B7B7;
+    width: 96.14px;
+    height: 30px;
+	padding-top: 3px;    
+	border-radius: 5px;
+}
+
+.pictureComment > textarea {
+    margin-top: 8px;
+    border: 1px solid #B7B7B7;
+    border-radius: 5px;
+    resize: none;
+}
+
+.pictureRegistBtn > .btn {
+    background-color: #1CAFF4;
+    color: white !important;
+    border-color: #1CAFF4 !important;
+}
+
+.pictureRegistBtn > .btn:hover {
+    color: #ffffff !important;
+    background-color: #0A8BD9;
+}
