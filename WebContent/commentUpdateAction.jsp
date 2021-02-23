@@ -39,12 +39,17 @@
 			script.println("history.back()");
 			script.println("</script>");
 		}
-		if(request.getParameter("bbsCommentContent") == null || request.getParameter("bbsCommentContent") == " " ){
+		String bbsComment = null;
+		if(request.getParameter("bbsCommentContent") != null){
+			bbsComment = request.getParameter("bbsCommentContent");
+		}
+		if(bbsComment == null || bbsComment == "" || bbsComment == " " || bbsComment == "  "  ){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('댓글을 작성해주세요');");
 			script.println("history.back()");
 			script.println("</script>");
+			return;
 		}
 		BbsCommentDAO bbsCommentDAO = new BbsCommentDAO();
 		if(!userID.equals(bbsCommentDAO.getBbsCommentUserID(bbsCommentID))){
@@ -64,9 +69,10 @@
 				script.println("</script>");
 			}else{
 				PrintWriter script = response.getWriter();
+				/* response.sendRedirect("view.jsp?bbsID="+bbsID); */
 				script.println("<script>");
 				script.println("alert('성공적으로 수정되었습니다');");
-				script.println("location.href='community.jsp'");
+				script.println("location.href='view.jsp?bbsID="+bbsID+"'");
 				script.println("</script>");
 			}
 		}

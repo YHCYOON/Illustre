@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@page import="java.io.PrintWriter" %>   
 <%@page import="bbsComment.BbsCommentDAO" %> 
+<%response.setCharacterEncoding("UTF-8"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,6 +33,10 @@
 			script.println("history.back()");
 			script.println("</script>");
 		}
+		int bbsID = 0;
+		if(request.getParameter("bbsID") != null){
+			bbsID = Integer.parseInt(request.getParameter("bbsID"));
+		}
 		BbsCommentDAO bbsCommentDAO = new BbsCommentDAO();
 		if(!userID.equals(bbsCommentDAO.getBbsCommentUserID(bbsCommentID))){
 			PrintWriter script = response.getWriter();
@@ -51,7 +56,7 @@
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('댓글이 삭제되었습니다');");
-				script.println("location.href='community.jsp'");
+				script.println("location.href='view.jsp?bbsID="+bbsID+"'");
 				script.println("</script>");
 			}
 		}

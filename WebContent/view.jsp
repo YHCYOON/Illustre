@@ -145,7 +145,7 @@
 		<% 
 			if(userID != null){
 		%>
-		<form method="post" action="writeBbsCommentAction.jsp?bbsID=<%=bbsID %>">
+		<form method="post" action="commentWriteAction.jsp?bbsID=<%=bbsID %>">
 			<table class="table" style="text-align: center; border: 1px solid #dddddd; margin-top:20px;">
 				<tbody>
 					<tr>	
@@ -176,7 +176,7 @@
 			BbsCommentDAO bbsCommentDAO = new BbsCommentDAO();
 			list = bbsCommentDAO.getBbsComment(bbsID);
 		%>
-			
+		<!-- 댓글 부분  -->
 		<div class="container">
 			<div class="row">
 				<div style="font-size:18px;">댓글 (<%=list.size() %>)</div>
@@ -190,8 +190,8 @@
 								if(userID != null && userID.equals(list.get(i).getUserID())){
 							%>
 							<td colspan="1" style="padding: 14px;"><%=list.get(i).getUserID() %></td>
-							<td style="padding-top:10px; width:60px;"><a href="commentUpdate.jsp?bbsID=<%=bbsID %>&bbsCommentID=<%=list.get(i).getBbsCommentID()%>"><button type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
-							<td style="padding-top:10px; width:60px;"><a onclick="return confirm('정말로 삭제하시겠습니까?')" href="commentDeleteAction.jsp?bbsCommentID=<%=list.get(i).getBbsCommentID()%>">
+							<td style="padding-top:10px; width:60px;"><a href="commentUpdate.jsp?bbsID=<%=list.get(i).getBbsID() %>&bbsCommentID=<%=list.get(i).getBbsCommentID()%>"><button type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
+							<td style="padding-top:10px; width:60px;"><a onclick="return confirm('정말로 삭제하시겠습니까?')" href="commentDeleteAction.jsp?bbsID=<%=list.get(i).getBbsID() %>&bbsCommentID=<%=list.get(i).getBbsCommentID()%>">
 							<button type="button" class="btn btn-Red btn-sm">삭제</button></a></td>
 							<%
 								}else{

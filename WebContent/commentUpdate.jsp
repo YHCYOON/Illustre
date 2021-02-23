@@ -29,6 +29,13 @@
 		UserDAO userDAO = new UserDAO();
 		userNickname = userDAO.getNickname(userID);
 	}
+	if(userID == null){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('로그인이 필요합니다');");
+		script.println("location.href='login.jsp'");
+		script.println("</script>");
+	}
 	
 	int bbsID = 0;
 	if(request.getParameter("bbsID") != null){
@@ -157,7 +164,7 @@
 		<% 
 			if(userID != null){
 		%>
-		<form method="post" action="writeBbsCommentAction.jsp?bbsID=<%=bbsID %>">
+		<form method="post" action="commentWriteAction.jsp?bbsID=<%=bbsID %>">
 			<table class="table" style="text-align: center; border: 1px solid #dddddd; margin-top:20px;">
 				<tbody>
 					<tr>	
@@ -223,7 +230,7 @@
 						%>
 						<tr>
 							<td colspan="3">
-								<form method="post" action="updateBbsCommentAction.jsp?bbsID=<%=bbsID %>&bbsCommentID=<%=bbsCommentID%>">
+								<form method="post" action="commentUpdateAction.jsp?bbsID=<%=bbsID %>&bbsCommentID=<%=bbsCommentID%>">
 									<table class="table" style="text-align: center; border: 1px solid #dddddd; margin-top:20px;">
 										<tbody>
 											<tr>	

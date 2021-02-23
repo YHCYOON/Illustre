@@ -35,10 +35,7 @@
 					int result = bbsCommentDAO.writeBbsComment(bbsID, userID, request.getParameter("bbsCommentContent"));
 					if(result == 1){
 						PrintWriter script = response.getWriter();
-						script.println("<script>");
-						script.println("alert('댓글을 성공적으로 작성했습니다');");
-						script.println("location.href='community.jsp'");
-						script.println("</script>");
+						response.sendRedirect("view.jsp?bbsID="+bbsID);
 					}else{
 						PrintWriter script = response.getWriter();
 						script.println("<script>");
