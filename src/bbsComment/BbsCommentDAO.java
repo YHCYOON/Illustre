@@ -151,4 +151,24 @@ Connection conn;
 		}
 		return null;
 	}
+	
+	// 게시글의 댓글 개수를 가져오는 메서드
+	public int countBbsComment(int bbsID) {
+		PreparedStatement pstmt;
+		ResultSet rs;
+		String SQL = "SELECT COUNT(*) FROM bbsComment WHERE bbsID = ? AND bbsAvailable = 1";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, bbsID);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt(1);
+			}else {
+				return 0;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;	//데이터베이스 오류
+	}
 }

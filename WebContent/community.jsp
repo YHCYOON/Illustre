@@ -3,6 +3,7 @@
 <%@page import="user.UserDAO" %>
 <%@page import="bbs.BbsDAO" %>
 <%@page import="bbs.Bbs" %>
+<%@page import="bbsComment.BbsCommentDAO" %>
 <%@page import="java.util.ArrayList" %>
 <%@page import="java.io.PrintWriter" %>
 <%request.setCharacterEncoding("UTF-8"); %>
@@ -14,6 +15,7 @@
 	<meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" href="css/customBootstrap.css">
 	<link rel="stylesheet" href="css/community.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 	<title></title>
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
@@ -109,7 +111,16 @@
 				%>
 					<tr>
 						<td><%=list.get(i).getBbsID() %></td>
-						<td><a href="view.jsp?bbsID=<%=list.get(i).getBbsID() %>"><%=list.get(i).getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %></a></td>
+						<td><a href="view.jsp?bbsID=<%=list.get(i).getBbsID() %>"><%=list.get(i).getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %>
+							<%
+								BbsCommentDAO bbsCommentDAO = new BbsCommentDAO();
+								int countComment = bbsCommentDAO.countBbsComment(list.get(i).getBbsID());
+								if(countComment > 0){
+							%>
+								&nbsp<i class="fas fa-comment" style="color:#A3A3A3;">&nbsp<%=countComment %></i></a></td>
+							<%
+								}
+							%>
 						<td><%=list.get(i).getUserID() %></td>
 						<td><%=list.get(i).getBbsDate() %></td>
 					</tr>
