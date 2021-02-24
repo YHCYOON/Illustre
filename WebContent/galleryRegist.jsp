@@ -143,7 +143,7 @@
     </nav>
 
     <div class="pictureRegistSectionWrap">
-       	<form action="fileUpload.jsp" method="post" enctype="Multipart/form-data" class="pictureRegistSection">
+       	<form action="/GalleryServlet" method="post" enctype="Multipart/form-data" class="pictureRegistSection">
             <div class="pictureRegistLeft">
                 <div class="filebox preview-image">
                 	<input class="upload-name" value="파일을 첨부해주세요" disabled="disabled">

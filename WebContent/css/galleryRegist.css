@@ -111,13 +111,6 @@ wrap {
     display: inline-block;
 }
 
-
-#checkImage {
-    height: 780px !important;
-    width: 880px;
-    border: 1px solid #B7B7B7;
-}
-
 .filebox input[type="file"]{
 	position: absolute;
 	width: 1px;

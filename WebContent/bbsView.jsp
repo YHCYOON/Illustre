@@ -131,7 +131,7 @@
 						</tr>
 					</tbody>
 				</table>
-				<a href="bbs.jsp" class="btn btn-Skyblue">목록</a>
+				<a href="bbs.jsp" class="btn btn-Green">목록</a>
 				<%
 					if(userID != null && userID.equals(bbs.getUserID())){
 				%>

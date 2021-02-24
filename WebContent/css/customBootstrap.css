@@ -3170,6 +3170,60 @@ fieldset[disabled] .btn-Red.focus {
   background-color: #FF5D5D;
 }
 
+/* Custom Green Btn */
+.btn-Green {
+  color: #69C56F;
+  background-color: #ffffff;
+  border-color: #69C56F;
+}
+.btn-Green:focus,
+.btn-Green.focus {
+  color: #ffffff;
+  background-color: #69C56F;
+}
+.btn-Green:hover {
+  color: #ffffff;
+  background-color: #69C56F;
+}
+.btn-Green:active,
+.btn-Green.active,
+.open > .dropdown-toggle.btn-Green {
+  color: #ffffff;
+  background-color: #69C56F;
+}
+.btn-Green:active:hover,
+.btn-Green.active:hover,
+.open > .dropdown-toggle.btn-Green:hover,
+.btn-Green:active:focus,
+.btn-Green.active:focus,
+.open > .dropdown-toggle.btn-Green:focus,
+.btn-Green:active.focus,
+.btn-Green.active.focus,
+.open > .dropdown-toggle.btn-Green.focus {
+  color: #ffffff;
+  background-color: #69C56F;
+}
+.btn-Green:active,
+.btn-Green.active,
+.open > .dropdown-toggle.btn-Green {
+  background-image: none;
+}
+.btn-Green.disabled:hover,
+.btn-Green[disabled]:hover,
+fieldset[disabled] .btn-Green:hover,
+.btn-Green.disabled:focus,
+.btn-Green[disabled]:focus,
+fieldset[disabled] .btn-Green:focus,
+.btn-Green.disabled.focus,
+.btn-Green[disabled].focus,
+fieldset[disabled] .btn-Green.focus {
+  background-color: #fff;
+  border-color: #ccc;
+}
+.btn-Green .badge {
+  color: #ffffff;
+  background-color: #69C56F;
+}
 
 /* Custom Skyblue Btn */
 .btn-Skyblue {
