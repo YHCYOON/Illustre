@@ -14,7 +14,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" href="css/customBootstrap.css">
-	<link rel="stylesheet" href="css/community.css">
+	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 	<title></title>
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>

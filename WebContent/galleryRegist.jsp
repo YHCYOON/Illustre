@@ -9,10 +9,62 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" href="css/galleryRegist.css">
-	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/customBootstrap.css">
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<title></title>
+	
+<script>
+	$(document).ready(function(){
+	   var fileTarget = $('.filebox .upload-hidden');
+
+	    fileTarget.on('change', function(){
+	        if(window.FileReader){
+	            // 파일명 추출
+	            var filename = $(this)[0].files[0].name;
+	        } 
+
+	        else {
+	            // Old IE 파일명 추출
+	            var filename = $(this).val().split('/').pop().split('\\').pop();
+	        };
+
+	        $(this).siblings('.upload-name').val(filename);
+	    });
+
+	    //preview image 
+	    var imgTarget = $('.preview-image .upload-hidden');
+
+	    imgTarget.on('change', function(){
+	        var parent = $(this).parent();
+	        parent.children('.upload-display').remove();
+
+	        if(window.FileReader){
+	        	//image 파일만
+	            if (!$(this)[0].files[0].type.match(/image\//)) 
+	            	return;
+	            
+	            var reader = new FileReader();
+	            reader.onload = function(e){
+	                var src = e.target.result;
+	                parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
+	            }
+	            reader.readAsDataURL($(this)[0].files[0]);
+	        }
+
+	        else {
+	            $(this)[0].select();
+	            $(this)[0].blur();
+	            var imgSrc = document.selection.createRange().text;
+	            parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
+
+	            var img = $(this).siblings('.upload-display').find('img');
+	            img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";        
+	        }
+	    });
+	});
+	  
+</script>
 </head>
 <body>
 <%
@@ -65,7 +117,7 @@
 	            </div>
 	            <div class="logOutBtn">
 	                <div class="dropdown">
-  						<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+  						<button class="btn btn-Skyblue dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
   						회원관리<span class="caret"></span></button>
 		  				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 						    <li role="presentation"><a href="userUpdate.jsp" role="menuitem" tabindex="-1">회원정보 수정</a></li>
@@ -82,7 +134,7 @@
 	                <div class="user">로그인이 필요합니다</div>
 	            </div>
 	            <div class="logOutBtn">
-	                <a href="login.jsp"><button type="button" style="background-color:white;" class="btn btn-default btn-sm">로그인</button></a>
+	                <a href="login.jsp"><button type="button" style="background-color:white;" class="btn btn-Skyblue btn-sm">로그인</button></a>
 	            </div>
             <%
             	}
@@ -91,18 +143,13 @@
     </nav>
 
     <div class="pictureRegistSectionWrap">
-        <div class="pictureRegistSection">
+       	<form action="fileUpload.jsp" method="post" enctype="Multipart/form-data" class="pictureRegistSection">
             <div class="pictureRegistLeft">
-                <div class="checkImage">
-                    <img id="urlImg">
-                </div>
-                <div class="UrlSection">
-                    <div class="inputURL">
-                        <input type="text" id="inputURL" class="form-control" placeholder="URL을 입력하세요">
-                    </div>
-                    <div class="checkURL">
-                        <button type="button" onclick="Show_Img()" class="btn btn-default btn-sm">이미지 확인</button>
-                    </div>
+                <div class="filebox preview-image">
+                	<input class="upload-name" value="파일을 첨부해주세요" disabled="disabled">
+                	
+                	<label for="input-file">파일 첨부</label>
+                    <input type="file" id="input-file" class="upload-hidden" name="filename1">
                 </div>
             </div>
 
@@ -128,14 +175,14 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text">작품설명</label>
                     </div>
-                    <textarea id="comment" class="form-control" rows="28"></textarea>
+                    <textarea id="comment" class="form-control" rows="26"></textarea>
                 </div>
                 <div class="pictureRegistBtn">
-                    <button onclick="Picture_Regist()" type="button" class="btn btn-primary btn-lg btn-block">등록하기</button>
+                	<input type="submit" class="btn btn-primary btn-lg btn-block" value="그림 등록하기"/>
                 </div>
             </div>
-        </div>
-    </div>
+         	</form>
+       </div>
 </div>
 
 </body>

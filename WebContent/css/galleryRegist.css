@@ -82,7 +82,7 @@ wrap {
     color: #ffffff !important;
     background-color: #1CAFF4 !important;
 }
-
+ 
 .illustre{
 	font-size: 24px;
 }
@@ -94,7 +94,6 @@ wrap {
 /* Picture Regist Section */
 
 .pictureRegistSectionWrap {
-    height: 899px;
     background-color: white;
     padding-top: 10px;
 }
@@ -108,39 +107,96 @@ wrap {
 /* Picture Regist Left */
 
 .pictureRegistLeft {
-    height: 880px;
     width: 880px;
     display: inline-block;
 }
 
-.checkImage > img {
-    height: 830px;
+
+#checkImage {
+    height: 780px !important;
     width: 880px;
+    border: 1px solid #B7B7B7;
 }
 
-.UrlSection {
-    margin-top: 10px;
-    display: flex;
+.filebox input[type="file"]{
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip:rect(0,0,0,0);
+	border: 0;
 }
 
-.inputURL {
-    width: 750px;
+.filebox label{
+	margin-top:5px;
+	width: 120px;
+	display: inline-block;
+	padding: .5em .75em;
+	color: #1CAFF4;
+	line-height: normal;
+	vertical-align: middle;
+	text-align: center;
+	background-color: white;
+	cursor: pointer;
+	border: 1px solid #1CAFF4;
+	border-radius: .25em;
 }
 
-.checkURL {
-    width: 130px;
-    padding-left: 8px;
+/* 이름 업로드 */
+.filebox .upload-name{
+	display: inline-block; 
+	width: 755px;
+	padding: .5em .75em; 
+	font-size: inherit; 
+	font-family: inherit; 
+	line-height: normal; 
+	vertical-align: middle; 
+	background-color: white; 
+	border: 1px solid #B7B7B7; 
+	border-radius: .25em; 
+	-webkit-appearance: none; /* 네이티브 외형 감추기 */ 
+	-moz-appearance: none; 
+	appearance: none;
 }
 
-.checkURL > .btn {
-    height: 38px;
-    width: 120px;
+/* imaged preview */ 
+.filebox .upload-display { 
+/* 이미지가 표시될 지역 */ 
+margin-bottom: 5px; 
+} 
+
+@media(min-width: 768px) { 
+	.filebox .upload-display { 
+	display: inline-block; 
+	margin-right: 5px; 
+	margin-bottom: 0; 
+	} 
 }
 
+
+/* 추가될 이미지를 감싸는 요소 */
+.filebox .upload-thumb-wrap{
+	display: inline-block;
+	width: 886px;
+	padding:2px;
+	vertical-align: middle;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	background-color: #fff;
+}
+
+/* 추가될 이미지 */
+.filebox .upload-display img{
+	display: block;
+	width: 880px;
+	height: auto;
+}
 
 /* Picture Regist Right */
 .pictureRegistRight {
-    height: 888px;
+    height: 500px;
     width: 450px;
     padding-left: 20px;
 }

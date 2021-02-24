@@ -8,7 +8,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width">
-	<link rel="stylesheet" href="css/bootstrap.css">
+	<link rel="stylesheet" href="css/customBootstrap.css">
 	<link rel="stylesheet" href="css/main.css">
 	<title>일러스트리 - 내가 그려가는 세상</title>
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -57,7 +57,7 @@
 	            </div>
 	            <div class="logOutBtn">
 	                <div class="dropdown">
-  						<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+  						<button class="btn btn-Skyblue dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
   						회원관리<span class="caret"></span></button>
 		  				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 						    <li role="presentation"><a href="userUpdate.jsp" role="menuitem" tabindex="-1">회원정보 수정</a></li>
@@ -74,7 +74,7 @@
 	                <div class="user">로그인이 필요합니다</div>
 	            </div>
 	            <div class="logOutBtn">
-	                <a href="login.jsp"><button type="button" style="background-color:white;" class="btn btn-default btn-sm">로그인</button></a>
+	                <a href="login.jsp"><button type="button" style="background-color:white;" class="btn btn-Skyblue btn-sm">로그인</button></a>
 	            </div>
             <%
             	}
