@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@page import="java.io.PrintWriter" %>
 <%@page import="user.UserDAO" %>    
-<%@page import="user.User" %>    
+<%@page import="user.User" %>  
+<%request.setCharacterEncoding("UTF-8"); %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,6 +64,27 @@
 	        }
 	    });
 	});
+	
+	// 항목 유효성 검사
+	function galleryRegist(){
+		var galleryCategory = $('#galleryCategory').val();
+		var galleryTitle = $('#galleryTitle').val();
+		var galleryContent = $('#galleryContent').val();
+		
+		if(galleryCategory == "카테고리를 선택하세요"){
+			alert('카테고리를 선택해주세요');
+			galleryCategory.focus();
+		}else if(galleryTitle == null || galleryTitle == "" || galleryTitle == " "){
+			alert('제목을 입력해주세요');
+			galleryTitle.focus();
+		}else if(galleryContent == null || galleryContent == "" || galleryContent == " "){
+			alert('작품 설명을 입력해주세요');
+			galleryContent.focus();
+		}
+		else{
+			$('#galleryRegistForm').submit();
+		}
+	}
 	  
 </script>
 </head>
@@ -143,13 +165,13 @@
     </nav>
 
     <div class="pictureRegistSectionWrap">
-       	<form action="/GalleryServlet" method="post" enctype="Multipart/form-data" class="pictureRegistSection">
+       	<form id="galleryRegistForm" action="galleryRegistAction.jsp" method="post" enctype="Multipart/form-data" class="pictureRegistSection">
             <div class="pictureRegistLeft">
                 <div class="filebox preview-image">
                 	<input class="upload-name" value="파일을 첨부해주세요" disabled="disabled">
                 	
                 	<label for="input-file">파일 첨부</label>
-                    <input type="file" id="input-file" class="upload-hidden" name="filename1">
+                    <input type="file" id="input-file" class="upload-hidden" name="fileName">
                 </div>
             </div>
 
@@ -158,8 +180,8 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text">카테고리</label>
                     </div>
-                    <select id="category" class="custom-select">
-                        <option selected>카테고리를 선택하세요</option>
+                    <select id="galleryCategory" name="galleryCategory" class="custom-select">
+                        <option value="카테고리를 선택하세요">카테고리를 선택하세요</option>
                         <option value="캐릭터 일러스트">캐릭터 일러스트</option>
                         <option value="배경 일러스트">배경 일러스트</option>
                         <option value="스케치">스케치</option>
@@ -168,21 +190,21 @@
                 <div class="pictureTitle">
                     <div class="input-group-prepend">
                         <label class="input-group-text">제목</label>
-                        <input type="text" id="title" class="form-control">
+                        <input type="text" id="galleryTitle" name="galleryTitle" class="form-control">
                     </div>
                 </div>
                 <div class="pictureComment">
                     <div class="input-group-prepend">
                         <label class="input-group-text">작품설명</label>
                     </div>
-                    <textarea id="comment" class="form-control" rows="26"></textarea>
+                    <textarea id="galleryContent" name="galleryContent" class="form-control" rows="26"></textarea>
                 </div>
                 <div class="pictureRegistBtn">
-                	<input type="submit" class="btn btn-primary btn-lg btn-block" value="그림 등록하기"/>
+                	<input type="button" onclick="galleryRegist()" class="btn btn-Skyblue btn-lg btn-block" value="그림 등록하기">
                 </div>
             </div>
-         	</form>
-       </div>
+       	</form>
+	</div>
 </div>
 
 </body>
