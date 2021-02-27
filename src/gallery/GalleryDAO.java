@@ -60,7 +60,7 @@ public class GalleryDAO {
 	
 	public int upload(String userID, String galleryCategory, String galleryTitle, String galleryContent, String fileName, String fileRealName) {
 		PreparedStatement pstmt;
-		String SQL = "INSERT INTO GALLERY VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String SQL = "INSERT INTO GALLERY VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, getGalleryID());
@@ -71,7 +71,8 @@ public class GalleryDAO {
 			pstmt.setString(6, getDate());
 			pstmt.setString(7, fileName);
 			pstmt.setString(8, fileRealName);
-			pstmt.setInt(9, 1);	// galleryAvailable = 1
+			pstmt.setInt(9, 0);	// galleryLikeCount = 1
+			pstmt.setInt(10, 1);	// galleryAvailable = 1
 			return pstmt.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();

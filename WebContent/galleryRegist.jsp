@@ -65,7 +65,7 @@
 	    });
 	});
 	
-	// 항목 유효성 검사
+	// 항목 유효성 검사 
 	function galleryRegist(){
 		var galleryCategory = $('#galleryCategory').val();
 		var galleryTitle = $('#galleryTitle').val();
