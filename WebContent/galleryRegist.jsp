@@ -16,6 +16,7 @@
 	<title></title>
 	
 <script>
+	// 이미지 첨부시 이름 보여주기
 	$(document).ready(function(){
 	   var fileTarget = $('.filebox .upload-hidden');
 
@@ -33,7 +34,7 @@
 	        $(this).siblings('.upload-name').val(filename);
 	    });
 
-	    //preview image 
+	    // 이미지 첨부시 미리보기 
 	    var imgTarget = $('.preview-image .upload-hidden');
 
 	    imgTarget.on('change', function(){
@@ -65,11 +66,30 @@
 	    });
 	});
 	
-	// 항목 유효성 검사 
+	// 입력 항목 유효성 검사 
 	function galleryRegist(){
 		var galleryCategory = $('#galleryCategory').val();
 		var galleryTitle = $('#galleryTitle').val();
 		var galleryContent = $('#galleryContent').val();
+		var imgFile = $('#input-file').val();
+		var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
+		var maxSize = 100 * 1024 * 1024;
+		
+		if($('#input-file').val() == ""){
+			alert('그림을 첨부해주세요');
+			$('#input-file').focus();
+			return;
+		}
+		if(imgFile != "" && imgFile != null){
+			fileSize = document.getElementById("input-file").files[0].size;
+			if(!imgFile.match(fileForm)){
+				alert('이미지 파일만 첨부해주세요');
+				return;
+			}else if(fileSize > maxSize){
+				alert('파일 사이즈는 100MB까지 가능합니다');
+				return;
+			}
+		}
 		
 		if(galleryCategory == "카테고리를 선택하세요"){
 			alert('카테고리를 선택해주세요');
