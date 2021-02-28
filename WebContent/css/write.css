@@ -73,17 +73,6 @@ wrap {
 .logOutBtn {
     padding-top: 23px;
 }
-
-.btn {
-    color: #1CAFF4 !important;
-    border-color: #1CAFF4 !important;
-}
-
-.btn:hover {
-    color: #ffffff !important;
-    background-color: #1CAFF4 !important;
-}
-
 .illustre{
 	font-size: 24px;
 }

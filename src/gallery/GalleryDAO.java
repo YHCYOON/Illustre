@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class GalleryDAO {
 	
@@ -57,7 +58,7 @@ public class GalleryDAO {
 			return -1;	// 데이터베이스 오류
 		}
 	
-	
+	// galleryRegist 메서드
 	public int upload(String userID, String galleryCategory, String galleryTitle, String galleryContent, String fileName, String fileRealName) {
 		PreparedStatement pstmt;
 		String SQL = "INSERT INTO GALLERY VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -78,5 +79,43 @@ public class GalleryDAO {
 			e.printStackTrace();
 		}
 		return -1;	// 데이터베이스 오류
+	}
+	
+	// gallery 총 페이지 수를 반환하는 메서드
+	public int getTotalPage() {
+		PreparedStatement pstmt;
+		int countList = 25;	// 한 페이지에 나타내는 그림이 25개
+		String SQL = "SELECT COUNT(IF(galleryAvailable = 1, galleryAvailable, null)) FROM GALLERY";
+	}
+	
+	// gallery 가져오는 메서드
+	public ArrayList<Gallery> getGalleryList(int pageNumber){
+		PreparedStatement pstmt;
+		ResultSet rs;
+		ArrayList<Gallery> list = new ArrayList<Gallery>();
+		String SQL = "SELECT * FROM GALLERY WHERE bbsAvailable = 1 ORDER BY galleryID DESC LIMIT ?, ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, (pageNumber - 1)*10);
+			pstmt.setInt(2, 25);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Gallery gallery = new Gallery();
+				gallery.setGalleryID(rs.getInt(1));
+				gallery.setUserID(rs.getString(2));
+				gallery.setGalleryCategory(rs.getString(3));
+				gallery.setGalleryTitle(rs.getString(4));
+				gallery.setGalleryContent(rs.getString(5));
+				gallery.setGalleryDate(rs.getString(6));
+				gallery.setFileName(rs.getString(7));
+				gallery.setFileRealName(rs.getString(8));
+				gallery.setGalleryLikeCount(rs.getInt(9));
+				gallery.setGalleryAvailable(rs.getInt(10));
+				list.add(gallery);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 }

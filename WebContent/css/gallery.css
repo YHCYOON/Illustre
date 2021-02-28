@@ -1,0 +1,250 @@
+@charset "UTF-8";
+* {
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+wrap {
+    min-width: 1330px;
+}
+
+/* Navbar */
+.navBar {
+    height: 70px;
+    background-color: white;
+    position: sticky;
+    top: 0px;
+    z-index: 3;
+}
+
+.navBarContent {
+    height: 70px;
+    width: 1330px;
+    margin: auto;
+    display: flex;
+}
+
+.navBarLogo {
+    height: 70px;
+    width: 162px;
+    padding-top: 18px;
+    display: inline-block;
+}
+
+.navContent {
+    width: 1000px;
+    height: 70px;
+    display: flex;
+    font-size: 18px;
+    padding-top: 12px;
+    padding-left: 20px;
+    text-align: center;
+}
+
+.gallery, .ranking, .pictureRegist, .myPicture, .community {
+    display: inline-block;
+    margin: auto;
+}
+
+.gallery > a:link, .ranking > a:link, .pictureRegist > a:link, .myPicture > a:link, .community > a:link {
+    color: #414141;
+    text-decoration: none;
+}
+
+.gallery > a:visited, .ranking > a:visited, .pictureRegist > a:visited, .myPicture > a:visited, .community > a:visited {
+    color: #414141;
+    text-decoration: none;
+}
+
+.gallery > a:hover, .ranking > a:hover, .pictureRegist > a:hover, .myPicture > a:hover, .community > a:hover {
+    color: #414141;
+    border: rgba(28, 175, 244, 0.8) solid;
+    border-width: 0 0 12px 0;
+
+}
+
+.helloUser {
+    width: 200px;
+    padding: 18px 10px 10px 0;
+    text-align: right;
+    font-size: 14px;
+}
+
+.logOutBtn {
+    padding-top: 23px;
+}
+/* searchBar */
+
+.searchBar {
+    height: 50px;
+    position: sticky;
+    background-color:white;
+    top: 70px;
+}
+
+.searchBarContent {
+    height: 50px;
+    width: 1330px;
+    margin: auto;
+    display: flex;
+}
+
+.category {
+    display: inline-block;
+    width: 998px;
+    padding-top: 5px;
+}
+
+.search {
+    width: 400px;
+    display: flex;
+    padding-top: 5px;
+    padding-left: 30px;
+    text-align: right;
+}
+
+
+.custom-select {
+    height: 40px;
+}
+
+.form-control {
+    height: 40px;
+    width: 200px;
+    margin-left: 10px;
+}
+
+#btnSearch {
+	margin-left: 10px;
+    height: 40px;
+}
+
+/* Middle section */
+
+.middleSectionWrap {
+    height: 60px;
+}
+
+.middleSection {
+    height: 50px;
+    width: 1330px;
+    margin: auto;
+    font-size: 18px;
+    padding: 15px 0 0 10px;
+    display: flex;
+}
+
+.middleSection > i {
+    color: #1CAFF4;
+}
+
+.pictureCount {
+    padding: 2px 0 0 10px;
+}
+
+/* PictureCards section */
+
+.pictureCardSectionWrap {
+    top: 170px;
+    width: 1330px;
+    background-color: #f4f4f4;
+}
+
+.pictureCardSection {
+	height: 2000px;
+	width: 1330px;
+    background-color: #f4f4f4;
+    margin: auto;
+    list-style: none;
+    padding-inline-start:0px;
+
+}
+
+
+.pictureCard {
+    height: 265px;
+    width: 265px;
+    background-color: yellow;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+.cardImage {
+    height: 265px;
+    width: 265px;
+}
+
+
+/* 그림 마우스 Hover */
+a:hover .hoveruserNickname {
+    top: 62%;
+}
+
+a:hover .hoverLike {
+    top: 80%;
+}
+
+a:hover .hoverTitle {
+    bottom: 52%;
+}
+
+.screen {
+    height: 265px;
+    width: 265px;
+    position: relative;
+    overflow: hidden;
+	margin:0;
+	padding:0;
+	display: inline-block;
+}
+
+.hoverTitle {
+    position: absolute;
+    bottom: 150%;
+    left: 15px;
+    z-index: 2;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 400;
+    transition: all .60s;
+}
+
+.hoverLike {
+    position: absolute;
+    top: 150%;
+    left: 15px;
+    z-index: 2;
+    color: azure;
+    font-size: 12px;
+    transition: all .60s;
+}
+
+.hoveruserNickname {
+    position: absolute;
+    top: 150%;
+    left: 15px;
+    z-index: 2;
+    color: azure;
+    font-size: 12px;
+    transition: all .60s;
+
+}
+
+.screen::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 265px;
+    height: 265px;
+    background: rgba(0, 0, 0, .6);
+    z-index: 1;
+    opacity: 0;
+    transition: all .35s;
+}
+
+a:hover .screen::after {
+    opacity: 0.9;
+}
+

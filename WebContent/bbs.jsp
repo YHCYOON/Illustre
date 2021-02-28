@@ -50,7 +50,7 @@
                     <a href="ranking.jsp">랭킹</a>
                 </div>
                 <div class="pictureRegist">
-                    <a href="regist.jsp">그림등록</a>
+                    <a href="galleryRegist.jsp">그림등록</a>
                 </div>
                 <div class="myPicture">
                     <a href="myPicture.jsp">나의그림</a>
@@ -85,7 +85,7 @@
 	                <div class="user">로그인이 필요합니다</div>
 	            </div>
 	            <div class="logOutBtn">
-	                <a href="login.jsp"><button type="button" style="background-color:white;" class="btn btn-Skyblue btn-sm">로그인</button></a>
+	                <a href="login.jsp" class="btn btn-Skyblue btn-sm">로그인</a>
 	            </div>
             <%
             	}
