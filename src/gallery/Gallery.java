@@ -3,7 +3,7 @@ package gallery;
 public class Gallery {
 	
 	private int galleryID;
-	private String userID;
+	private String userNickname;
 	private String galleryCategory;
 	private String galleryTitle;
 	private String galleryContent;
@@ -19,11 +19,11 @@ public class Gallery {
 	public void setGalleryID(int galleryID) {
 		this.galleryID = galleryID;
 	}
-	public String getUserID() {
-		return userID;
+	public String getUserNickname() {
+		return userNickname;
 	}
-	public void setUserID(String userID) {
-		this.userID = userID;
+	public void setUserNickname(String userNickname) {
+		this.userNickname = userNickname;
 	}
 	public String getGalleryCategory() {
 		return galleryCategory;
@@ -73,6 +73,6 @@ public class Gallery {
 	public void setGalleryAvailable(int galleryAvailable) {
 		this.galleryAvailable = galleryAvailable;
 	}
-	
+
 	
 }

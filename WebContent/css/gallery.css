@@ -78,7 +78,6 @@ wrap {
     height: 50px;
     position: sticky;
     background-color:white;
-    top: 70px;
 }
 
 .searchBarContent {
@@ -142,17 +141,14 @@ wrap {
 }
 
 /* PictureCards section */
-
 .pictureCardSectionWrap {
     top: 170px;
     width: 1330px;
-    background-color: #f4f4f4;
 }
 
 .pictureCardSection {
-	height: 2000px;
+	height: 1450px;
 	width: 1330px;
-    background-color: #f4f4f4;
     margin: auto;
     list-style: none;
     padding-inline-start:0px;
@@ -161,17 +157,16 @@ wrap {
 
 
 .pictureCard {
-    height: 265px;
-    width: 265px;
-    background-color: yellow;
+    height: 262px;
+    width: 262px;
     display: inline-block;
     margin: 0;
     padding: 0;
 }
 
 .cardImage {
-    height: 265px;
-    width: 265px;
+    height: 262px;
+    width: 262px;
 }
 
 
@@ -189,8 +184,8 @@ a:hover .hoverTitle {
 }
 
 .screen {
-    height: 265px;
-    width: 265px;
+    height: 262px;
+    width: 262px;
     position: relative;
     overflow: hidden;
 	margin:0;
@@ -236,8 +231,8 @@ a:hover .hoverTitle {
     position: absolute;
     top: 0;
     left: 0;
-    width: 265px;
-    height: 265px;
+    width: 262px;
+    height: 262px;
     background: rgba(0, 0, 0, .6);
     z-index: 1;
     opacity: 0;

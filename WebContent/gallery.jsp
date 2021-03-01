@@ -1,9 +1,13 @@
+<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
+<%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="user.UserDAO" %>    
 <%@page import="user.User" %>
 <%@page import="gallery.Gallery" %>    
-<%@page import="gallery.GalleryDAO" %>    
+<%@page import="gallery.GalleryDAO" %>  
+<%@page import="java.util.ArrayList" %> 
+<%@page import="java.io.PrintWriter" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +18,7 @@
 	<title>일러스트리 - 내가 그려가는 세상</title>
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 </head>
 <body>
 <%
@@ -24,6 +29,11 @@
 			UserDAO userDAO = new UserDAO();
 			User user = userDAO.getUserInfo(userID);
 			userNickname = user.getUserNickname();
+		}
+		
+		int pageNumber = 1;
+		if(request.getParameter("pageNumber") != null){
+			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		}
 	%>
 <div class="wrap">
@@ -123,220 +133,76 @@
     
     <!-- CardSection -->
     <div class="pictureCardSection">
-    	
-     <a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a>
-                                
-                                <a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a><a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a><a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a><a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a><a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a>  <a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a><a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a><a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a><a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a><a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a><a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a><a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a><a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a><a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a><a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a><a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a><a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a><a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a><a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a><a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a><a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a><a class="pictureCard" href="/picturedetail/${picturenumber}">
-                                <div class="screen">
-                                    <div class="hoverTitle">안녕</div>
-                                    <div class="hoveruserNickname">하세요</div>
-                                    <div class="hoverLike">
-                                        <i class="fas fa-heart"> ㅋㅋㅋㅋ</i>
-                                    </div>
-                                    <img id="pictureCard" class="cardImage" src="${imgURL}">
-                                </div>
-                                </a>    
-    	
-    	
-    
+    <%
+	    GalleryDAO galleryDAO = new GalleryDAO();
+		ArrayList<Gallery> list = galleryDAO.getGalleryList(pageNumber);
+    	try{
+    		for(int i = 0; i < list.size(); i++){
+    %>
+				<a class="pictureCard" href="/galleryView.jsp?galleryID=<%=list.get(i).getGalleryID()%>">
+					<div class="screen">
+						<div class="hoverTitle"><%=list.get(i).getGalleryTitle() %></div>
+						<div class="hoveruserNickname"><%=list.get(i).getUserNickname() %></div>
+						<div class="hoverLike">
+						<i class="fas fa-heart"><%=list.get(i).getGalleryLikeCount() %></i>
+						</div>
+						<img id="pictureCard" class="cardImage" src="<%=request.getContextPath() %>/upload/<%=list.get(i).getFileRealName()%>">
+					</div>
+				</a>
+   <%
+    		}
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
+    %>	
+	<!-- 페이징 처리  -->
+		<div class="text-center">
+			<ul class="pagination">
+				<%
+					int startPage = galleryDAO.getStartPage(pageNumber);
+					int endPage = galleryDAO.getEndPage(pageNumber);
+					int totalPage = galleryDAO.getTotalPage();
+					if(pageNumber == 1){
+				%>
+		    		<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">이전</a></li>
+		    	<%
+					}else{	
+		    	%>
+		    		<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=pageNumber -1 %> " tabindex="-1">이전</a></li>
+		    	<%
+					}
+		    		for(int iCount = startPage; iCount <= endPage; iCount++){
+    					if(pageNumber == iCount){
+		    	%>
+		    				<li class="page-item active"><a class="page-link" href="gallery.jsp?pageNumber=<%=iCount%>"><%=iCount %></a></li>
+		    	<%
+		    			}else{
+		    	%>		
+		    				<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=iCount%>"><%=iCount %></a></li>
+		    	<%
+		    			}
+		    		}
+		    		if(pageNumber == totalPage){
+				%>	
+		    		<li class="page-item disabled"><a class="page-link" href="#">다음</a></li>
+		    	<%
+					}else{
+		    	%>
+		    		<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=pageNumber +1%>">다음</a></li>
+				<%
+					}
+		    		if(pageNumber > totalPage || pageNumber < 1 ){
+		    			PrintWriter script = response.getWriter();
+		    			script.println("<script>");
+		    			script.println("alert('올바르지 않은 페이지 번호입니다');");
+		    			script.println("history.back()");
+		    			script.println("</script>");
+		    		}
+				%>
+					
+			</ul>
+		</div>
+		
     </div>
     
 </div>	

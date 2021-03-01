@@ -185,7 +185,8 @@
     </nav>
 
     <div class="pictureRegistSectionWrap">
-       	<form id="galleryRegistForm" action="galleryRegistAction.jsp" method="post" enctype="Multipart/form-data" class="pictureRegistSection">
+    	<!-- 그림등록 Form  -->
+       	<form id="galleryRegistForm" action="galleryRegistAction.jsp" method="post" enctype="multipart/form-data" class="pictureRegistSection">
             <div class="pictureRegistLeft">
                 <div class="filebox preview-image">
                 	<input class="upload-name" value="파일을 첨부해주세요" disabled="disabled">

@@ -32,8 +32,10 @@
 		}else{
 			try{
 				// 해당 폴더에 이미지를 저장
-				String uploadDir = this.getClass().getResource("").getPath();
-				uploadDir = uploadDir.substring(1, uploadDir.indexOf(".metadata"))+"Illustre/WebContent/upload"; 
+				String uploadDir = application.getRealPath("/upload/");
+				// String uploadDir = this.getClass().getResource("").getPath();
+				// uploadDir = uploadDir.substring(1, uploadDir.indexOf(".metadata"))+"Illustre/WebContent/upload";
+				
 				// 총 100MB 까지 저장 가능하게 함
 				int maxSize = 100 * 1024 * 1024;
 				String encoding = "UTF-8";
@@ -52,7 +54,9 @@
 				
 				// MYSQL 에 업로드하는 메서드
 				GalleryDAO galleryDAO = new GalleryDAO();
-				int result = galleryDAO.upload(userID, multi.getParameter("galleryCategory"), multi.getParameter("galleryTitle"), multi.getParameter("galleryContent"), fileName, fileRealName);
+				UserDAO userDAO = new UserDAO();
+				String userNickname = userDAO.getNickname(userID);
+				int result = galleryDAO.upload(userNickname, multi.getParameter("galleryCategory"), multi.getParameter("galleryTitle"), multi.getParameter("galleryContent"), fileName, fileRealName);
 				if(result == -1){
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
@@ -63,7 +67,7 @@
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
 					script.println("alert('그림을 성공적으로 등록했습니다');");
-					script.println("location.href='main.jsp'");
+					script.println("location.href='gallery.jsp'");
 					script.println("</script>");
 				}
 			}

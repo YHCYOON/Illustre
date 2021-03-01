@@ -59,13 +59,13 @@ public class GalleryDAO {
 		}
 	
 	// galleryRegist 메서드
-	public int upload(String userID, String galleryCategory, String galleryTitle, String galleryContent, String fileName, String fileRealName) {
+	public int upload(String userNickname, String galleryCategory, String galleryTitle, String galleryContent, String fileName, String fileRealName) {
 		PreparedStatement pstmt;
 		String SQL = "INSERT INTO GALLERY VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, getGalleryID());
-			pstmt.setString(2, userID);
+			pstmt.setString(2, userNickname);
 			pstmt.setString(3, galleryCategory);
 			pstmt.setString(4, galleryTitle);
 			pstmt.setString(5, galleryContent);
@@ -84,8 +84,38 @@ public class GalleryDAO {
 	// gallery 총 페이지 수를 반환하는 메서드
 	public int getTotalPage() {
 		PreparedStatement pstmt;
+		ResultSet rs;
 		int countList = 25;	// 한 페이지에 나타내는 그림이 25개
 		String SQL = "SELECT COUNT(IF(galleryAvailable = 1, galleryAvailable, null)) FROM GALLERY";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				if(rs.getInt(1) % countList == 0 ) {
+					return rs.getInt(1) / countList;
+				}else {
+					return rs.getInt(1) / countList + 1;
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;	// 데이터베이스 오류 
+	}
+	
+	// startPage 가져오는 메서드
+	public int getStartPage(int pageNumber) {
+		int startPage = ((pageNumber - 1) / 10) * 10 + 1 ;
+		return startPage;
+	}
+	
+	// endPage 가져오는 메서드
+	public int getEndPage(int pageNumber) {
+		int endPage = getStartPage(pageNumber) + 9;
+		if(endPage > getTotalPage()) {
+			return getTotalPage();
+		}
+		return endPage;
 	}
 	
 	// gallery 가져오는 메서드
@@ -93,16 +123,16 @@ public class GalleryDAO {
 		PreparedStatement pstmt;
 		ResultSet rs;
 		ArrayList<Gallery> list = new ArrayList<Gallery>();
-		String SQL = "SELECT * FROM GALLERY WHERE bbsAvailable = 1 ORDER BY galleryID DESC LIMIT ?, ?";
+		String SQL = "SELECT * FROM GALLERY WHERE galleryAvailable = 1 ORDER BY galleryID DESC LIMIT ?, ?";
 		try {
 			pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, (pageNumber - 1)*10);
+			pstmt.setInt(1, (pageNumber - 1)*25);
 			pstmt.setInt(2, 25);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Gallery gallery = new Gallery();
 				gallery.setGalleryID(rs.getInt(1));
-				gallery.setUserID(rs.getString(2));
+				gallery.setUserNickname(rs.getString(2));
 				gallery.setGalleryCategory(rs.getString(3));
 				gallery.setGalleryTitle(rs.getString(4));
 				gallery.setGalleryContent(rs.getString(5));
