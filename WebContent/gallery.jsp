@@ -37,6 +37,24 @@
 		if(request.getParameter("pageNumber") != null){
 			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		}
+		
+		GalleryDAO galleryDAO = new GalleryDAO();
+    	String galleryCategory = "전체보기";
+    	if(request.getParameter("galleryCategory") != null){
+    		galleryCategory = (String) request.getParameter("galleryCategory");
+    	}
+    	// keyWord , searchWord 값이 default 일때 모든 파일을 보여줌
+    	String keyWord = "fileName";
+    	String searchWord = ".";
+    	
+    	if(request.getParameter("keyWord") != null){
+    		keyWord = (String) request.getParameter("keyWord");
+    	}
+    	if(request.getParameter("searchWord") != null){
+    		searchWord = (String) request.getParameter("searchWord");
+    	}
+    	
+		ArrayList<Gallery> list = galleryDAO.getGalleryList(pageNumber, galleryCategory, keyWord, searchWord);
 	%>
 <div class="wrap">
     <nav class="navBar">
@@ -98,22 +116,22 @@
     <div class="searchBar">
         <div class="searchBarContent">
             <div class="category">
-            	<a href="gallery.jsp?galleryCategory=all" class="btn btn-Skyblue">전체보기</a>
-            	<a href="gallery.jsp?galleryCategory=character" class="btn btn-Skyblue">캐릭터 일러스트</a>
-            	<a href="gallery.jsp?galleryCategory=background" class="btn btn-Skyblue">배경 일러스트</a>
-            	<a href="gallery.jsp?galleryCategory=sketch" class="btn btn-Skyblue">스케치</a>
+            	<a href="gallery.jsp?galleryCategory=전체보기" class="btn btn-Skyblue">전체보기</a>
+            	<a href="gallery.jsp?galleryCategory=캐릭터 일러스트" class="btn btn-Skyblue">캐릭터 일러스트</a>
+            	<a href="gallery.jsp?galleryCategory=배경 일러스트" class="btn btn-Skyblue">배경 일러스트</a>
+            	<a href="gallery.jsp?galleryCategory=스케치" class="btn btn-Skyblue">스케치</a>
             </div>
-            <form class="search" action="gallery.jsp">
+            <form class="search" method="get" action="gallery.jsp?keyWord=<%=request.getParameter("keyWord")%>&searchWord=<%=request.getParameter("searchWord")%>">
                 <div class="searchCategory">
-                    <select id="searchCategory" class="custom-select">
-                        <option id="searchAll" value="searchAll">전체</option>
-                        <option id="searchTitle" value="searchTitle">제목</option>
-                        <option id="searchNickname" value="searchNickname">닉네임</option>
-                        <option id="searchComment" value="searchComment">작품설명</option>
+                    <select id="searchCategory" class="custom-select" name="keyWord">
+                        <!--<option id="searchAll" value="all">전체</option>-->
+                        <option id="searchTitle" value="galleryTitle">제목</option>
+                        <option id="searchNickname" value="userNickname">닉네임</option>
+                        <option id="searchComment" value="galleryContent">작품설명</option>
                     </select>
                 </div>
-                <input id="searchContent" class="form-control mr-sm-2" type="search" aria-label="Search">
-                <button id="btnSearch" type="button" name='search' class="btn btn-Skyblue" onclick="searchContent()">검색</button>
+                <input id="searchContent" class="form-control mr-sm-2" type="search" aria-label="Search" name="searchWord">
+                <input type="submit" id="btnSearch" class="btn btn-Skyblue" value="검색">
             </form>
         </div>
     </div>
@@ -122,18 +140,23 @@
     <div class="middleSectionWrap">
         <div class="middleSection">
             <i class="fas fa-image fa-2x"></i>
-            <div class="pictureCount" id="pictureCategoryCount">전체보기 </div>
+            <%
+            if(keyWord.equals("fileName")){
+           	%>	
+           	<div class="pictureCount" id="pictureCategoryCount"><%=galleryCategory %> (<%=galleryDAO.countTotalPage(galleryCategory, keyWord, searchWord)%>) </div>
+           	<%
+            }else{
+            %>
+            <div class="pictureCount" id="pictureCategoryCount"><%=searchWord %>로 검색한 결과 (<%=galleryDAO.countTotalPage(galleryCategory, keyWord, searchWord)%>) </div>
+            <%
+            }
+            %>
         </div>
     </div>
     
     <!-- CardSection -->
     <div class="pictureCardSection">
     <%
-	    GalleryDAO galleryDAO = new GalleryDAO();
-    	String galleryCategory = "all";
-    	String keyWord = "userNickname";
-    	String searchWord = "b";
-		ArrayList<Gallery> list = galleryDAO.getGalleryList(pageNumber, galleryCategory, keyWord, searchWord);
     	try{
     		for(int i = 0; i < list.size(); i++){
     %>
@@ -189,13 +212,13 @@
 		    		<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=pageNumber +1%>">다음</a></li>
 				<%
 					}
-		    		/* if(pageNumber > totalPage || pageNumber < 1 ){
+		    		if(pageNumber > totalPage || pageNumber < 1 ){
 		    			PrintWriter script = response.getWriter();
 		    			script.println("<script>");
 		    			script.println("alert('올바르지 않은 페이지 번호입니다');");
 		    			script.println("history.back()");
 		    			script.println("</script>");
-		    		} */
+		    		}  
 				%>
 					
 			</ul>

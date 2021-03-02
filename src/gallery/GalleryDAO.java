@@ -80,6 +80,34 @@ public class GalleryDAO {
 		}
 		return -1;	// 데이터베이스 오류
 	}
+	// gallery 총 게시글 개수를 가져오는 메서드
+		public int countTotalPage(String galleryCategory, String keyWord, String searchWord) {
+			PreparedStatement pstmt;
+			ResultSet rs;
+			String SQL_all = "SELECT COUNT(*) FROM GALLERY WHERE " + keyWord + " LIKE ? AND galleryAvailable = 1";
+			String SQL_category = "SELECT COUNT(*) FROM GALLERY WHERE " + keyWord + " LIKE ? AND galleryCategory = ? AND galleryAvailable = 1";
+			try {
+				if(galleryCategory.equals("전체보기")) {
+					pstmt = conn.prepareStatement(SQL_all);
+					pstmt.setString(1, "%" + searchWord + "%");
+					rs = pstmt.executeQuery();
+					if(rs.next()) {
+						return rs.getInt(1);
+					}
+				}else {
+					pstmt = conn.prepareStatement(SQL_category);
+					pstmt.setString(1, "%" + searchWord + "%");
+					pstmt.setString(2, galleryCategory);
+					rs = pstmt.executeQuery();
+					if(rs.next()) {
+						return rs.getInt(1);
+					}
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return -1;	// 데이터베이스 오류 
+		}
 	
 	// gallery 총 페이지 수를 반환하는 메서드 + 검색 기능 추가
 	public int getTotalPage(String galleryCategory, String keyWord, String searchWord) {
@@ -89,7 +117,7 @@ public class GalleryDAO {
 		String SQL_all = "SELECT COUNT(*) FROM GALLERY WHERE " + keyWord + " LIKE ? AND galleryAvailable = 1";
 		String SQL_category = "SELECT COUNT(*) FROM GALLERY WHERE " + keyWord + " LIKE ? AND galleryCategory = ? AND galleryAvailable = 1";
 		try {
-			if(galleryCategory.equals("all")) {
+			if(galleryCategory.equals("전체보기")) {
 				pstmt = conn.prepareStatement(SQL_all);
 				pstmt.setString(1, "%" + searchWord + "%");
 				rs = pstmt.executeQuery();
@@ -145,7 +173,7 @@ public class GalleryDAO {
 		String SQL_category = "SELECT * FROM GALLERY WHERE galleryAvailable = 1 AND galleryCategory = ? AND " + keyWord + " LIKE ? ORDER BY galleryID DESC LIMIT ?, ?";
 		
 		try {
-			if(galleryCategory.equals("all")) {
+			if(galleryCategory.equals("전체보기")) {
 				pstmt = conn.prepareStatement(SQL_all);
 				pstmt.setString(1, "%"+searchWord+"%");
 				pstmt.setInt(2, (pageNumber - 1)*25);
