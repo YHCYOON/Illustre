@@ -183,39 +183,93 @@
 					int startPage = galleryDAO.getStartPage(pageNumber);
 					int endPage = galleryDAO.getEndPage(pageNumber, galleryCategory, keyWord, searchWord);
 					int totalPage = galleryDAO.getTotalPage(galleryCategory, keyWord, searchWord);
+					
+					// 페이징 이전버튼 처리
 					if(pageNumber == 1){
 				%>
 		    		<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">이전</a></li>
 		    	<%
-					}else{	
-		    	%>
-		    		<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=pageNumber -1 %> " tabindex="-1">이전</a></li>
-		    	<%
+					}else{
+						if(keyWord.equals("fileName") && searchWord.equals(".")){	// 검색값이 없을때
+							if(galleryCategory.equals("전체보기")){	// 카테고리가 전체보기(default)일때
+				%>				
+								<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=pageNumber -1%>">이전</a></li>
+				<%
+							}else{	// 카테고리가 default가 아니면 galleryCategory를 파라미터로 전달
+				%>
+								<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=pageNumber -1%>&galleryCategory=<%=galleryCategory%>">이전</a></li>
+				<% 			
+							}
+						}else{	// 검색값이 있으면 keyWord, searchWord를 파라미터로 전달
+				%>
+						<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=pageNumber -1%>&keyWord=<%=keyWord%>&searchWord=<%=searchWord%>">이전</a></li>
+				<%
+						}
 					}
-		    		for(int iCount = startPage; iCount <= endPage; iCount++){
-    					if(pageNumber == iCount){
+		    		
+					// 페이지 개수 처리
+					for(int iCount = startPage; iCount <= endPage; iCount++){
+    					if(pageNumber == iCount){	// 해당 페이지일때
+    						if(keyWord.equals("fileName") && searchWord.equals(".")){	// 검색값이 없을때
+    							if(galleryCategory.equals("전체보기")){	// 카테고리가 전체보기(default)일때
 		    	%>
-		    				<li class="page-item active"><a class="page-link" href="gallery.jsp?pageNumber=<%=iCount%>"><%=iCount %></a></li>
+		    					<li class="page-item active"><a class="page-link" href="gallery.jsp?pageNumber=<%=iCount%>"><%=iCount %></a></li>
 		    	<%
-		    			}else{
+    							}else{	// 카테고리가 default가 아니면 galleryCategory를 파라미터로 전달
+    			%>				
+    							<li class="page-item active"><a class="page-link" href="gallery.jsp?pageNumber=<%=iCount%>&galleryCategory=<%=galleryCategory%>"><%=iCount %></a></li>
+		    	<%
+		    					}
+    						}else{	// 검색값이 있으면 keyWord, searchWord를 파라미터로 전달
 		    	%>		
-		    				<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=iCount%>"><%=iCount %></a></li>
+    							<li class="page-item active"><a class="page-link" href="gallery.jsp?pageNumber=<%=iCount%>&keyWord=<%=keyWord%>&searchWord=<%=searchWord%>"><%=iCount %></a></li>
 		    	<%
-		    			}
-		    		}
+		    				}
+		    			}else{	// 해당 페이지가 아닐때
+		    				if(keyWord.equals("fileName") && searchWord.equals(".")){	// 검색값이 없을때
+    							if(galleryCategory.equals("전체보기")){	// 카테고리가 전체보기(default)일때
+		    	%>
+		    					<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=iCount%>"><%=iCount %></a></li>
+		    	<%
+    							}else{	// 카테고리가 default가 아니면 galleryCategory를 파라미터로 전달
+    			%>				
+    							<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=iCount%>&galleryCategory=<%=galleryCategory%>"><%=iCount %></a></li>
+		    	<%
+		    					}
+    						}else{	// 검색값이 있으면 keyWord, searchWord를 파라미터로 전달
+		    	%>		
+    							<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=iCount%>&keyWord=<%=keyWord%>&searchWord=<%=searchWord%>"><%=iCount %></a></li>
+		    	<%	
+		    				}
+						}
+					}
+    					
+					// 페이징 다음 버튼 처리
 		    		if(pageNumber == totalPage){
 				%>	
 		    		<li class="page-item disabled"><a class="page-link" href="#">다음</a></li>
 		    	<%
 					}else{
-		    	%>
-		    		<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=pageNumber +1%>">다음</a></li>
+						if(keyWord.equals("fileName") && searchWord.equals(".")){	// 검색값이 없을때
+							if(galleryCategory.equals("전체보기")){
+				%>				
+								<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=pageNumber +1%>">다음</a></li>
 				<%
+							}else{
+				%>
+								<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=pageNumber +1%>&galleryCategory=<%=galleryCategory%>">다음</a></li>
+				<% 			
+							}
+						}else{
+				%>
+						<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=pageNumber +1%>&keyWord=<%=keyWord%>&searchWord=<%=searchWord%>">다음</a></li>
+				<%
+						}
 					}
 		    		if(pageNumber > totalPage || pageNumber < 1 ){
 		    			PrintWriter script = response.getWriter();
 		    			script.println("<script>");
-		    			script.println("alert('올바르지 않은 페이지 번호입니다');");
+		    			script.println("alert('올바르지 않은 접근입니다');");
 		    			script.println("history.back()");
 		    			script.println("</script>");
 		    		}  
