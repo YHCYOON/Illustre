@@ -81,20 +81,36 @@ public class GalleryDAO {
 		return -1;	// 데이터베이스 오류
 	}
 	
-	// gallery 총 페이지 수를 반환하는 메서드
-	public int getTotalPage() {
+	// gallery 총 페이지 수를 반환하는 메서드 + 검색 기능 추가
+	public int getTotalPage(String galleryCategory, String keyWord, String searchWord) {
 		PreparedStatement pstmt;
 		ResultSet rs;
 		int countList = 25;	// 한 페이지에 나타내는 그림이 25개
-		String SQL = "SELECT COUNT(IF(galleryAvailable = 1, galleryAvailable, null)) FROM GALLERY";
+		String SQL_all = "SELECT COUNT(*) FROM GALLERY WHERE " + keyWord + " LIKE ? AND galleryAvailable = 1";
+		String SQL_category = "SELECT COUNT(*) FROM GALLERY WHERE " + keyWord + " LIKE ? AND galleryCategory = ? AND galleryAvailable = 1";
 		try {
-			pstmt = conn.prepareStatement(SQL);
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				if(rs.getInt(1) % countList == 0 ) {
-					return rs.getInt(1) / countList;
-				}else {
-					return rs.getInt(1) / countList + 1;
+			if(galleryCategory.equals("all")) {
+				pstmt = conn.prepareStatement(SQL_all);
+				pstmt.setString(1, "%" + searchWord + "%");
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					if(rs.getInt(1) % countList == 0 ) {
+						return rs.getInt(1) / countList;
+					}else {
+						return rs.getInt(1) / countList + 1;
+					}
+				}
+			}else {
+				pstmt = conn.prepareStatement(SQL_category);
+				pstmt.setString(1, "%" + searchWord + "%");
+				pstmt.setString(2, galleryCategory);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					if(rs.getInt(1) % countList == 0 ) {
+						return rs.getInt(1) / countList;
+					}else {
+						return rs.getInt(1) / countList + 1;
+					}
 				}
 			}
 		}catch(Exception e) {
@@ -110,39 +126,67 @@ public class GalleryDAO {
 	}
 	
 	// endPage 가져오는 메서드
-	public int getEndPage(int pageNumber) {
+	public int getEndPage(int pageNumber, String galleryCategory, String keyWord, String searchWord) {
 		int endPage = getStartPage(pageNumber) + 9;
-		if(endPage > getTotalPage()) {
-			return getTotalPage();
+		int totalPage = getTotalPage(galleryCategory, keyWord, searchWord);
+		if(endPage > totalPage) {
+			return totalPage;
 		}
 		return endPage;
 	}
 	
-	// gallery 가져오는 메서드
-	public ArrayList<Gallery> getGalleryList(int pageNumber){
+	// gallery 가져오는 메서드 + 검색기능 추가
+	public ArrayList<Gallery> getGalleryList(int pageNumber, String galleryCategory, String keyWord, String searchWord){
 		PreparedStatement pstmt;
 		ResultSet rs;
 		ArrayList<Gallery> list = new ArrayList<Gallery>();
-		String SQL = "SELECT * FROM GALLERY WHERE galleryAvailable = 1 ORDER BY galleryID DESC LIMIT ?, ?";
+		
+		String SQL_all = "SELECT * FROM GALLERY WHERE galleryAvailable = 1 AND " + keyWord + " LIKE ? ORDER BY galleryID DESC LIMIT ?, ?";
+		String SQL_category = "SELECT * FROM GALLERY WHERE galleryAvailable = 1 AND galleryCategory = ? AND " + keyWord + " LIKE ? ORDER BY galleryID DESC LIMIT ?, ?";
+		
 		try {
-			pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, (pageNumber - 1)*25);
-			pstmt.setInt(2, 25);
-			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				Gallery gallery = new Gallery();
-				gallery.setGalleryID(rs.getInt(1));
-				gallery.setUserNickname(rs.getString(2));
-				gallery.setGalleryCategory(rs.getString(3));
-				gallery.setGalleryTitle(rs.getString(4));
-				gallery.setGalleryContent(rs.getString(5));
-				gallery.setGalleryDate(rs.getString(6));
-				gallery.setFileName(rs.getString(7));
-				gallery.setFileRealName(rs.getString(8));
-				gallery.setGalleryLikeCount(rs.getInt(9));
-				gallery.setGalleryAvailable(rs.getInt(10));
-				list.add(gallery);
+			if(galleryCategory.equals("all")) {
+				pstmt = conn.prepareStatement(SQL_all);
+				pstmt.setString(1, "%"+searchWord+"%");
+				pstmt.setInt(2, (pageNumber - 1)*25);
+				pstmt.setInt(3, 25);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					Gallery gallery = new Gallery();
+					gallery.setGalleryID(rs.getInt(1));
+					gallery.setUserNickname(rs.getString(2));
+					gallery.setGalleryCategory(rs.getString(3));
+					gallery.setGalleryTitle(rs.getString(4));
+					gallery.setGalleryContent(rs.getString(5));
+					gallery.setGalleryDate(rs.getString(6));
+					gallery.setFileName(rs.getString(7));
+					gallery.setFileRealName(rs.getString(8));
+					gallery.setGalleryLikeCount(rs.getInt(9));
+					gallery.setGalleryAvailable(rs.getInt(10));
+					list.add(gallery);
+				}
+			}else {
+				pstmt = conn.prepareStatement(SQL_category);
+				pstmt.setString(1, galleryCategory);
+				pstmt.setString(2, "%"+searchWord+"%");
+				pstmt.setInt(3, (pageNumber - 1)*25);
+				pstmt.setInt(4, 25);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					Gallery gallery = new Gallery();
+					gallery.setGalleryID(rs.getInt(1));
+					gallery.setUserNickname(rs.getString(2));
+					gallery.setGalleryCategory(rs.getString(3));
+					gallery.setGalleryTitle(rs.getString(4));
+					gallery.setGalleryContent(rs.getString(5));
+					gallery.setGalleryDate(rs.getString(6));
+					gallery.setFileName(rs.getString(7));
+					gallery.setFileRealName(rs.getString(8));
+					gallery.setGalleryLikeCount(rs.getInt(9));
+					gallery.setGalleryAvailable(rs.getInt(10));
+					list.add(gallery);
 			}
+		}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

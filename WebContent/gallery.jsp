@@ -7,7 +7,9 @@
 <%@page import="gallery.Gallery" %>    
 <%@page import="gallery.GalleryDAO" %>  
 <%@page import="java.util.ArrayList" %> 
-<%@page import="java.io.PrintWriter" %> 
+<%@page import="java.io.PrintWriter" %>
+<%request.setCharacterEncoding("UTF-8"); %> 
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -96,19 +98,12 @@
     <div class="searchBar">
         <div class="searchBarContent">
             <div class="category">
-                <button type="button" onclick="showAll()" name="showCategory" id="showAll" class="btn btn-Skyblue" value="all">전체보기
-                </button>
-                <button type="button" onclick="showCharacter()" name="showCategory" id="showChar" class="btn btn-Skyblue"
-                        value="캐릭터 일러스트">캐릭터 일러스트
-                </button>
-                <button type="button" onclick="showBackground()" name="showCategory" id="showBackground" class="btn btn-Skyblue"
-                        value="배경 일러스트">배경 일러스트
-                </button>
-                <button type="button" onclick="showSketch()" name="showCategory" id="showSketch" class="btn btn-Skyblue"
-                        value="스케치">스케치
-                </button>
+            	<a href="gallery.jsp?galleryCategory=all" class="btn btn-Skyblue">전체보기</a>
+            	<a href="gallery.jsp?galleryCategory=character" class="btn btn-Skyblue">캐릭터 일러스트</a>
+            	<a href="gallery.jsp?galleryCategory=background" class="btn btn-Skyblue">배경 일러스트</a>
+            	<a href="gallery.jsp?galleryCategory=sketch" class="btn btn-Skyblue">스케치</a>
             </div>
-            <div class="search">
+            <form class="search" action="gallery.jsp">
                 <div class="searchCategory">
                     <select id="searchCategory" class="custom-select">
                         <option id="searchAll" value="searchAll">전체</option>
@@ -119,7 +114,7 @@
                 </div>
                 <input id="searchContent" class="form-control mr-sm-2" type="search" aria-label="Search">
                 <button id="btnSearch" type="button" name='search' class="btn btn-Skyblue" onclick="searchContent()">검색</button>
-            </div>
+            </form>
         </div>
     </div>
     
@@ -135,7 +130,10 @@
     <div class="pictureCardSection">
     <%
 	    GalleryDAO galleryDAO = new GalleryDAO();
-		ArrayList<Gallery> list = galleryDAO.getGalleryList(pageNumber);
+    	String galleryCategory = "all";
+    	String keyWord = "userNickname";
+    	String searchWord = "b";
+		ArrayList<Gallery> list = galleryDAO.getGalleryList(pageNumber, galleryCategory, keyWord, searchWord);
     	try{
     		for(int i = 0; i < list.size(); i++){
     %>
@@ -160,8 +158,8 @@
 			<ul class="pagination">
 				<%
 					int startPage = galleryDAO.getStartPage(pageNumber);
-					int endPage = galleryDAO.getEndPage(pageNumber);
-					int totalPage = galleryDAO.getTotalPage();
+					int endPage = galleryDAO.getEndPage(pageNumber, galleryCategory, keyWord, searchWord);
+					int totalPage = galleryDAO.getTotalPage(galleryCategory, keyWord, searchWord);
 					if(pageNumber == 1){
 				%>
 		    		<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">이전</a></li>
@@ -191,13 +189,13 @@
 		    		<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=pageNumber +1%>">다음</a></li>
 				<%
 					}
-		    		if(pageNumber > totalPage || pageNumber < 1 ){
+		    		/* if(pageNumber > totalPage || pageNumber < 1 ){
 		    			PrintWriter script = response.getWriter();
 		    			script.println("<script>");
 		    			script.println("alert('올바르지 않은 페이지 번호입니다');");
 		    			script.println("history.back()");
 		    			script.println("</script>");
-		    		}
+		    		} */
 				%>
 					
 			</ul>

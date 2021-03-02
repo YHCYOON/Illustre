@@ -104,6 +104,8 @@ wrap {
 
 .custom-select {
     height: 40px;
+    border-color: #AFAFAF;
+    border-radius: 4px;
 }
 
 .form-control {
