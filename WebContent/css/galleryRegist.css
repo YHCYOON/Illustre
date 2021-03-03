@@ -188,6 +188,7 @@ margin-bottom: 5px;
 .pictureCategory {
 	height: 30px;
     display: flex;
+    margin-bottom: 10px;
 }
 
 .pictureCategory > .custom-select {
@@ -195,6 +196,19 @@ margin-bottom: 5px;
     margin-left: 10px;
     border-radius: 5px;
 }
+
+.pictureCategory > .custom-viewContent {
+    font-size: 15px;
+	font-weight: normal;
+    background-color: white;
+    border: 1px solid #B7B7B7;
+    width: 330px;
+    margin-left: 10px;
+	padding-left: 10px; 
+	border-radius: 5px;
+	
+}
+
 
 .pictureTitle{
 	height: 30px;
@@ -205,6 +219,7 @@ margin-bottom: 5px;
 .pictureComment, .pictureRegistBtn {
     margin-top: 53px;
 }
+
 
 .pictureTitle > .input-group-prepend > .form-control {
     width: 430px;

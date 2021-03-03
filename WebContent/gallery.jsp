@@ -160,7 +160,7 @@
     	try{
     		for(int i = 0; i < list.size(); i++){
     %>
-				<a class="pictureCard" href="/galleryView.jsp?galleryID=<%=list.get(i).getGalleryID()%>">
+				<a class="pictureCard" href="galleryView.jsp?galleryID=<%=list.get(i).getGalleryID()%>">
 					<div class="screen">
 						<div class="hoverTitle"><%=list.get(i).getGalleryTitle() %></div>
 						<div class="hoveruserNickname"><%=list.get(i).getUserNickname() %></div>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{{ detailContent['title'] }}</title>
+
+    <!-- <link href="{{ url_for('static', filename='pictureDetail.css') }}" rel="stylesheet" id="login-css"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <style>
+        * {
+            font-family: 'Nanum Gothic', sans-serif;
+        }
+
+        wrap {
+            min-width: 1330px;
+        }
+
+        /* Navbar */
+        .navBar {
+            height: 70px;
+            background-color: white;
+            position: sticky;
+            top: 0px;
+            z-index: 3;
+        }
+
+        .navBarContent {
+            height: 70px;
+            width: 1330px;
+            margin: auto;
+            display: flex;
+        }
+
+        .navBarLogo {
+            height: 70px;
+            width: 162px;
+            padding-top: 18px;
+            display: inline-block;
+        }
+
+        .navContent {
+            width: 1000px;
+            height: 70px;
+            display: flex;
+            font-size: 18px;
+            padding-top: 12px;
+            padding-left: 20px;
+            text-align: center;
+        }
+
+        .showPicture, .ranking, .pictureRegist, .myPicture, .favorite {
+            display: inline-block;
+            margin: auto;
+        }
+
+        .showPicture > a:link, .ranking > a:link, .pictureRegist > a:link, .myPicture > a:link, .favorite > a:link {
+            color: #414141;
+            text-decoration: none;
+        }
+
+        .showPicture > a:visited, .ranking > a:visited, .pictureRegist > a:visited, .myPicture > a:visited, .favorite > a:visited {
+            color: #414141;
+            text-decoration: none;
+        }
+
+        .showPicture > a:hover, .ranking > a:hover, .pictureRegist > a:hover, .myPicture > a:hover, .favorite > a:hover {
+            color: #414141;
+            border: rgba(28, 175, 244, 0.8) solid;
+            border-width: 0 0 12px 0;
+
+        }
+
+        .helloUser {
+            width: 200px;
+            padding: 18px 10px 10px 0;
+            text-align: right;
+            font-size: 14px;
+        }
+
+        .logOutBtn {
+            padding-top: 23px;
+        }
+
+        .btn {
+            color: #1CAFF4 !important;
+            border-color: #1CAFF4 !important;
+        }
+
+        .btn:hover {
+            color: #ffffff !important;
+            background-color: #1CAFF4;
+        }
+
+        .pictureLike > .btn {
+            color: #FC4949 !important;
+            border-color: #FC4949 !important;
+        }
+
+        .pictureLike > .btn:hover {
+            color: #ffffff !important;
+            background-color: #FC4949;
+        }
+
+        /* pictureDetail section */
+
+        .pictureDetailtSectionWrap {
+            height: 899px;
+            background-color: #f4f4f4;
+            padding-top: 10px;
+        }
+
+        .pictureDetailSection {
+            width: 1330px;
+            margin: auto;
+            display: flex;
+        }
+
+
+        /* pictureDetail left */
+
+        .pictureDetailLeft {
+            height: 880px;
+            width: 880px;
+            display: inline-block;
+        }
+
+        .showImage > img {
+            height: 880px;
+            width: 880px;
+        }
+
+
+        /* pictureDetail Right */
+
+        .pictureDetailRight {
+            width: 550px;
+            padding-left: 20px;
+            display: inline-block;
+        }
+
+        .pictureDate, .pictureNickname, .pictureTitle, .pictureComment {
+            margin-top: 10px;
+        }
+
+        .input-group-text {
+            background-color: #D0D0D0;
+            border: 0;
+            width: 120px;
+        }
+
+        .pictureComment > .input-group-text {
+            width: 428px;
+        }
+
+
+        .form-control {
+            background-color: #f4f4f4 !important;
+            border: 0;
+            /* border: 1px solid #D8D8D8; */
+            /* border-radius: 3px; */
+            margin-left: 5px;
+        }
+
+        .pictureComment > .input-group-text {
+            width: 430px;
+        }
+
+        .pictureComment > .form-control {
+            margin-top: 8px;
+            border: 1px solid #D8D8D8;
+            border-radius: 3px;
+            margin-left: 0px;
+        }
+
+        .pictureComment > textarea {
+            resize: none;
+        }
+
+        .pictureShow, .pictureLike, .pictureFavorite {
+            margin-top: 10px;
+        }
+
+        /* Modal */
+
+        .modal-content {
+            max-width: 1665px;
+            margin: auto;
+        }
+
+        .modal-dialog {
+            max-width: 2500px;
+        }
+
+        .modal-body > img {
+            width: 1630px;
+            height: auto;
+
+        }
+
+
+    </style>
+
+    <script>
+        // 로그아웃해서 세션 버리는 함수
+        function onClickLogOut() {
+            $.ajax({
+                url: '/logout',
+                method: 'POST',
+                data: {},
+                success: function (response) {
+                    $(location).attr('href', '/');
+                }
+            })
+        }
+
+        // Nav Bar 로고 , 작품보기
+        function onClickMain() {
+            $(location).attr('href', '/');
+        }
+
+        // Nav Bar 랭킹
+        function onClickRanking() {
+            $(location).attr('href', '/rank/전체랭킹');
+        }
+
+        // Nav Bar 작품등록
+        function onClickPictureRegist() {
+            $(location).attr('href', '/pictureregist');
+        }
+
+        // Nav Bar 나의작품
+        function onClickMypicture() {
+            $(location).attr('href', '/mypicture');
+        }
+
+        // Nav Bar 갤러리
+        function onClickGallery() {
+            $(location).attr('href', '#');
+        }
+
+/*
+        // 갤러리에 추가
+        function AddGallery() {
+            //
+            $.ajax({
+                type: "POST",
+                url: "/addgallery",
+                data: {
+                    userkey_give: '{{ userkey }}',
+                    picturenumber_give: '{{ detailContent['picturenumber'] }}'
+                },
+                success: function (response) {
+                    if (response["result"] == "success") {
+                        alert(response["msg"]);
+                    }
+                }
+            })
+        }
+*/
+        // 좋아요
+        function Like() {
+            $.ajax({
+                type: "POST",
+                url: "/like",
+                data: {
+                    picturenumber_give: '{{ detailContent['picturenumber'] }}'
+                },
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        alert(response['msg']);
+
+                        window.location.reload();
+                    }
+                }
+            });
+        }
+
+    </script>
+</head>
+<body>
+<div class="wrap">
+    <nav class="navBar">
+        <div class="navBarContent">
+            <a href="#" onclick="onClickMain()" class="navBarLogo">
+                <img src="/static/illustre_logo.png" alt="illustre">
+            </a>
+            <div class="navContent">
+                <div class="showPicture">
+                    <a href="#" onclick="onClickMain()">&nbsp&nbsp&nbsp&nbsp 작품보기 &nbsp&nbsp&nbsp&nbsp</a>
+                </div>
+                <div class="ranking">
+                    <a href="#" onclick="onClickRanking()">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 랭킹
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a>
+                </div>
+                <div class="pictureRegist">
+                    <a href="#" onclick="onClickPictureRegist()">&nbsp&nbsp&nbsp&nbsp 작품등록 &nbsp&nbsp&nbsp&nbsp</a>
+                </div>
+                <div class="myPicture">
+                    <a href="#" onclick="onClickMypicture()">&nbsp&nbsp&nbsp&nbsp 나의작품 &nbsp&nbsp&nbsp&nbsp</a>
+                </div>
+                <div class="favorite">
+                    <a href="#" onclick="onClickGallery()">&nbsp&nbsp&nbsp&nbsp 갤러리 &nbsp&nbsp&nbsp&nbsp</a>
+                </div>
+            </div>
+            <div class="helloUser">
+                <div class="hello">안녕하세요</div>
+                <div class="user">{{ nickname }}님!</div>
+            </div>
+            <div class="logOutBtn">
+                <button type="button" onclick="onClickLogOut()" class="btn btn-outline-primary btn-sm">로그아웃</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pictureDetailtSectionWrap">
+        <div class="pictureDetailSection">
+            <div class="pictureDetailLeft">
+                <div class="showImage">
+                    <img id="urlImg" src="{{ detailContent['imgURL'] }}">
+                </div>
+
+            </div>
+            <div class="pictureDetailRight">
+
+                <div class="pictureCategory">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">카테고리</label>
+
+                        <input type="text" id="category" value="{{ detailContent['category'] }}" class="form-control"
+                               readonly>
+                    </div>
+                </div>
+                <div class="pictureDate">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect02">등록일자</label>
+
+                        <input type="text" id="date" value="{{ detailContent['date'] }}" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="pictureNickname">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect02">작성자</label>
+
+                        <input type="text" id="userNickname" value="{{ detailContent['nickname'] }}"
+                               class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="pictureTitle">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect02">제목</label>
+
+                        <input type="text" id="title" value="{{ detailContent['title'] }}" class="form-control"
+                               readonly>
+                    </div>
+                </div>
+                <div class="pictureComment">
+                    <label class="input-group-text" for="inputGroupSelect01">작품설명</label>
+                    <textarea id="comment" class="form-control" rows="19"
+                              readonly>{{ detailContent['comment'] }}</textarea>
+
+                </div>
+                <div class="pictureShow">
+                    <button type="button" class="btn btn-outline-dark btn-block" data-toggle="modal"
+                            data-target="#exampleModal">원본비율로 보기
+                    </button>
+                </div>
+                <div class="pictureFavorite">
+                    <button onclick="AddGallery()" type="button" class="btn btn-outline-dark btn-block">갤러리에 추가</button>
+                </div>
+                <div class="pictureLike">
+                    <button onclick="Like()" type="button" class="btn btn-outline-dark btn-block">좋아요 <i
+                            class="fas fa-heart"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- 원본크기로 보기 Modal -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="exampleModalLabel">{{ detailContent['title'] }}</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img src="{{ detailContent['imgURL'] }}">
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
