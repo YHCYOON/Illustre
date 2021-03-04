@@ -19,3 +19,20 @@ GalleryLike Table
 create table galleryLike(
 	userID VARCHAR(20),
 	galleryID int);
+	
+	
+GalleryComment Table
+
+create table galleryComment(
+	galleryCommentID int,	
+	galleryID int,	
+	userID VARCHAR(20),
+	galleryComment VARCHAR(2048),
+	galleryCommentDate DATETIME,
+	galleryCommentAvailable int,
+	PRIMARY KEY (galleryCommentID));
+	
+	
+	
+	
+	

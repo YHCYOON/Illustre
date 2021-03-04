@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="gallery.GalleryDAO" %>   
-<%@page import="galleryLike.GalleryLikeDAO" %>   
+<%@page import="galleryComment.GalleryCommentDAO" %>
+<%@page import="gallery.GalleryDAO" %>
 <%@page import="java.io.PrintWriter" %>
 <%request.setCharacterEncoding("UTF-8"); %>    
 <!DOCTYPE html>
@@ -37,7 +37,6 @@
 			script.println("</script>");
 			return;
 		}
-		
 		GalleryDAO galleryDAO = new GalleryDAO();
 		int checkGalleryAvailable = galleryDAO.checkGalleryAvailable(galleryID);
 		// galleryID 가 1보다 작거나, 현재 존재하는 galleryID보다 크거나, galleryAvailable이 0인 게시글일때 alert발생 이후 history.back()
@@ -49,34 +48,32 @@
 			script.println("</script>");
 			return;
 		}
-		
-		GalleryLikeDAO galleryLikeDAO = new GalleryLikeDAO();
-		
-		int checkLike = galleryLikeDAO.checkLikeCount(userID, galleryID);
-		
-		if(checkLike == 0){		// 좋아요가 안되어있는 상태
-			galleryLikeDAO.galleryPlusLike(userID, galleryID);	// galleryLike 테이블에 insert
-			galleryDAO.galleryPlusLike(galleryID);		// gallery 테이블의 galleryAvailable + 1
+		String galleryComment = request.getParameter("galleryCommentContent");
+		if(galleryComment.equals(null) || galleryComment.equals("") || galleryComment.equals(" ")){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('좋아해 주셔서 감사합니다!');");
-			script.println("location.href='galleryView.jsp?galleryID="+galleryID+"'");
-			script.println("</script>");
-		}else if(checkLike == 1){		// 이미 좋아요가 되어있는 상태
-			galleryLikeDAO.galleryMinusLike(userID, galleryID);		// galleryLike 테이블에서 delete
-			galleryDAO.galleryMinusLike(galleryID);		// gallery 테이블의 galleryAvailable - 1
-			PrintWriter script = response.getWriter();
-			script.println("<script>");
-			script.println("alert('좋아요가 취소되었습니다');");
-			script.println("location.href='galleryView.jsp?galleryID="+galleryID+"'");
-			script.println("</script>");
-		}else{
-			PrintWriter script = response.getWriter();
-			script.println("<script>");
-			script.println("alert('데이터베이스 오류입니다. 다시 시도해주세요');");
+			script.println("alert('댓글을 입력해주세요');");
 			script.println("history.back()");
 			script.println("</script>");
+			return;
+		}else{
+			GalleryCommentDAO galleryCommentDAO = new GalleryCommentDAO();
+			int result = galleryCommentDAO.writeGalleryComment(galleryID, userID, galleryComment);
+			if(result == 1){
+				PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('댓글이 등록되었습니다');");
+				script.println("location.href='galleryView.jsp?galleryID="+galleryID+"'");
+				script.println("</script>");
+			}else{
+				PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('데이터베이스 오류입니다');");
+				script.println("history.back()");
+				script.println("</script>");
+			}
 		}
+		
 	%>
 </body>
 </html>

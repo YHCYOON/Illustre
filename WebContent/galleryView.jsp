@@ -110,7 +110,62 @@
        	<div id="galleryRegistForm" class="pictureRegistSection">
             <div>
             	<img class="galleryImage" src="<%=request.getContextPath() %>/upload/<%=gallery.getFileRealName()%>">
-            	<div>222</div>
+				<!-- 댓글 입력부분 -->
+				<% 
+				if(userID != null){
+				%>
+				<form method="post" action="galleryCommentWriteAction.jsp?galleryID=<%=galleryID %>">
+					<table class="table" style="text-align: center; border: 1px solid #dddddd; margin-top:20px;">
+						<tbody>
+							<tr>	
+								<td colspan="2"><textarea class="form-control" placeholder="<%=userNickname %>님의 생각은 어떠신가요?" name="galleryCommentContent" maxlength="2048" style="height: 100px; resize: none;"></textarea></td>
+							</tr>
+						</tbody>
+					</table>
+					<input type="submit" class="btn btn-Skyblue pull-right" value="댓글 작성하기">
+				</form>
+				<%
+					}else{
+				%>
+				<table class="table" style="text-align: center; border: 1px solid #dddddd; margin-top:20px;">
+					<tbody>
+						<tr>	
+							<td colspan="2"><textarea class="form-control" placeholder="로그인이 필요합니다" name="bbsContent" maxlength="2048" style="height: 100px; resize: none;"></textarea></td>
+						</tr>
+					</tbody>
+				</table>
+				<%
+					}	
+				%>
+				<!-- 댓글 부분 -->
+				<%
+					if(userID != null){
+				%>
+					<div style="margin-top:60px; font-size:18px;">댓글 (222)</div>
+				<%
+					}else{
+				%>
+					<div style="margin-top:20px; font-size:18px;">댓글 (222)</div>
+				<%
+					}
+				%>
+				<table class="table" style="border: 2px solid #dddddd; margin-top:10px;">
+					<tbody>
+						<tr>
+							<td colspan="1" style="padding: 14px;">123123</td>
+							<td style="padding-top:10px; width:60px;"><a href="commentUpdate.jsp?"><button type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
+							<td style="padding-top:10px; width:60px;"><a onclick="return confirm('정말로 삭제하시겠습니까?')" href="commentDeleteAction.jsp">
+							<button type="button" class="btn btn-Red btn-sm">삭제</button></a></td>
+						</tr>
+						<tr>
+							<td colspan="3">123</td>
+						</tr>
+						<tr>
+							<td colspan="3">123</td>
+						</tr>
+					</tbody>
+				</table>
+				
            	</div>
             <div class="pictureRegistRight">
                 <div class="pictureCategory">

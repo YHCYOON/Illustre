@@ -159,15 +159,13 @@
 		<%
 			}else{
 		%>
-		<form action="login.jsp">
-			<table class="table" style="text-align: center; border: 1px solid #dddddd; margin-top:20px;">
-				<tbody>
-					<tr>	
-						<td colspan="2"><textarea class="form-control" placeholder="로그인이 필요합니다" name="bbsContent" maxlength="2048" style="height: 100px; resize: none;"></textarea></td>
-					</tr>
-				</tbody>
-			</table>
-		</form>
+		<table class="table" style="text-align: center; border: 1px solid #dddddd; margin-top:20px;">
+			<tbody>
+				<tr>	
+					<td colspan="2"><textarea class="form-control" placeholder="로그인이 필요합니다" name="bbsContent" maxlength="2048" style="height: 100px; resize: none;"></textarea></td>
+				</tr>
+			</tbody>
+		</table>
 		<%
 			}	
 		%>

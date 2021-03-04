@@ -35,7 +35,10 @@
 					int result = bbsCommentDAO.writeBbsComment(bbsID, userID, request.getParameter("bbsCommentContent"));
 					if(result == 1){
 						PrintWriter script = response.getWriter();
-						response.sendRedirect("bbsView.jsp?bbsID="+bbsID);
+						script.println("<script>");
+						script.println("alert('댓글이 등록되었습니다');");
+						script.println("location.href='bbsView.jsp?bbsID="+bbsID+"'");
+						script.println("</script>");
 					}else{
 						PrintWriter script = response.getWriter();
 						script.println("<script>");
