@@ -221,7 +221,7 @@
                     <textarea id="galleryContent" name="galleryContent" class="form-control" rows="26"></textarea>
                 </div>
                 <div class="pictureRegistBtn">
-                	<input type="button" onclick="galleryRegist()" class="btn btn-Skyblue btn-lg btn-block" value="그림 등록하기">
+                	<input type="button" onclick="galleryRegist()" class="btn btn-noneHoverSkyBlue btn-lg btn-block" value="그림 등록하기">
                 </div>
             </div>
        	</form>

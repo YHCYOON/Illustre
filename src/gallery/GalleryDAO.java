@@ -220,4 +220,81 @@ public class GalleryDAO {
 		}
 		return list;
 	}
+	
+	// galleryView 가져오는 메서드
+	public Gallery getGalleryView(int galleryID) {
+		PreparedStatement pstmt;
+		ResultSet rs;
+		String SQL = "SELECT * FROM GALLERY WHERE galleryID = ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, galleryID);
+			rs = pstmt.executeQuery();
+			Gallery gallery = new Gallery();
+			if(rs.next()) {
+				gallery.setGalleryID(rs.getInt(1));
+				gallery.setUserNickname(rs.getString(2));
+				gallery.setGalleryCategory(rs.getString(3));
+				gallery.setGalleryTitle(rs.getString(4));
+				gallery.setGalleryContent(rs.getString(5));
+				gallery.setGalleryDate(rs.getString(6));
+				gallery.setFileName(rs.getString(7));
+				gallery.setFileRealName(rs.getString(8));
+				gallery.setGalleryLikeCount(rs.getInt(9));
+				gallery.setGalleryAvailable(rs.getInt(10));
+				return gallery;
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;	// 데이터베이스 오류
+	}
+	
+	// 좋아요 눌렀을때 galleryLikeCount + 1 하는 메서드
+	public int galleryPlusLike(int galleryID) {
+		PreparedStatement pstmt;
+		String SQL = "UPDATE GALLERY SET galleryLikeCount = galleryLikeCount+1 WHERE galleryID = ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, galleryID);
+			return pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;		// 데이터베이스 오류
+	}
+	
+	// 좋아요 눌렀을때 galleryLikeCount - 1 하는 메서드
+	public int galleryMinusLike(int galleryID) {
+		PreparedStatement pstmt;
+		String SQL = "UPDATE GALLERY SET galleryLikeCount = galleryLikeCount-1 WHERE galleryID = ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, galleryID);
+			return pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;		// 데이터베이스 오류
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

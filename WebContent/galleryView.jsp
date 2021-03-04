@@ -3,6 +3,9 @@
 <%@page import="java.io.PrintWriter" %>
 <%@page import="user.UserDAO" %>    
 <%@page import="user.User" %>  
+<%@page import="gallery.Gallery" %>
+<%@page import="gallery.GalleryDAO" %>
+<%@page import="galleryLike.GalleryLikeDAO" %>
 <%request.setCharacterEncoding("UTF-8"); %>  
 <!DOCTYPE html>
 <html>
@@ -13,6 +16,7 @@
 	<link rel="stylesheet" href="css/customBootstrap.css">
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 	<title></title>
 	
 </head>
@@ -26,7 +30,7 @@
 		User user = userDAO.getUserInfo(userID);
 		userNickname = user.getUserNickname();
 	}
-	/* int galleryID = 0;
+	int galleryID = 0;
 	if(request.getParameter("galleryID") != null){
 		galleryID = Integer.parseInt(request.getParameter("galleryID"));
 	}
@@ -36,7 +40,7 @@
 		script.println("alert('유효하지 않은 페이지입니다');");
 		script.println("history.back()");
 		script.println("</script>");
-	} */
+	}
 	
 %>
 <div class="wrap">
@@ -95,52 +99,78 @@
             %>
         </div>
     </nav>
-
+	
+	<%
+		GalleryDAO galleryDAO = new GalleryDAO();
+		Gallery gallery = galleryDAO.getGalleryView(galleryID);
+	%>
+	
     <div class="pictureRegistSectionWrap">
-    	<!-- 그림등록 Form  -->
+    	<!-- galleryView Form  -->
        	<div id="galleryRegistForm" class="pictureRegistSection">
-            <div class="pictureRegistLeft">
-                <div class="filebox preview-image">
-                </div>
-            </div>
-
+            <div>
+            	<img class="galleryImage" src="<%=request.getContextPath() %>/upload/<%=gallery.getFileRealName()%>">
+            	<div>222</div>
+           	</div>
             <div class="pictureRegistRight">
                 <div class="pictureCategory">
                     <div class="input-group-prepend">
                         <label class="input-group-text">카테고리</label>
                     </div>
-                    <input type="text" class="custom-viewContent" readonly>
+                    <input type="text" class="custom-viewContent" value="<%=gallery.getGalleryCategory() %>" readonly>
                 </div>
                 <div class="pictureCategory">
                     <div class="input-group-prepend">
                         <label class="input-group-text">아티스트</label>
                     </div>
-                    <input type="text" class="custom-viewContent" readonly>
+                    <input type="text" class="custom-viewContent" value="<%=gallery.getUserNickname() %>" readonly>
                 </div>
                 <div class="pictureCategory">
                     <div class="input-group-prepend">
                         <label class="input-group-text">제목</label>
                     </div>
-                    <input type="text" class="custom-viewContent" readonly>
+                    <input type="text" class="custom-viewContent" value="<%=gallery.getGalleryTitle() %>" readonly>
                 </div>
                 <div class="pictureCategory">
                     <div class="input-group-prepend">
                         <label class="input-group-text">작성일자</label>
                     </div>
-                    <input type="text" class="custom-viewContent" readonly>
+                    <input type="text" class="custom-viewContent" value="<%=gallery.getGalleryDate() %>" readonly>
                 </div>
                 <div class="pictureContent">
                     <div class="input-group-prepend">
                         <label class="input-group-text">작품설명</label>
                     </div>
-                    <textarea id="galleryContent" name="galleryContent" class="form-control" rows="26" readonly></textarea>
+                    <textarea id="galleryContent" name="galleryContent" class="form-control" rows="26" readonly><%=gallery.getGalleryContent() %></textarea>
                 </div>
-                <div class="pictureRegistBtn">
-                	<input type="button" onclick="galleryRegist()" class="btn btn-Skyblue btn-lg btn-block" value="그림 등록하기">
+                <div class="pictureRegistBtn" style="margin-top:15px;">
+                	<a href="bbs.jsp" class="btn btn-noneHoverSkyBlue btn-block">Favorite에 추가</a>
+                </div>
+                <div class="pictureRegistBtn" style="margin-top:15px;">
+                	<%
+                		GalleryLikeDAO galleryLikeDAO = new GalleryLikeDAO();
+                		int checkLike = galleryLikeDAO.checkLikeCount(userID, galleryID);
+                		if(checkLike == 0){
+                	%>
+                	<a href="galleryLikeAction.jsp?galleryID=<%=gallery.getGalleryID() %>" class="btn btn-Red btn-block">좋아요 <i class="fas fa-heart"> <%=gallery.getGalleryLikeCount() %></i></a>
+                	<%
+                		}else if(checkLike == 1){
+                	%>
+                	<a onclick="return confirm('좋아요를 취소하시겠습니까?')" href="galleryLikeAction.jsp?galleryID=<%=gallery.getGalleryID() %>" class="btn btn-noneHoverRed btn-block">좋아요 <i class="fas fa-heart"> <%=gallery.getGalleryLikeCount() %></i></a>
+                	<%
+                		}else{
+                		PrintWriter script = response.getWriter();
+                		script.println("<script>");
+                		script.println("alert('데이터베이스 오류입니다. 다시 시도해주세요');");
+                		script.println("history.back()");
+                		script.println("</script>");
+                		}
+                	%>
                 </div>
             </div>
        	</div>
 	</div>
+	
 </div>
 
 </body>

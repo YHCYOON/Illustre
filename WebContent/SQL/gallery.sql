@@ -12,3 +12,10 @@ create table gallery(
 	galleryLikeCount int,
 	galleryAvailable int,
 	PRIMARY KEY (galleryID));
+	
+	
+GalleryLike Table
+
+create table galleryLike(
+	userID VARCHAR(20),
+	galleryID int);

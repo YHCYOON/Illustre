@@ -245,13 +245,13 @@ margin-bottom: 5px;
     resize: none;
 }
 
-.pictureRegistBtn > .btn {
-    background-color: #1CAFF4;
-    color: white !important;
-    border-color: #1CAFF4 !important;
+#galleryContent{
+	resize:none;
+	background-color: white;
 }
 
-.pictureRegistBtn > .btn:hover {
-    color: #ffffff !important;
-    background-color: #0A8BD9;
+.galleryImage{
+	display: block;
+	width: 880px;
+	height: auto;
 }
