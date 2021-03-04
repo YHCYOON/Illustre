@@ -278,9 +278,23 @@ public class GalleryDAO {
 		return -1;		// 데이터베이스 오류
 	}
 	
-	
-	
-	
+	// gallery Action 할때 galleryAvailable = 0 인지 체크하는 메서드
+	public int checkGalleryAvailable(int galleryID) {
+		PreparedStatement pstmt;
+		ResultSet rs;
+		String SQL = "SELECT galleryAvailable FROM gallery WHERE galleryID = ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, galleryID);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;		// 데이터베이스 오류
+	}
 	
 	
 	
