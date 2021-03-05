@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="java.io.PrintWriter" %>
+<%@page import="java.util.ArrayList" %>
 <%@page import="user.UserDAO" %>    
 <%@page import="user.User" %>  
 <%@page import="gallery.Gallery" %>
 <%@page import="gallery.GalleryDAO" %>
 <%@page import="galleryLike.GalleryLikeDAO" %>
+<%@page import="galleryComment.GalleryComment" %>
+<%@page import="galleryComment.GalleryCommentDAO" %>
 <%request.setCharacterEncoding("UTF-8"); %>  
 <!DOCTYPE html>
 <html>
@@ -31,15 +34,30 @@
 		userNickname = user.getUserNickname();
 	}
 	int galleryID = 0;
-	if(request.getParameter("galleryID") != null){
-		galleryID = Integer.parseInt(request.getParameter("galleryID"));
-	}
-	if(galleryID == 0){
+	// 받은 galleryID 파라미터값 galleryID에 넣음, galleryID가 int 값이 아닐때 예외처리
+	try{
+		if(request.getParameter("galleryID") != null){
+			galleryID = Integer.parseInt(request.getParameter("galleryID"));
+		}
+	}catch(Exception e){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
-		script.println("alert('유효하지 않은 페이지입니다');");
+		script.println("alert('올바르지 않은 접근입니다. 다시 시도해주세요');");
 		script.println("history.back()");
 		script.println("</script>");
+		return;
+	}
+	
+	GalleryDAO galleryDAO = new GalleryDAO();
+	int checkGalleryAvailable = galleryDAO.checkGalleryAvailable(galleryID);
+	// galleryID 가 1보다 작거나, 현재 존재하는 galleryID보다 크거나, galleryAvailable이 0인 게시글일때 alert발생 이후 history.back()
+	if(galleryID < 1 || galleryID > galleryDAO.getGalleryID()-1 || checkGalleryAvailable == 0){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('존재하지 않는 게시글입니다. 다시 시도해주세요');");
+		script.println("history.back()");
+		script.println("</script>");
+		return;
 	}
 	
 %>
@@ -101,8 +119,10 @@
     </nav>
 	
 	<%
-		GalleryDAO galleryDAO = new GalleryDAO();
 		Gallery gallery = galleryDAO.getGalleryView(galleryID);
+		GalleryCommentDAO galleryCommentDAO = new GalleryCommentDAO();
+		ArrayList<GalleryComment> list = new ArrayList<GalleryComment>();
+		list = galleryCommentDAO.getGalleryCommentList(galleryID);
 	%>
 	
     <div class="pictureRegistSectionWrap">
@@ -141,31 +161,47 @@
 				<%
 					if(userID != null){
 				%>
-					<div style="margin-top:60px; font-size:18px;">댓글 (222)</div>
+					<div style="margin-top:60px; font-size:18px;">댓글 (<%=list.size() %>)</div>
 				<%
 					}else{
 				%>
-					<div style="margin-top:20px; font-size:18px;">댓글 (222)</div>
+					<div style="margin-top:20px; font-size:18px;">댓글 (<%=list.size() %>)</div>
 				<%
 					}
+				%>
+				
+				<%
+				for(int i = 0; i < list.size(); i++){
 				%>
 				<table class="table" style="border: 2px solid #dddddd; margin-top:10px;">
 					<tbody>
 						<tr>
-							<td colspan="1" style="padding: 14px;">123123</td>
+							<%	// 로그인중인 회원일때 수정,삭제 버튼 표시
+								if(userID != null && userID.equals(list.get(i).getUserID())){
+							%>
+							<td colspan="1" style="padding: 14px;"><%=list.get(i).getUserID()%></td>
 							<td style="padding-top:10px; width:60px;"><a href="commentUpdate.jsp?"><button type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
 							<td style="padding-top:10px; width:60px;"><a onclick="return confirm('정말로 삭제하시겠습니까?')" href="commentDeleteAction.jsp">
 							<button type="button" class="btn btn-Red btn-sm">삭제</button></a></td>
+							<%
+								}else{// 비회원은 수정,삭제 표시하지 않음
+							%>
+							<td colspan="3" style="padding: 14px;"><%=list.get(i).getUserID() %></td>
+							<%
+								}
+							%>
 						</tr>
 						<tr>
-							<td colspan="3">123</td>
+							<td colspan="3"><%=list.get(i).getGalleryCommentDate() %></td>
 						</tr>
 						<tr>
-							<td colspan="3">123</td>
+							<td colspan="3"><%=list.get(i).getGalleryComment() %></td>
 						</tr>
 					</tbody>
 				</table>
-				
+				<%
+				}
+				%>
            	</div>
             <div class="pictureRegistRight">
                 <div class="pictureCategory">
@@ -211,7 +247,7 @@
                 	<%
                 		}else if(checkLike == 1){
                 	%>
-                	<a onclick="return confirm('좋아요를 취소하시겠습니까?')" href="galleryLikeAction.jsp?galleryID=<%=gallery.getGalleryID() %>" class="btn btn-noneHoverRed btn-block">좋아요 <i class="fas fa-heart"> <%=gallery.getGalleryLikeCount() %></i></a>
+                	<a onclick="return confirm('좋아요를 취소하시겠습니까?')" href="galleryLikeAction.jsp?galleryID=<%=gallery.getGalleryID() %>" class="btn btn-noneHoverRed btn-block">좋아요 취소 <i class="fas fa-heart"> <%=gallery.getGalleryLikeCount() %></i></a>
                 	<%
                 		}else{
                 		PrintWriter script = response.getWriter();

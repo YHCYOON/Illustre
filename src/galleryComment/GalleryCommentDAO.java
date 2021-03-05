@@ -82,12 +82,12 @@ Connection conn;
 	public ArrayList<GalleryComment> getGalleryCommentList(int galleryID){
 		PreparedStatement pstmt;
 		ResultSet rs;
+		ArrayList<GalleryComment> list = new ArrayList<GalleryComment>();
 		String SQL = "SELECT * FROM galleryComment WHERE galleryID = ? AND galleryCommentAvailable = 1";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, galleryID);
 			rs = pstmt.executeQuery();
-			ArrayList<GalleryComment> list = new ArrayList<GalleryComment>();
 			while(rs.next()) {
 				GalleryComment galleryComment = new GalleryComment();
 				galleryComment.setGalleryCommentID(rs.getInt(1));
@@ -97,14 +97,11 @@ Connection conn;
 				galleryComment.setGalleryCommentDate(rs.getString(5));
 				galleryComment.setGalleryCommentAvailable(rs.getInt(6));
 				list.add(galleryComment);
-				return list;
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
-		}
-		return null;
+		}return list;
 	}
-	
 	
 	
 	
