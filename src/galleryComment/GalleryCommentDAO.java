@@ -103,11 +103,71 @@ Connection conn;
 		}return list;
 	}
 	
+	// galleryComment Action 할때 galleryCommentAvailable = 0 인지 체크하는 메서드
+		public int checkGalleryCommentAvailable(int galleryCommentID) {
+			PreparedStatement pstmt;
+			ResultSet rs;
+			String SQL = "SELECT galleryCommentAvailable FROM galleryComment WHERE galleryCommentID = ?";
+			try {
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setInt(1, galleryCommentID);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					return rs.getInt(1);
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return -1;		// 데이터베이스 오류
+		}
 	
+		// 커뮤니티 댓글 수정하는 메서드
+		public int updateGalleryComment(int galleryID, int galleryCommentID, String galleryComment) {
+			PreparedStatement pstmt;
+			String SQL = "UPDATE galleryComment SET galleryComment = ? WHERE galleryID = ? AND galleryCommentID = ?";
+			try {
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, galleryComment);
+				pstmt.setInt(2, galleryID);
+				pstmt.setInt(3, galleryCommentID);
+				return pstmt.executeUpdate();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return -1;	// 데이터베이스 오류
+		}
+		
+		// 커뮤니티 댓글 삭제하는 메서드
+		public int deleteGalleryComment(int galleryCommentID) {
+			PreparedStatement pstmt;
+			String SQL = "UPDATE galleryComment SET galleryCommentAvailable = 0 WHERE galleryCommentID = ?";
+			try {
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setInt(1, galleryCommentID);
+				return pstmt.executeUpdate();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return -1;		// 데이터베이스 오류
+		}
 	
-	
-	
-	
+		// 갤러리 댓글의 userID 가져오는 메서드
+		public String getGalleryCommentUserID(int galleryCommentID) {
+			PreparedStatement pstmt;
+			ResultSet rs;
+			String SQL = "SELECT userID FROM galleryComment WHERE galleryCommentID = ?";
+			try {
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setInt(1, galleryCommentID);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					return rs.getString(1);
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
 	
 	
 	

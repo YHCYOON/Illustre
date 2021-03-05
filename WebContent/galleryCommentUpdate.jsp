@@ -47,7 +47,6 @@
 		script.println("</script>");
 		return;
 	}
-	
 	GalleryDAO galleryDAO = new GalleryDAO();
 	int checkGalleryAvailable = galleryDAO.checkGalleryAvailable(galleryID);
 	// galleryID 가 1보다 작거나, 현재 존재하는 galleryID보다 크거나, galleryAvailable이 0인 게시글일때 alert발생 이후 history.back()
@@ -59,8 +58,33 @@
 		script.println("</script>");
 		return;
 	}
-	
+	int galleryCommentID = 0;
+	// 받은 galleryCommentID 파라미터값을 galleryCommentID에 넣음, galleryCommentID가 int값이 아닐때 예외처리
+	try{
+		if(request.getParameter("galleryCommentID") != null){
+			galleryCommentID = Integer.parseInt(request.getParameter("galleryCommentID"));
+		}
+	}catch(Exception e){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('올바르지 않은 접근입니다. 다시 시도해주세요');");
+		script.println("history.back()");
+		script.println("</script>");
+		return;
+	}
+	GalleryCommentDAO galleryCommentDAO = new GalleryCommentDAO();
+	int checkGalleryCommentAvailable = galleryCommentDAO.checkGalleryCommentAvailable(galleryCommentID);
+	// galleryCommentID 가 1보다 작거나, 현재 존재하는 galleryCommentID 보다 크거나, galleryCommentAvailable 이 0인 댓글일때 alert 이후 history.back()
+	if(galleryCommentID < 1 || galleryCommentID > galleryCommentDAO.getGalleryCommentID()-1 || checkGalleryCommentAvailable == 0){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('존재하지 않는 댓글입니다. 다시 시도해주세요');");
+		script.println("history.back()");
+		script.println("</script>");
+		return;
+	}
 %>
+
 <div class="wrap">
     <nav class="navBar">
         <div class="navBarContent">
@@ -120,7 +144,6 @@
 	
 	<%
 		Gallery gallery = galleryDAO.getGalleryView(galleryID);
-		GalleryCommentDAO galleryCommentDAO = new GalleryCommentDAO();
 		ArrayList<GalleryComment> list = new ArrayList<GalleryComment>();
 		list = galleryCommentDAO.getGalleryCommentList(galleryID);
 	%>
@@ -155,22 +178,16 @@
 					</tbody>
 				</table>
 				<%
-					}	
-				%>
-				<!-- 댓글 부분 -->
-				<%
-					if(userID != null){
+				}	
+				if(userID != null){	// userID 세션이 있을때 css 처리
 				%>
 					<div style="margin-top:60px; font-size:18px;">댓글 (<%=list.size() %>)</div>
 				<%
-					}else{
+				}else{
 				%>
 					<div style="margin-top:20px; font-size:18px;">댓글 (<%=list.size() %>)</div>
 				<%
-					}
-				%>
-				
-				<%
+				}
 				for(int i = 0; i < list.size(); i++){
 				%>
 				<table class="table" style="border: 2px solid #dddddd; margin-top:10px;">
@@ -180,7 +197,7 @@
 								if(userID != null && userID.equals(list.get(i).getUserID())){
 							%>
 							<td colspan="1" style="padding: 14px;"><%=list.get(i).getUserID()%></td>
-							<td style="padding-top:10px; width:60px;"><a href="galleryCommentUpdate.jsp?galleryID=<%=list.get(i).getGalleryID() %>&galleryCommentID=<%=list.get(i).getGalleryCommentID()%>"><button type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
+							<td style="padding-top:10px; width:60px;"><a href="galleryCommentUpdate.jsp?galleryID=<%=galleryID%>&galleryCommentID=<%=list.get(i).getGalleryCommentID()%>"><button type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
 							<td style="padding-top:10px; width:60px;"><a onclick="return confirm('정말로 삭제하시겠습니까?')" href="galleryCommentDeleteAction.jsp?galleryID=<%=list.get(i).getGalleryID() %>&galleryCommentID=<%=list.get(i).getGalleryCommentID()%>">
 							<button type="button" class="btn btn-Red btn-sm">삭제</button></a></td>
 							<%
@@ -190,13 +207,37 @@
 							<%
 								}
 							%>
-						</tr>
-						<tr>
-							<td colspan="3"><%=list.get(i).getGalleryCommentDate() %></td>
-						</tr>
-						<tr>
-							<td colspan="3"><%=list.get(i).getGalleryComment() %></td>
-						</tr>
+							</tr>
+							<tr>
+								<td colspan="3"><%=list.get(i).getGalleryCommentDate() %></td>
+							</tr>
+							<%
+								if(galleryCommentID == list.get(i).getGalleryCommentID()){	// 수정하기 누른 galleryCommentID 값이 등록되어있는 galleryCommentID값과 같을때
+							%>
+							<tr>
+								<td colspan="3">
+									<form method="post" action="galleryCommentUpdateAction.jsp?galleryID=<%=galleryID%>&galleryCommentID=<%=galleryCommentID%>">
+										<table class="table" style="text-align: center; border: 1px solid #dddddd; margin-top: 20px;">
+											<tbody>
+												<tr>
+													<td colspan="2"><textarea class="form-control" placeholder="<%=list.get(i).getGalleryComment()%>"
+													name="galleryCommentContent" maxlength="2048" style="height: 100px; resize: none;"></textarea></td>
+												</tr>
+											</tbody>
+										</table>
+										<input type="submit" class="btn btn-Skyblue pull-right" value="댓글 수정하기">
+									</form>
+								</td>
+							</tr>
+							<%
+								}else{
+							%>
+							<tr>
+								<td colspan="3"><%=list.get(i).getGalleryComment() %></td>
+							</tr>
+							<%
+							}
+							%>
 					</tbody>
 				</table>
 				<%

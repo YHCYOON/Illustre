@@ -230,7 +230,7 @@ request.setCharacterEncoding("UTF-8");
 					style="border: 2px solid #dddddd; margin-top: 10px;">
 					<tbody>
 						<tr>
-							<%
+							<%	// 아이디 세션이 있고 게시글의 userID와 일치할때
 							if (userID != null && userID.equals(list.get(i).getUserID())) {
 							%>
 							<td colspan="1" style="padding: 14px;"><%=list.get(i).getUserID()%></td>
@@ -256,7 +256,7 @@ request.setCharacterEncoding("UTF-8");
 						</tr>
 
 						<%
-						if (bbsCommentID == list.get(i).getBbsCommentID()) {
+						if (bbsCommentID == list.get(i).getBbsCommentID()) {	// 해당 댓글이 수정할 댓글일때 댓글입력창 보여줌
 						%>
 						<tr>
 							<td colspan="3">
