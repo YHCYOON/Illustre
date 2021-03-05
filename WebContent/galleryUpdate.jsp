@@ -21,7 +21,97 @@
 	<script src="js/bootstrap.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 	<title></title>
+<script>
+//이미지 첨부시 이름 보여주기
+$(document).ready(function(){
+   var fileTarget = $('.filebox .upload-hidden');
+
+    fileTarget.on('change', function(){
+        if(window.FileReader){
+            // 파일명 추출
+            var filename = $(this)[0].files[0].name;
+        } 
+
+        else {
+            // Old IE 파일명 추출
+            var filename = $(this).val().split('/').pop().split('\\').pop();
+        };
+
+        $(this).siblings('.upload-name').val(filename);
+    });
+
+    // 이미지 첨부시 미리보기 
+    var imgTarget = $('.preview-image .upload-hidden');
+
+    imgTarget.on('change', function(){
+        var parent = $(this).parent();
+        parent.children('.upload-display').remove();
+
+        if(window.FileReader){
+        	//image 파일만
+            if (!$(this)[0].files[0].type.match(/image\//)) 
+            	return;
+            
+            var reader = new FileReader();
+            reader.onload = function(e){
+                var src = e.target.result;
+                $('.galleryImage').remove();	// 기존 이미지 삭제
+                parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div>');
+            }
+            reader.readAsDataURL($(this)[0].files[0]);
+        }
+
+        else {
+            $(this)[0].select();
+            $(this)[0].blur();
+            var imgSrc = document.selection.createRange().text;
+            parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
+            var img = $(this).siblings('.upload-display').find('img');
+            img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";        
+        }
+    });
+});
+
+// 입력 항목 유효성 검사 
+function galleryRegist(){
+	var galleryCategory = $('#galleryCategory').val();
+	var galleryTitle = $('#galleryTitle').val();
+	var galleryContent = $('#galleryContent').val();
+	var imgFile = $('#input-file').val();
+	var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
+	var maxSize = 100 * 1024 * 1024;
 	
+	if($('#input-file').val() == ""){
+		alert('그림을 첨부해주세요');
+		$('#input-file').focus();
+		return;
+	}
+	if(imgFile != "" && imgFile != null){
+		fileSize = document.getElementById("input-file").files[0].size;
+		if(!imgFile.match(fileForm)){
+			alert('이미지 파일만 첨부해주세요');
+			return;
+		}else if(fileSize > maxSize){
+			alert('파일 사이즈는 100MB까지 가능합니다');
+			return;
+		}
+	}
+	
+	if(galleryCategory == "카테고리를 선택하세요"){
+		alert('카테고리를 선택해주세요');
+		galleryCategory.focus();
+	}else if(galleryTitle == null || galleryTitle == "" || galleryTitle == " "){
+		alert('제목을 입력해주세요');
+		galleryTitle.focus();
+	}else if(galleryContent == null || galleryContent == "" || galleryContent == " "){
+		alert('작품 설명을 입력해주세요');
+		galleryContent.focus();
+	}
+	else{
+		$('#galleryRegistForm').submit();
+	}
+}
+</script>	
 </head>
 <body>
 <%
@@ -47,6 +137,7 @@
 		script.println("</script>");
 		return;
 	}
+	
 	GalleryDAO galleryDAO = new GalleryDAO();
 	int checkGalleryAvailable = galleryDAO.checkGalleryAvailable(galleryID);
 	// galleryID 가 1보다 작거나, 현재 존재하는 galleryID보다 크거나, galleryAvailable이 0인 게시글일때 alert발생 이후 history.back()
@@ -58,33 +149,8 @@
 		script.println("</script>");
 		return;
 	}
-	int galleryCommentID = 0;
-	// 받은 galleryCommentID 파라미터값을 galleryCommentID에 넣음, galleryCommentID가 int값이 아닐때 예외처리
-	try{
-		if(request.getParameter("galleryCommentID") != null){
-			galleryCommentID = Integer.parseInt(request.getParameter("galleryCommentID"));
-		}
-	}catch(Exception e){
-		PrintWriter script = response.getWriter();
-		script.println("<script>");
-		script.println("alert('올바르지 않은 접근입니다. 다시 시도해주세요');");
-		script.println("history.back()");
-		script.println("</script>");
-		return;
-	}
-	GalleryCommentDAO galleryCommentDAO = new GalleryCommentDAO();
-	int checkGalleryCommentAvailable = galleryCommentDAO.checkGalleryCommentAvailable(galleryCommentID);
-	// galleryCommentID 가 1보다 작거나, 현재 존재하는 galleryCommentID 보다 크거나, galleryCommentAvailable 이 0인 댓글일때 alert 이후 history.back()
-	if(galleryCommentID < 1 || galleryCommentID > galleryCommentDAO.getGalleryCommentID()-1 || checkGalleryCommentAvailable == 0){
-		PrintWriter script = response.getWriter();
-		script.println("<script>");
-		script.println("alert('존재하지 않는 댓글입니다. 다시 시도해주세요');");
-		script.println("history.back()");
-		script.println("</script>");
-		return;
-	}
+	
 %>
-
 <div class="wrap">
     <nav class="navBar">
         <div class="navBarContent">
@@ -144,50 +210,36 @@
 	
 	<%
 		Gallery gallery = galleryDAO.getGalleryView(galleryID);
+		GalleryCommentDAO galleryCommentDAO = new GalleryCommentDAO();
 		ArrayList<GalleryComment> list = new ArrayList<GalleryComment>();
 		list = galleryCommentDAO.getGalleryCommentList(galleryID);
 	%>
 	
     <div class="pictureRegistSectionWrap">
     	<!-- galleryView Form  -->
-       	<div id="galleryRegistForm" class="pictureRegistSection">
+       	<form id="galleryRegistForm" class="pictureRegistSection" action="galleryUpdateAction.jsp?<%=galleryID %>=multipart" method="post" enctype="multipart/form-data">
             <div>
             	<img class="galleryImage" src="<%=request.getContextPath() %>/upload/<%=gallery.getFileRealName()%>">
-				<!-- 댓글 입력부분 -->
-				<% 
-				if(userID != null){
-				%>
-				<form method="post" action="galleryCommentWriteAction.jsp?galleryID=<%=galleryID %>">
-					<table class="table" style="text-align: center; border: 1px solid #dddddd; margin-top:20px;">
-						<tbody>
-							<tr>	
-								<td colspan="2"><textarea class="form-control" placeholder="<%=userNickname %>님의 생각은 어떠신가요?" name="galleryCommentContent" maxlength="2048" style="height: 100px; resize: none;"></textarea></td>
-							</tr>
-						</tbody>
-					</table>
-					<input type="submit" class="btn btn-Skyblue pull-right" value="댓글 작성하기">
-				</form>
+            	<div class="filebox preview-image" style="margin-top:10px;">
+                	<input class="upload-name" value="<%=gallery.getFileName() %>" disabled="disabled">
+                	<label for="input-file">파일 첨부</label>
+                    <input type="file" id="input-file" class="upload-hidden" name="fileName">
+                </div>
+				
+				<!-- 댓글 부분 -->
 				<%
-					}else{
-				%>
-				<table class="table" style="text-align: center; border: 1px solid #dddddd; margin-top:20px;">
-					<tbody>
-						<tr>	
-							<td colspan="2"><textarea class="form-control" placeholder="로그인이 필요합니다" name="bbsContent" maxlength="2048" style="height: 100px; resize: none;"></textarea></td>
-						</tr>
-					</tbody>
-				</table>
-				<%
-				}	
-				if(userID != null){	// userID 세션이 있을때 css 처리
+					if(userID != null){
 				%>
 					<div style="margin-top:60px; font-size:18px;">댓글 (<%=list.size() %>)</div>
 				<%
-				}else{
+					}else{
 				%>
 					<div style="margin-top:20px; font-size:18px;">댓글 (<%=list.size() %>)</div>
 				<%
-				}
+					}
+				%>
+				
+				<%
 				for(int i = 0; i < list.size(); i++){
 				%>
 				<table class="table" style="border: 2px solid #dddddd; margin-top:10px;">
@@ -197,7 +249,7 @@
 								if(userID != null && userID.equals(list.get(i).getUserID())){
 							%>
 							<td colspan="1" style="padding: 14px;"><%=list.get(i).getUserID()%></td>
-							<td style="padding-top:10px; width:60px;"><a href="galleryCommentUpdate.jsp?galleryID=<%=galleryID%>&galleryCommentID=<%=list.get(i).getGalleryCommentID()%>"><button type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
+							<td style="padding-top:10px; width:60px;"><a href="galleryCommentUpdate.jsp?galleryID=<%=list.get(i).getGalleryID() %>&galleryCommentID=<%=list.get(i).getGalleryCommentID()%>"><button type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
 							<td style="padding-top:10px; width:60px;"><a onclick="return confirm('정말로 삭제하시겠습니까?')" href="galleryCommentDeleteAction.jsp?galleryID=<%=list.get(i).getGalleryID() %>&galleryCommentID=<%=list.get(i).getGalleryCommentID()%>">
 							<button type="button" class="btn btn-Red btn-sm">삭제</button></a></td>
 							<%
@@ -207,37 +259,13 @@
 							<%
 								}
 							%>
-							</tr>
-							<tr>
-								<td colspan="3"><%=list.get(i).getGalleryCommentDate() %></td>
-							</tr>
-							<%
-								if(galleryCommentID == list.get(i).getGalleryCommentID()){	// 수정하기 누른 galleryCommentID 값이 등록되어있는 galleryCommentID값과 같을때
-							%>
-							<tr>
-								<td colspan="3">
-									<form method="post" action="galleryCommentUpdateAction.jsp?galleryID=<%=galleryID%>&galleryCommentID=<%=galleryCommentID%>">
-										<table class="table" style="text-align: center; border: 1px solid #dddddd; margin-top: 20px;">
-											<tbody>
-												<tr>
-													<td colspan="2"><textarea class="form-control" placeholder="<%=list.get(i).getGalleryComment()%>"
-													name="galleryCommentContent" maxlength="2048" style="height: 100px; resize: none;"></textarea></td>
-												</tr>
-											</tbody>
-										</table>
-										<input type="submit" class="btn btn-Skyblue pull-right" value="댓글 수정하기">
-									</form>
-								</td>
-							</tr>
-							<%
-								}else{
-							%>
-							<tr>
-								<td colspan="3"><%=list.get(i).getGalleryComment() %></td>
-							</tr>
-							<%
-							}
-							%>
+						</tr>
+						<tr>
+							<td colspan="3"><%=list.get(i).getGalleryCommentDate() %></td>
+						</tr>
+						<tr>
+							<td colspan="3"><%=list.get(i).getGalleryComment() %></td>
+						</tr>
 					</tbody>
 				</table>
 				<%
@@ -249,37 +277,42 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text">카테고리</label>
                     </div>
-                    <input type="text" class="custom-viewContent" value="<%=gallery.getGalleryCategory() %>" readonly>
+                    <select id="galleryCategory" name="galleryCategory" class="custom-select" select="<%=gallery.getGalleryCategory() %>">
+                        <option value="카테고리를 선택하세요">카테고리를 선택하세요</option>
+                        <option value="캐릭터 일러스트">캐릭터 일러스트</option>
+                        <option value="배경 일러스트">배경 일러스트</option>
+                        <option value="스케치">스케치</option>
+                    </select>
                 </div>
                 <div class="pictureCategory">
                     <div class="input-group-prepend">
                         <label class="input-group-text">아티스트</label>
                     </div>
-                    <input type="text" class="custom-viewContent" value="<%=gallery.getUserNickname() %>" readonly>
+                    <input type="text" class="custom-viewContent" value="<%=gallery.getUserNickname() %>" readonly >
                 </div>
                 <div class="pictureCategory">
                     <div class="input-group-prepend">
                         <label class="input-group-text">제목</label>
                     </div>
-                    <input type="text" class="custom-viewContent" value="<%=gallery.getGalleryTitle() %>" readonly>
+                    <input type="text" class="custom-viewContent" value="<%=gallery.getGalleryTitle() %>" >
                 </div>
                 <div class="pictureCategory">
                     <div class="input-group-prepend">
                         <label class="input-group-text">작성일자</label>
                     </div>
-                    <input type="text" class="custom-viewContent" value="<%=gallery.getGalleryDate() %>" readonly>
+                    <input type="text" class="custom-viewContent" value="<%=gallery.getGalleryDate() %>" readonly >
                 </div>
                 <div class="pictureContent">
                     <div class="input-group-prepend">
                         <label class="input-group-text">작품설명</label>
                     </div>
-                    <textarea id="galleryContent" name="galleryContent" class="form-control" rows="26" readonly><%=gallery.getGalleryContent() %></textarea>
+                    <textarea id="galleryContent" name="galleryContent" class="form-control" rows="26" ><%=gallery.getGalleryContent() %></textarea>
                 </div>
                 <%
                 if(userID.equals(galleryDAO.getGalleryUserID(galleryID))){	// 이 갤러리 게시글을 작성한 사람일때 수정/삭제 표시
                 %>
                 <div class="pictureRegistBtn" style="margin-top:15px; display:flex;">
-                	<a href="galleryUpdate.jsp?galleryID=<%=galleryID %>" class="btn btn-Skyblue btn-block"  style="margin:0 10px 0 0;">수정</a>
+                	<a href="galleryUpdateAction.jsp?galleryID=<%=galleryID %>" class="btn btn-Skyblue btn-block"  style="margin:0 10px 0 0;">수정하기</a>
                 	<a onclick="return confirm('정말 삭제하시겠습니까?')" href="galleryDeleteAction.jsp?galleryID=<%=galleryID %>" class="btn btn-Skyblue btn-block"  style="margin:0 0 0 10px;">삭제</a>
                 </div>
                 <%
@@ -307,7 +340,7 @@
                 	%>
                 </div>
             </div>
-       	</div>
+       	</form>
 	</div>
 	
 </div>

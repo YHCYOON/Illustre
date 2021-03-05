@@ -4,6 +4,7 @@
 <%@page import="user.UserDAO" %>
 <%@page import="java.io.File" %>
 <%@page import="java.io.PrintWriter" %>
+<%request.setCharacterEncoding("UTF-8"); %>
 <!-- 파일 이름이 동일한게 나오면 자동으로 다른것으로 바꿔줌 -->
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy" %>
 <!-- 실제로 파일 업로드 하기 위한 클래스 -->
@@ -29,6 +30,33 @@
 			script.println("alert('로그인이 필요합니다');");
 			script.println("location.href='login.jsp'");
 			script.println("</script>");
+			
+		}
+		int galleryID = 0;
+		// 받은 galleryID 파라미터값 galleryID에 넣음, galleryID가 int 값이 아닐때 예외처리
+		try{
+			if(request.getParameter("galleryID") != null){
+				galleryID = Integer.parseInt(request.getParameter("galleryID"));
+				System.out.println(galleryID);
+			}
+		}catch(Exception e){
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('올바르지 않은 접근입니다. 다시 시도해주세요');");
+			script.println("history.back()");
+			script.println("</script>");
+			return;
+		}
+		GalleryDAO galleryDAO = new GalleryDAO();
+		int checkGalleryAvailable = galleryDAO.checkGalleryAvailable(galleryID);
+		// galleryID 가 1보다 작거나, 현재 존재하는 galleryID보다 크거나, galleryAvailable이 0인 게시글일때 alert발생 이후 history.back()
+		if(galleryID < 1 || galleryID > galleryDAO.getGalleryID()-1 || checkGalleryAvailable == 0){
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('존재하지 않는 게시글입니다. 다시 시도해주세요');");
+			script.println("history.back()");
+			script.println("</script>");
+			return;
 		}else{
 			try{
 				// 해당 폴더에 이미지를 저장
@@ -51,12 +79,8 @@
 				String galleryCategory = multi.getParameter("galleryCategory");
 				String galleryTitle = multi.getParameter("galleryTitle");
 				String galleryContent = multi.getParameter("galleryContent");
-				
 				// MYSQL 에 업로드하는 메서드
-				GalleryDAO galleryDAO = new GalleryDAO();
-				UserDAO userDAO = new UserDAO();
-				String userNickname = userDAO.getNickname(userID);
-				int result = galleryDAO.upload(userID, userNickname, multi.getParameter("galleryCategory"), multi.getParameter("galleryTitle"), multi.getParameter("galleryContent"), fileName, fileRealName);
+				int result = galleryDAO.updateGallery(galleryID, multi.getParameter("galleryCategory"), multi.getParameter("galleryTitle"), multi.getParameter("galleryContent"), fileName, fileRealName);
 				if(result == -1){
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
@@ -66,17 +90,19 @@
 				}else{
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
-					script.println("alert('그림을 성공적으로 등록했습니다');");
-					script.println("location.href='gallery.jsp'");
+					script.println("alert('그림을 성공적으로 수정했습니다');");
+					script.println("location.href='galleryView.jsp?galleryID="+galleryID+"'");
 					script.println("</script>");
+					return;
 				}
 			}
 			catch(Exception e){
-			PrintWriter script = response.getWriter();
+				e.printStackTrace();
+			/* PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('올바르지 않은 접근입니다');");
-			script.println("location.href='galleryRegist.jsp'");
-			script.println("</script>");
+			script.println("history.back()");
+			script.println("</script>"); */
 			}
 		}
 	%>

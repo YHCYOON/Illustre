@@ -318,7 +318,24 @@ public class GalleryDAO {
 		return null;
 	}
 
-
+	// gallery 수정 메서드
+	public int updateGallery(int galleryID, String galleryCategory, String galleryTitle, String galleryContent, String fileName, String fileRealName) {
+		PreparedStatement pstmt;
+		String SQL = "UPDATE GALLERY SET galleryCategory = ? , galleryTitle = ?, galleryContent = ? , fileName = ? , fileRealName = ? WHERE galleryID = ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1, galleryCategory);
+			pstmt.setString(2, galleryTitle);
+			pstmt.setString(3, galleryContent);
+			pstmt.setString(4, fileName);
+			pstmt.setString(5, fileRealName);
+			pstmt.setInt(6, galleryID);
+			return pstmt.executeUpdate();		// 성공시 1 반환
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;	//데이터베이스 오류
+	}
 	
 	
 	

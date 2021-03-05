@@ -235,11 +235,13 @@
                     <textarea id="galleryContent" name="galleryContent" class="form-control" rows="26" readonly><%=gallery.getGalleryContent() %></textarea>
                 </div>
                 <%
-                if(userID.equals(galleryDAO.getGalleryUserID(galleryID))){	// 이 갤러리 게시글을 작성한 사람일때 수정/삭제 표시
+                if(userID == null){	// userID 가 없을때 아무것도 수정/삭제 표시하지 않음
+                	
+                }else if(userID.equals(galleryDAO.getGalleryUserID(galleryID))){	// 이 갤러리 게시글을 작성한 사람일때 수정/삭제 표시
                 %>
                 <div class="pictureRegistBtn" style="margin-top:15px; display:flex;">
-                	<a href="bbs.jsp" class="btn btn-Skyblue btn-block"  style="margin:0 10px 0 0;">수정</a>
-                	<a href="bbs.jsp" class="btn btn-Skyblue btn-block"  style="margin:0 0 0 10px;">삭제</a>
+                	<a href="galleryUpdate.jsp?galleryID=<%=galleryID %>" class="btn btn-Skyblue btn-block"  style="margin:0 10px 0 0;">수정</a>
+                	<a onclick="return confirm('정말 삭제하시겠습니까?')" href="galleryDeleteAction.jsp?galleryID=<%=galleryID %>" class="btn btn-Skyblue btn-block"  style="margin:0 0 0 10px;">삭제</a>
                 </div>
                 <%
                 }
