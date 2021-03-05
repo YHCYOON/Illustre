@@ -175,6 +175,10 @@
     	}catch(Exception e){
     		e.printStackTrace();
     	}
+    	// list가 없을떄 pageNumber = 0
+    	if(list.size() == 0){
+    		pageNumber = 0;
+    	}
     %>	
 	<!-- 페이징 처리  -->
 		<div class="text-center">
@@ -185,6 +189,14 @@
 					int totalPage = galleryDAO.getTotalPage(galleryCategory, keyWord, searchWord);
 					
 					// 페이징 이전버튼 처리
+				
+					if(pageNumber == 0){
+				%>
+					<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">이전</a></li>
+					<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">다음</a></li>
+				<%
+					return;
+					}
 					if(pageNumber == 1){
 				%>
 		    		<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">이전</a></li>
@@ -266,13 +278,13 @@
 				<%
 						}
 					}
-		    		if(pageNumber > totalPage || pageNumber < 1 ){
+		    		if(pageNumber > totalPage || pageNumber < 0 ){
 		    			PrintWriter script = response.getWriter();
 		    			script.println("<script>");
 		    			script.println("alert('올바르지 않은 접근입니다');");
 		    			script.println("history.back()");
 		    			script.println("</script>");
-		    		}  
+		    		}
 				%>
 					
 			</ul>

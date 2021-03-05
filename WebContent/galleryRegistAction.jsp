@@ -56,7 +56,7 @@
 				GalleryDAO galleryDAO = new GalleryDAO();
 				UserDAO userDAO = new UserDAO();
 				String userNickname = userDAO.getNickname(userID);
-				int result = galleryDAO.upload(userNickname, multi.getParameter("galleryCategory"), multi.getParameter("galleryTitle"), multi.getParameter("galleryContent"), fileName, fileRealName);
+				int result = galleryDAO.upload(userID, userNickname, multi.getParameter("galleryCategory"), multi.getParameter("galleryTitle"), multi.getParameter("galleryContent"), fileName, fileRealName);
 				if(result == -1){
 					PrintWriter script = response.getWriter();
 					script.println("<script>");

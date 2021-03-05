@@ -3,6 +3,7 @@ package gallery;
 public class Gallery {
 	
 	private int galleryID;
+	private String userID;
 	private String userNickname;
 	private String galleryCategory;
 	private String galleryTitle;
@@ -13,6 +14,12 @@ public class Gallery {
 	private int galleryLikeCount;
 	private int galleryAvailable;
 	
+	public String getUserID() {
+		return userID;
+	}
+	public void setUserID(String userID) {
+		this.userID = userID;
+	}
 	public int getGalleryID() {
 		return galleryID;
 	}

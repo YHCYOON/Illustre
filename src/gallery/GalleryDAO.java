@@ -59,21 +59,22 @@ public class GalleryDAO {
 		}
 	
 	// galleryRegist 메서드
-	public int upload(String userNickname, String galleryCategory, String galleryTitle, String galleryContent, String fileName, String fileRealName) {
+	public int upload(String userID, String userNickname, String galleryCategory, String galleryTitle, String galleryContent, String fileName, String fileRealName) {
 		PreparedStatement pstmt;
-		String SQL = "INSERT INTO GALLERY VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String SQL = "INSERT INTO GALLERY VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, getGalleryID());
-			pstmt.setString(2, userNickname);
-			pstmt.setString(3, galleryCategory);
-			pstmt.setString(4, galleryTitle);
-			pstmt.setString(5, galleryContent);
-			pstmt.setString(6, getDate());
-			pstmt.setString(7, fileName);
-			pstmt.setString(8, fileRealName);
-			pstmt.setInt(9, 0);	// galleryLikeCount = 1
-			pstmt.setInt(10, 1);	// galleryAvailable = 1
+			pstmt.setString(2, userID);
+			pstmt.setString(3, userNickname);
+			pstmt.setString(4, galleryCategory);
+			pstmt.setString(5, galleryTitle);
+			pstmt.setString(6, galleryContent);
+			pstmt.setString(7, getDate());
+			pstmt.setString(8, fileName);
+			pstmt.setString(9, fileRealName);
+			pstmt.setInt(10, 0);	// galleryLikeCount = 1
+			pstmt.setInt(11, 1);	// galleryAvailable = 1
 			return pstmt.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -182,15 +183,16 @@ public class GalleryDAO {
 				while(rs.next()) {
 					Gallery gallery = new Gallery();
 					gallery.setGalleryID(rs.getInt(1));
-					gallery.setUserNickname(rs.getString(2));
-					gallery.setGalleryCategory(rs.getString(3));
-					gallery.setGalleryTitle(rs.getString(4));
-					gallery.setGalleryContent(rs.getString(5));
-					gallery.setGalleryDate(rs.getString(6));
-					gallery.setFileName(rs.getString(7));
-					gallery.setFileRealName(rs.getString(8));
-					gallery.setGalleryLikeCount(rs.getInt(9));
-					gallery.setGalleryAvailable(rs.getInt(10));
+					gallery.setUserID(rs.getString(2));
+					gallery.setUserNickname(rs.getString(3));
+					gallery.setGalleryCategory(rs.getString(4));
+					gallery.setGalleryTitle(rs.getString(5));
+					gallery.setGalleryContent(rs.getString(6));
+					gallery.setGalleryDate(rs.getString(7));
+					gallery.setFileName(rs.getString(8));
+					gallery.setFileRealName(rs.getString(9));
+					gallery.setGalleryLikeCount(rs.getInt(10));
+					gallery.setGalleryAvailable(rs.getInt(11));
 					list.add(gallery);
 				}
 			}else {
@@ -203,15 +205,16 @@ public class GalleryDAO {
 				while(rs.next()) {
 					Gallery gallery = new Gallery();
 					gallery.setGalleryID(rs.getInt(1));
-					gallery.setUserNickname(rs.getString(2));
-					gallery.setGalleryCategory(rs.getString(3));
-					gallery.setGalleryTitle(rs.getString(4));
-					gallery.setGalleryContent(rs.getString(5));
-					gallery.setGalleryDate(rs.getString(6));
-					gallery.setFileName(rs.getString(7));
-					gallery.setFileRealName(rs.getString(8));
-					gallery.setGalleryLikeCount(rs.getInt(9));
-					gallery.setGalleryAvailable(rs.getInt(10));
+					gallery.setUserID(rs.getString(2));
+					gallery.setUserNickname(rs.getString(3));
+					gallery.setGalleryCategory(rs.getString(4));
+					gallery.setGalleryTitle(rs.getString(5));
+					gallery.setGalleryContent(rs.getString(6));
+					gallery.setGalleryDate(rs.getString(7));
+					gallery.setFileName(rs.getString(8));
+					gallery.setFileRealName(rs.getString(9));
+					gallery.setGalleryLikeCount(rs.getInt(10));
+					gallery.setGalleryAvailable(rs.getInt(11));
 					list.add(gallery);
 			}
 		}
@@ -233,15 +236,16 @@ public class GalleryDAO {
 			Gallery gallery = new Gallery();
 			if(rs.next()) {
 				gallery.setGalleryID(rs.getInt(1));
-				gallery.setUserNickname(rs.getString(2));
-				gallery.setGalleryCategory(rs.getString(3));
-				gallery.setGalleryTitle(rs.getString(4));
-				gallery.setGalleryContent(rs.getString(5));
-				gallery.setGalleryDate(rs.getString(6));
-				gallery.setFileName(rs.getString(7));
-				gallery.setFileRealName(rs.getString(8));
-				gallery.setGalleryLikeCount(rs.getInt(9));
-				gallery.setGalleryAvailable(rs.getInt(10));
+				gallery.setUserID(rs.getString(2));
+				gallery.setUserNickname(rs.getString(3));
+				gallery.setGalleryCategory(rs.getString(4));
+				gallery.setGalleryTitle(rs.getString(5));
+				gallery.setGalleryContent(rs.getString(6));
+				gallery.setGalleryDate(rs.getString(7));
+				gallery.setFileName(rs.getString(8));
+				gallery.setFileRealName(rs.getString(9));
+				gallery.setGalleryLikeCount(rs.getInt(10));
+				gallery.setGalleryAvailable(rs.getInt(11));
 				return gallery;
 			}
 		}catch(Exception e){
@@ -296,9 +300,25 @@ public class GalleryDAO {
 		return -1;		// 데이터베이스 오류
 	}
 	
-	
-	
-	
+	// gallery 의 userID 가져오는 메서드
+	public String getGalleryUserID(int galleryID) {
+		PreparedStatement pstmt;
+		ResultSet rs;
+		String SQL = "SELECT userID FROM Gallery WHERE galleryID = ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, galleryID);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return rs.getString(1);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+
 	
 	
 	

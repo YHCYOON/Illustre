@@ -2,6 +2,7 @@ Gallery Table
 
 create table gallery(
 	galleryID int,
+	userID VARCHAR(20),
 	userNickname VARCHAR(20),
 	galleryCategory VARCHAR(20),
 	galleryTitle VARCHAR(50),
