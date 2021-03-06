@@ -337,9 +337,20 @@ public class GalleryDAO {
 		return -1;	//데이터베이스 오류
 	}
 	
-	
-	
-	
+	// gallery 삭제 메서드 
+	public int deleteGallery(int galleryID) {
+		PreparedStatement pstmt;
+		String SQL = "UPDATE GALLERY SET galleryAvailable = ? WHERE galleryID = ?";
+		try {
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setInt(1, 0);
+			pstmt.setInt(2, galleryID);
+			return pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return -1;		// 데이터베이스 오류
+	}
 	
 	
 	

@@ -81,7 +81,7 @@ function galleryRegist(){
 	var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
 	var maxSize = 100 * 1024 * 1024;
 	
-	if($('#input-file').val() == ""){
+	if($('.upload-name').val() == ""){
 		alert('그림을 첨부해주세요');
 		$('#input-file').focus();
 		return;
@@ -217,7 +217,7 @@ function galleryRegist(){
 	
     <div class="pictureRegistSectionWrap">
     	<!-- galleryView Form  -->
-       	<form id="galleryRegistForm" class="pictureRegistSection" action="galleryUpdateAction.jsp?<%=galleryID %>=multipart" method="post" enctype="multipart/form-data">
+       	<form id="galleryRegistForm" class="pictureRegistSection" action="galleryUpdateAction.jsp" method="post" enctype="multipart/form-data">
             <div>
             	<img class="galleryImage" src="<%=request.getContextPath() %>/upload/<%=gallery.getFileRealName()%>">
             	<div class="filebox preview-image" style="margin-top:10px;">
@@ -249,7 +249,7 @@ function galleryRegist(){
 								if(userID != null && userID.equals(list.get(i).getUserID())){
 							%>
 							<td colspan="1" style="padding: 14px;"><%=list.get(i).getUserID()%></td>
-							<td style="padding-top:10px; width:60px;"><a href="galleryCommentUpdate.jsp?galleryID=<%=list.get(i).getGalleryID() %>&galleryCommentID=<%=list.get(i).getGalleryCommentID()%>"><button type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
+							<td style="padding-top:10px; width:60px;"><a href="galleryCommentUpdate.jsp?"><button type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
 							<td style="padding-top:10px; width:60px;"><a onclick="return confirm('정말로 삭제하시겠습니까?')" href="galleryCommentDeleteAction.jsp?galleryID=<%=list.get(i).getGalleryID() %>&galleryCommentID=<%=list.get(i).getGalleryCommentID()%>">
 							<button type="button" class="btn btn-Red btn-sm">삭제</button></a></td>
 							<%
@@ -277,7 +277,7 @@ function galleryRegist(){
                     <div class="input-group-prepend">
                         <label class="input-group-text">카테고리</label>
                     </div>
-                    <select id="galleryCategory" name="galleryCategory" class="custom-select" select="<%=gallery.getGalleryCategory() %>">
+                    <select id="galleryCategory" name="galleryCategory" class="custom-select" >
                         <option value="카테고리를 선택하세요">카테고리를 선택하세요</option>
                         <option value="캐릭터 일러스트">캐릭터 일러스트</option>
                         <option value="배경 일러스트">배경 일러스트</option>
@@ -294,7 +294,7 @@ function galleryRegist(){
                     <div class="input-group-prepend">
                         <label class="input-group-text">제목</label>
                     </div>
-                    <input type="text" class="custom-viewContent" value="<%=gallery.getGalleryTitle() %>" >
+                    <input type="text" class="custom-viewContent" name="galleryTitle" id="galleryTitle" value="<%=gallery.getGalleryTitle() %>" >
                 </div>
                 <div class="pictureCategory">
                     <div class="input-group-prepend">
@@ -312,7 +312,9 @@ function galleryRegist(){
                 if(userID.equals(galleryDAO.getGalleryUserID(galleryID))){	// 이 갤러리 게시글을 작성한 사람일때 수정/삭제 표시
                 %>
                 <div class="pictureRegistBtn" style="margin-top:15px; display:flex;">
-                	<a href="galleryUpdateAction.jsp?galleryID=<%=galleryID %>" class="btn btn-Skyblue btn-block"  style="margin:0 10px 0 0;">수정하기</a>
+                	<input type="button" style="margin:0 10px 0 0;" onclick="galleryRegist()" class="btn btn-Skyblue btn-block" value="수정하기">
+                	<!-- url로 파라미터를 보낼수 없기떄문에 hidden 타입으로 변수 전달 -->
+                	<input type="hidden" name="galleryID" value=<%=galleryID %>>
                 	<a onclick="return confirm('정말 삭제하시겠습니까?')" href="galleryDeleteAction.jsp?galleryID=<%=galleryID %>" class="btn btn-Skyblue btn-block"  style="margin:0 0 0 10px;">삭제</a>
                 </div>
                 <%

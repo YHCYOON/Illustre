@@ -10,6 +10,7 @@
 <%@page import="galleryComment.GalleryComment" %>
 <%@page import="galleryComment.GalleryCommentDAO" %>
 <%request.setCharacterEncoding("UTF-8"); %>  
+<%response.setContentType("text/html;charset-utf-8"); %>
 <!DOCTYPE html>
 <html>
 <head>
