@@ -1,5 +1,3 @@
-<%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
-<%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="user.UserDAO" %>    
@@ -34,8 +32,16 @@
 		}
 		
 		int pageNumber = 1;
-		if(request.getParameter("pageNumber") != null){
-			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		try{
+			if(request.getParameter("pageNumber") != null){
+				pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+			}
+		}catch(Exception e){
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('올바르지 않은 페이지입니다');");
+			script.println("location.href='bbs.jsp'");
+			script.println("</script>");
 		}
 		
 		GalleryDAO galleryDAO = new GalleryDAO();
@@ -59,7 +65,7 @@
 <div class="wrap">
     <nav class="navBar">
         <div class="navBarContent">
-            <a href="main.jsp" onclick="onClickMain()" class="navBarLogo">
+            <a href="main.jsp" class="navBarLogo">
                 <img src="images/illustre_logo.png" alt="illustre">
             </a>
             <div class="navContent">
@@ -91,7 +97,7 @@
   						<button class="btn btn-Skyblue dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
   						회원관리<span class="caret"></span></button>
 		  				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-						    <li role="presentation" ><a href="userUpdate.jsp" role="menuitem" tabindex="-1">회원정보 수정</a></li>
+						    <li role="presentation"><a href="userUpdate.jsp" role="menuitem" tabindex="-1">회원정보 수정</a></li>
 						    <li role="presentation" class="divider"></li>
 						    <li role="presentation"><a href="logoutAction.jsp" role="menuitem" tabindex="-1">로그아웃</a></li>
 						</ul>

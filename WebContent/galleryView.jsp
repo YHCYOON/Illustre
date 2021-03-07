@@ -238,7 +238,7 @@
                 <%
                 if(userID == null){	// userID 가 없을때 아무것도 수정/삭제 표시하지 않음
                 	
-                }else if(userID.equals(galleryDAO.getGalleryUserID(galleryID))){	// 이 갤러리 게시글을 작성한 사람일때 수정/삭제 표시
+                }else if(userID.equals(gallery.getUserID())){	// 이 갤러리 게시글을 작성한 사람일때 수정/삭제 표시
                 %>
                 <div class="pictureRegistBtn" style="margin-top:15px; display:flex;">
                 	<a href="galleryUpdate.jsp?galleryID=<%=galleryID %>" class="btn btn-Skyblue btn-block"  style="margin:0 10px 0 0;">수정</a>

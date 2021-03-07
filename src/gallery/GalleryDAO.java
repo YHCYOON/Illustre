@@ -300,24 +300,6 @@ public class GalleryDAO {
 		return -1;		// 데이터베이스 오류
 	}
 	
-	// gallery 의 userID 가져오는 메서드
-	public String getGalleryUserID(int galleryID) {
-		PreparedStatement pstmt;
-		ResultSet rs;
-		String SQL = "SELECT userID FROM Gallery WHERE galleryID = ?";
-		try {
-			pstmt = conn.prepareStatement(SQL);
-			pstmt.setInt(1, galleryID);
-			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				return rs.getString(1);
-			}
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
 	// gallery 수정 메서드
 	public int updateGallery(int galleryID, String galleryCategory, String galleryTitle, String galleryContent, String fileName, String fileRealName) {
 		PreparedStatement pstmt;
@@ -352,7 +334,62 @@ public class GalleryDAO {
 		return -1;		// 데이터베이스 오류
 	}
 	
-	
+	// Ranking 페이지 gallery가져오는 메서드
+	public ArrayList<Gallery> getRanking(String category) {
+		PreparedStatement pstmt;
+		ResultSet rs;
+		String SQL_ALL = "SELECT * FROM gallery WHERE galleryAvailable = 1 ORDER BY galleryLikeCount DESC LIMIT ? , ?"; 
+		String SQL = "SELECT * FROM gallery WHERE galleryCategory = ? AND galleryAvailable = 1 ORDER BY galleryLikeCount DESC LIMIT ? , ?";
+		ArrayList<Gallery> list = new ArrayList<Gallery>();
+		try {
+			if(category.equals("전체보기")) {
+				pstmt = conn.prepareStatement(SQL_ALL);
+				pstmt.setInt(1, 0);
+				pstmt.setInt(2, 28);		// likeCount가 높은 순으로 28개 가져옴
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					Gallery gallery = new Gallery();
+					gallery.setGalleryID(rs.getInt(1));
+					gallery.setUserID(rs.getString(2));
+					gallery.setUserNickname(rs.getString(3));
+					gallery.setGalleryCategory(rs.getString(4));
+					gallery.setGalleryTitle(rs.getString(5));
+					gallery.setGalleryContent(rs.getString(6));
+					gallery.setGalleryDate(rs.getString(7));
+					gallery.setFileName(rs.getString(8));
+					gallery.setFileRealName(rs.getString(9));
+					gallery.setGalleryLikeCount(rs.getInt(10));
+					gallery.setGalleryAvailable(rs.getInt(11));
+					list.add(gallery);
+				}
+			}else {
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1, category);
+				pstmt.setInt(2, 0);
+				pstmt.setInt(3, 28);		// likeCount가 높은 순으로 28개 가져옴
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					Gallery gallery = new Gallery();
+					gallery.setGalleryID(rs.getInt(1));
+					gallery.setUserID(rs.getString(2));
+					gallery.setUserNickname(rs.getString(3));
+					gallery.setGalleryCategory(rs.getString(4));
+					gallery.setGalleryTitle(rs.getString(5));
+					gallery.setGalleryContent(rs.getString(6));
+					gallery.setGalleryDate(rs.getString(7));
+					gallery.setFileName(rs.getString(8));
+					gallery.setFileRealName(rs.getString(9));
+					gallery.setGalleryLikeCount(rs.getInt(10));
+					gallery.setGalleryAvailable(rs.getInt(11));
+					list.add(gallery);
+				}
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 	
 	
 	

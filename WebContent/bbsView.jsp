@@ -3,6 +3,7 @@
 <%@page import="java.io.PrintWriter" %>    
 <%@page import="bbs.Bbs" %>
 <%@page import="bbs.BbsDAO" %>
+<%@page import="user.User" %>
 <%@page import="user.UserDAO" %>
 <%@page import="bbsComment.BbsComment" %>
 <%@page import="bbsComment.BbsCommentDAO" %>
@@ -42,7 +43,7 @@
 		script.println("</script>");
 	}
 	Bbs bbs = new BbsDAO().getBbs(bbsID);
-	
+	UserDAO userDAO = new UserDAO();
 	
 %>
 <div class="wrap">
@@ -117,7 +118,7 @@
 						</tr>
 						<tr>
 							<td>작성자</td>
-							<td colspan="2"><%=bbs.getUserID() %></td>
+							<td colspan="2"><%=userDAO.getUserInfo(bbs.getUserID()).getUserNickname() %></td>
 						</tr>
 						<tr>
 							<td>작성일자</td>
@@ -188,14 +189,14 @@
 							<%	// 로그인중인 회원일때 수정,삭제 버튼 표시
 								if(userID != null && userID.equals(list.get(i).getUserID())){
 							%>
-							<td colspan="1" style="padding: 14px;"><%=list.get(i).getUserID() %></td>
+							<td colspan="1" style="padding: 14px;"><%=userDAO.getNickname(list.get(i).getUserID()) %></td>
 							<td style="padding-top:10px; width:60px;"><a href="commentUpdate.jsp?bbsID=<%=list.get(i).getBbsID() %>&bbsCommentID=<%=list.get(i).getBbsCommentID()%>"><button type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
 							<td style="padding-top:10px; width:60px;"><a onclick="return confirm('정말로 삭제하시겠습니까?')" href="commentDeleteAction.jsp?bbsID=<%=list.get(i).getBbsID() %>&bbsCommentID=<%=list.get(i).getBbsCommentID()%>">
 							<button type="button" class="btn btn-Red btn-sm">삭제</button></a></td>
 							<%
 								}else{	// 비회원은 수정,삭제 표시하지 않음
 							%>
-							<td colspan="3" style="padding: 14px;"><%=list.get(i).getUserID() %></td>
+							<td colspan="3" style="padding: 14px;"><%=userDAO.getNickname(list.get(i).getUserID()) %></td>
 							<%
 								}
 							%>

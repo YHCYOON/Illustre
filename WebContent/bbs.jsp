@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
 <%@page import="user.UserDAO" %>
+<%@page import="user.User" %>
 <%@page import="bbs.BbsDAO" %>
 <%@page import="bbs.Bbs" %>
 <%@page import="bbsComment.BbsCommentDAO" %>
@@ -31,15 +32,23 @@
 		userNickname = userDAO.getNickname(userID);
 	}
 	int pageNumber = 1;
-	if(request.getParameter("pageNumber") != null){
-		pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+	try{
+		if(request.getParameter("pageNumber") != null){
+			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		}
+	}catch(Exception e){
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('올바르지 않은 페이지입니다');");
+		script.println("location.href='bbs.jsp'");
+		script.println("</script>");
 	}
-	
+	UserDAO userDAO = new UserDAO();
 %>
 <div class="wrap">
     <nav class="navBar">
         <div class="navBarContent">
-            <a href="main.jsp" onclick="onClickMain()" class="navBarLogo">
+            <a href="main.jsp" class="navBarLogo">
                 <img src="images/illustre_logo.png" alt="illustre">
             </a>
             <div class="navContent">
@@ -121,7 +130,7 @@
 							<%
 								}
 							%>
-						<td><%=list.get(i).getUserID() %></td>
+						<td><%=userDAO.getUserInfo(list.get(i).getUserID()).getUserNickname() %></td>
 						<td><%=list.get(i).getBbsDate() %></td>
 					</tr>
 				<%
