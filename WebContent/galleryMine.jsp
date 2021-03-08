@@ -29,12 +29,19 @@
 			User user = userDAO.getUserInfo(userID);
 			userNickname = user.getUserNickname();
 		}
+		if(userID == null){
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('로그인이 필요합니다');");
+			script.println("location.href='login.jsp'");
+			script.println("</script>");
+		}
 		
 		GalleryDAO galleryDAO = new GalleryDAO();
-    	String category = "전체보기";
+    	String galleryCategory = "전체보기";
     	try{
-	    	if(request.getParameter("category") != null){
-	    		category = (String) request.getParameter("category");
+	    	if(request.getParameter("galleryCategory") != null){
+	    		galleryCategory = (String) request.getParameter("galleryCategory");
 	    	}
     	}catch(Exception e){
     		PrintWriter script = response.getWriter();
@@ -43,6 +50,33 @@
 			script.println("history.back()");
 			script.println("</script>");
     	}
+    	
+    	int pageNumber = 1;
+		try{
+			if(request.getParameter("pageNumber") != null){
+				pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+			}
+		}catch(Exception e){
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('올바르지 않은 페이지입니다');");
+			script.println("location.href='bbs.jsp'");
+			script.println("</script>");
+		}
+		
+		
+		// keyWord , searchWord 값이 default 일때 모든 파일을 보여줌
+    	String keyWord = "fileName";
+    	String searchWord = ".";
+    	
+    	if(request.getParameter("keyWord") != null){
+    		keyWord = (String) request.getParameter("keyWord");
+    	}
+    	if(request.getParameter("searchWord") != null){
+    		searchWord = (String) request.getParameter("searchWord");
+    	}
+    	
+		ArrayList<Gallery> list = galleryDAO.getGalleryList(pageNumber, galleryCategory, keyWord, searchWord);
 %>
 <div class="wrap">
     <nav class="navBar">
@@ -67,9 +101,6 @@
                     <a href="bbs.jsp">커뮤니티</a>
                 </div>
             </div>
-<%
-	if(userID != null){
-%>
             <div class="helloUser">
                 <div class="hello">안녕하세요</div>
                 <div class="user"><%=userNickname %>님!</div>
@@ -85,19 +116,6 @@
 					</ul>
 				</div>
             </div>
-<%
-	}else{
-%>
-           	<div class="helloUser">
-                <div class="hello">안녕하세요</div>
-                <div class="user">로그인이 필요합니다</div>
-            </div>
-            <div class="logOutBtn">
-                <a href="login.jsp" class="btn btn-Skyblue btn-sm">로그인</a>
-            </div>
-<%
-	}
-%>
         </div>
     </nav>
     <!-- 카테고리  -->
@@ -115,7 +133,7 @@
     <!-- 카테고리 & 검색결과 -->
     <div class="middleSectionWrap">
         <div class="middleSection">
-            <i class="fas fa-trophy fa-2x"></i><%=category %>
+            <i class="fas fa-image fa-2x"></i><%=galleryCategory %>
         </div>
     </div>
     <!-- CardSection -->

@@ -168,7 +168,7 @@ function galleryRegist(){
                     <a href="galleryRegist.jsp">그림등록</a>
                 </div>
                 <div class="myPicture">
-                    <a href="myPicture.jsp">나의그림</a>
+                    <a href="galleryMine.jsp">나의그림</a>
                 </div>
                 <div class="community">
                     <a href="bbs.jsp">커뮤니티</a>
@@ -309,7 +309,7 @@ function galleryRegist(){
                     <textarea id="galleryContent" name="galleryContent" class="form-control" rows="26" ><%=gallery.getGalleryContent() %></textarea>
                 </div>
                 <%
-                if(userID.equals(galleryDAO.getGalleryUserID(galleryID))){	// 이 갤러리 게시글을 작성한 사람일때 수정/삭제 표시
+                if(userID.equals(galleryDAO.getGalleryView(galleryID).getUserID())){	// 이 갤러리 게시글을 작성한 사람일때 수정/삭제 표시
                 %>
                 <div class="pictureRegistBtn" style="margin-top:15px; display:flex;">
                 	<input type="button" style="margin:0 10px 0 0;" onclick="galleryRegist()" class="btn btn-Skyblue btn-block" value="수정하기">

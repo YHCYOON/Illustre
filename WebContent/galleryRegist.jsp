@@ -144,7 +144,7 @@
                     <a href="galleryRegist.jsp">그림등록</a>
                 </div>
                 <div class="myPicture">
-                    <a href="myPicture.jsp">나의그림</a>
+                    <a href="galleryMine.jsp">나의그림</a>
                 </div>
                 <div class="community">
                     <a href="bbs.jsp">커뮤니티</a>
