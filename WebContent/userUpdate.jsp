@@ -172,13 +172,13 @@ function userUpdateTest(){
 			<form id="userUpdateForm" action="userUpdateAction.jsp" method="POST">
 				<input type="text" id="userID" class="fadeIn third" name="userID" value="<%=user.getUserID() %>" readonly> 
 				<div id="idCheck"></div> 
-				<input type="password" id="userPassword" class="fadeIn fourth" name="userPassword" value="<%=user.getUserPassword() %>">
+				<input type="password" id="userPassword" class="fadeIn fourth" name="userPassword" placeholder="비밀번호" value="<%=user.getUserPassword() %>">
 				<div id="passwordCheck"></div> 
-				<input type="text" id="userName" class="fadeIn fifth"	name="userName" value="<%=user.getUserName() %>">
+				<input type="text" id="userName" class="fadeIn fifth"	name="userName" placeholder="이름" value="<%=user.getUserName() %>">
 				<div id="nameCheck"></div> 
-				<input type="text" id="userNickname" class="fadeIn sixth"	name="userNickname" value="<%=user.getUserNickname() %>">
+				<input type="text" id="userNickname" class="fadeIn sixth"	name="userNickname" placeholder="닉네임" value="<%=user.getUserNickname() %>">
 				<div id="nicknameCheck"></div> 
-				<input type="text" id="userEmail" class="fadeIn seventh"	name="userEmail" value="<%=user.getUserEmail() %>">
+				<input type="text" id="userEmail" class="fadeIn seventh"	name="userEmail" placeholder="이메일" value="<%=user.getUserEmail() %>">
 				<div id="emailCheck"></div> 
 				<input type="button" onclick="userUpdateTest()" class="fadeIn eighth" value="회원정보 수정">
 			</form>

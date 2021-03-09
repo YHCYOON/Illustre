@@ -31,10 +31,10 @@
 		}
 		
 		GalleryDAO galleryDAO = new GalleryDAO();
-    	String category = "전체보기";
+    	String galleryCategory = "전체보기";
     	try{
-	    	if(request.getParameter("category") != null){
-	    		category = (String) request.getParameter("category");
+	    	if(request.getParameter("galleryCategory") != null){
+	    		galleryCategory = (String) request.getParameter("galleryCategory");
 	    	}
     	}catch(Exception e){
     		PrintWriter script = response.getWriter();
@@ -104,10 +104,10 @@
     <div class="searchBar">
         <div class="searchBarContent">
             <div class="category">
-            	<a href="ranking.jsp?category=전체보기" class="btn btn-Skyblue">전체보기</a>
-            	<a href="ranking.jsp?category=캐릭터 일러스트" class="btn btn-Skyblue">캐릭터 일러스트</a>
-            	<a href="ranking.jsp?category=배경 일러스트" class="btn btn-Skyblue">배경 일러스트</a>
-            	<a href="ranking.jsp?category=스케치" class="btn btn-Skyblue">스케치</a>
+            	<a href="ranking.jsp?galleryCategory=전체보기" class="btn btn-Skyblue">전체보기</a>
+            	<a href="ranking.jsp?galleryCategory=캐릭터 일러스트" class="btn btn-Skyblue">캐릭터 일러스트</a>
+            	<a href="ranking.jsp?galleryCategory=배경 일러스트" class="btn btn-Skyblue">배경 일러스트</a>
+            	<a href="ranking.jsp?galleryCategory=스케치" class="btn btn-Skyblue">스케치</a>
             </div>
         </div>
     </div>
@@ -115,13 +115,13 @@
     <!-- 카테고리 & 검색결과 -->
     <div class="middleSectionWrap">
         <div class="middleSection">
-            <i class="fas fa-trophy fa-2x"></i><%=category %>
+            <i class="fas fa-trophy fa-2x"></i><%=galleryCategory %>
         </div>
     </div>
     <!-- CardSection -->
 	<div class="rankSectionTop">
 <%
-	ArrayList<Gallery> list = galleryDAO.getRanking(category);
+	ArrayList<Gallery> list = galleryDAO.getRanking(galleryCategory);
 	if(list.size() <= 3 ){		//  list 가 3개 이하일때
 		for(int i = 0; i < list.size(); i++){
 			Gallery gallery = new Gallery();

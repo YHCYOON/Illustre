@@ -60,23 +60,30 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('올바르지 않은 페이지입니다');");
-			script.println("location.href='bbs.jsp'");
+			script.println("location.href='galleryMine.jsp'");
 			script.println("</script>");
 		}
 		
+		// pageNumber 가 존재하는 페이지 이상이고 존재하는 그림이 0이 아니면
+		if(galleryDAO.getGalleryMineTotalPage(galleryCategory, userID) != 0){
+			if(pageNumber > galleryDAO.getGalleryMineTotalPage(galleryCategory, userID)){
+				PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('존재하지 않는 페이지입니다');");
+				script.println("history.back()");
+				script.println("</script>");
+			}
+		}else{	// 존재하는 그림이 없는데 pageNumber 가 1이상이면 에러
+			if(pageNumber > 1){
+				PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('존재하지 않는 페이지입니다');");
+				script.println("history.back()");
+				script.println("</script>");
+			}
+		}
 		
-		// keyWord , searchWord 값이 default 일때 모든 파일을 보여줌
-    	String keyWord = "fileName";
-    	String searchWord = ".";
-    	
-    	if(request.getParameter("keyWord") != null){
-    		keyWord = (String) request.getParameter("keyWord");
-    	}
-    	if(request.getParameter("searchWord") != null){
-    		searchWord = (String) request.getParameter("searchWord");
-    	}
-    	
-		ArrayList<Gallery> list = galleryDAO.getGalleryList(pageNumber, galleryCategory, keyWord, searchWord);
+		ArrayList<Gallery> list = galleryDAO.getGalleryMine(userID, galleryCategory, pageNumber);
 %>
 <div class="wrap">
     <nav class="navBar">
@@ -122,10 +129,10 @@
     <div class="searchBar">
         <div class="searchBarContent">
             <div class="category">
-            	<a href="ranking.jsp?category=전체보기" class="btn btn-Skyblue">전체보기</a>
-            	<a href="ranking.jsp?category=캐릭터 일러스트" class="btn btn-Skyblue">캐릭터 일러스트</a>
-            	<a href="ranking.jsp?category=배경 일러스트" class="btn btn-Skyblue">배경 일러스트</a>
-            	<a href="ranking.jsp?category=스케치" class="btn btn-Skyblue">스케치</a>
+            	<a href="galleryMine.jsp?galleryCategory=전체보기" class="btn btn-Skyblue">전체보기</a>
+            	<a href="galleryMine.jsp?galleryCategory=캐릭터 일러스트" class="btn btn-Skyblue">캐릭터 일러스트</a>
+            	<a href="galleryMine.jsp?galleryCategory=배경 일러스트" class="btn btn-Skyblue">배경 일러스트</a>
+            	<a href="galleryMine.jsp?galleryCategory=스케치" class="btn btn-Skyblue">스케치</a>
             </div>
         </div>
     </div>
@@ -133,115 +140,117 @@
     <!-- 카테고리 & 검색결과 -->
     <div class="middleSectionWrap">
         <div class="middleSection">
-            <i class="fas fa-image fa-2x"></i><%=galleryCategory %>
+            <i class="fas fa-image fa-2x"></i>
+            <div class="pictureCount" id="pictureCategoryCount"><%=userNickname%>님의 그림 - <%=galleryCategory %> (<%=galleryDAO.countGalleryMineTotalPage(galleryCategory, userID)%>)</div>
         </div>
     </div>
     <!-- CardSection -->
-	<div class="rankSectionTop">
-<%
-	ArrayList<Gallery> list = galleryDAO.getRanking(category);
-	if(list.size() <= 3 ){		//  list 가 3개 이하일때
-		for(int i = 0; i < list.size(); i++){
-			Gallery gallery = new Gallery();
-%>
-		<div class="rankCard">
-			<a class="rankImg" href="galleryView.jsp?galleryID=<%=list.get(i).getGalleryID()%>">
-				<img src="<%=request.getContextPath() %>/upload/<%=list.get(i).getFileRealName()%>">
-			</a>
-			<div class="rank">
-<%
-			if(i == 0){
-%>
-				<div class="gold"><i class="fas fa-medal fa-5x"></i>
-				</div>
-<%
-			}else if(i == 1){
-%>			
-				<div class="silver"><i class="fas fa-medal fa-5x"></i>
-				</div>	
-<% 
-			}else if(i == 2){
-%>			
-				<div class="bronze"><i class="fas fa-medal fa-5x"></i>
-				</div>		
-<%
-			}
-%>
-				<div class="rankContentWrap">
-					<div class="rankTitle"><%=list.get(i).getGalleryTitle() %>
-					</div>
-					<div class="rankNicknameLike">
-	    				<div class="rankNickname"><%=list.get(i).getUserNickname() %>
-	    				</div>
-						<div class="rankLike"><i class="fas fa-heart"></i> <%=list.get(i).getGalleryLikeCount() %>
+	<!-- CardSection -->
+    <div class="pictureCardSection">
+    <%
+    	try{
+    		for(int i = 0; i < list.size(); i++){
+    %>
+				<a class="pictureCard" href="galleryView.jsp?galleryID=<%=list.get(i).getGalleryID()%>">
+					<div class="screen">
+						<div class="hoverTitle"><%=list.get(i).getGalleryTitle() %></div>
+						<div class="hoveruserNickname"><%=list.get(i).getUserNickname() %></div>
+						<div class="hoverLike">
+						<i class="fas fa-heart"><%=list.get(i).getGalleryLikeCount() %></i>
 						</div>
-	            	</div>
-        		</div>
-    		</div>
-		</div>
-<%
-		}
-	}else{	// list가 3개 이상
-		for(int i = 0; i < 3; i++){
-			Gallery gallery = new Gallery();
-%>
-		<div class="rankCard">
-			<a class="rankImg" href="galleryView.jsp?galleryID=<%=list.get(i).getGalleryID()%>">
-				<img src="<%=request.getContextPath() %>/upload/<%=list.get(i).getFileRealName()%>">
-			</a>
-			<div class="rank">
-<%
-			if(i == 0){
-%>
-				<div class="gold"><i class="fas fa-medal fa-5x"></i>
-				</div>
-<%
-			}else if(i == 1){
-%>			
-				<div class="silver"><i class="fas fa-medal fa-5x"></i>
-				</div>	
-<% 
-			}else if(i == 2){
-%>			
-				<div class="bronze"><i class="fas fa-medal fa-5x"></i>
-				</div>		
-<%
-			}
-%>
-				<div class="rankContentWrap">
-					<div class="rankTitle"><%=list.get(i).getGalleryTitle() %>
+						<img id="pictureCard" class="cardImage" src="<%=request.getContextPath() %>/upload/<%=list.get(i).getFileRealName()%>">
 					</div>
-					<div class="rankNicknameLike">
-	    				<div class="rankNickname"><%=list.get(i).getUserNickname() %>
-	    				</div>
-						<div class="rankLike"><i class="fas fa-heart"></i> <%=list.get(i).getGalleryLikeCount() %>
-						</div>
-	            	</div>
-        		</div>
-    		</div>
+				</a>
+   <%
+    		}
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	// list가 없을떄 pageNumber = 0
+    	if(list.size() == 0){
+    		pageNumber = 0;
+    	}
+    %>	
+	<!-- 페이징 처리  -->
+		<div class="text-center">
+			<ul class="pagination">
+				<%
+					int startPage = galleryDAO.getGalleryMineStartPage(pageNumber);
+					int endPage = galleryDAO.getGalleryMineEndPage(pageNumber, galleryCategory, userID);
+					int totalPage = galleryDAO.getGalleryMineTotalPage(galleryCategory, userID);
+					
+					// 페이징 이전버튼 처리
+				
+					if(pageNumber == 0){
+				%>
+					<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">이전</a></li>
+					<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">다음</a></li>
+				<%
+					return;
+					}
+					if(pageNumber == 1){
+				%>
+		    		<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">이전</a></li>
+		    	<%
+					}else{
+						if(galleryCategory.equals("전체보기")){	// 카테고리가 전체보기(default)일때
+				%>				
+							<li class="page-item"><a class="page-link" href="galleryMine.jsp?pageNumber=<%=pageNumber -1%>">이전</a></li>
+				<%
+						}else{	// 카테고리가 default가 아니면 galleryCategory를 파라미터로 전달
+				%>
+							<li class="page-item"><a class="page-link" href="galleryMine.jsp?pageNumber=<%=pageNumber -1%>&galleryCategory=<%=galleryCategory%>">이전</a></li>
+				<% 			
+						}
+					}
+				%>
+				<%
+					// 페이지 개수 처리
+					for(int iCount = startPage; iCount <= endPage; iCount++){
+    					if(pageNumber == iCount){	// 해당 페이지일때
+    						if(galleryCategory.equals("전체보기")){	// 카테고리가 전체보기(default)일때
+		    	%>
+	    					<li class="page-item active"><a class="page-link" href="galleryMine.jsp?pageNumber=<%=iCount%>"><%=iCount %></a></li>
+		    	<%
+   							}else{	// 카테고리가 default가 아니면 galleryCategory를 파라미터로 전달
+    			%>				
+   							<li class="page-item active"><a class="page-link" href="galleryMine.jsp?pageNumber=<%=iCount%>&galleryCategory=<%=galleryCategory%>"><%=iCount %></a></li>
+		    	<%
+	    					}
+   						}else{	// 해당 페이지가 아닐때
+   							if(galleryCategory.equals("전체보기")){	// 카테고리가 전체보기(default)일때
+		    	%>
+	    					<li class="page-item"><a class="page-link" href="galleryMine.jsp?pageNumber=<%=iCount%>"><%=iCount %></a></li>
+		    	<%
+   							}else{	// 카테고리가 default가 아니면 galleryCategory를 파라미터로 전달
+    			%>				
+   							<li class="page-item"><a class="page-link" href="galleryMine.jsp?pageNumber=<%=iCount%>&galleryCategory=<%=galleryCategory%>"><%=iCount %></a></li>
+		    	<%
+		    				}
+						}
+					}
+    					
+					// 페이징 다음 버튼 처리
+		    		if(pageNumber == totalPage){
+				%>	
+		    		<li class="page-item disabled"><a class="page-link" href="#">다음</a></li>
+		    	<%
+					}else{
+						if(galleryCategory.equals("전체보기")){
+				%>				
+						<li class="page-item"><a class="page-link" href="galleryMine.jsp?pageNumber=<%=pageNumber +1%>">다음</a></li>
+				<%
+						}else{
+				%>
+						<li class="page-item"><a class="page-link" href="galleryMine.jsp?pageNumber=<%=pageNumber +1%>&galleryCategory=<%=galleryCategory%>">다음</a></li>
+				<% 			
+						}
+					}
+				%>
+			</ul>
 		</div>
-<%			
-		}
-%>
-   	</div>	
-   	<div class="pictureCardSection">
-<%		
-		for(int i = 3; i < list.size(); i++){
-			Gallery gallery = new Gallery();
-%>
-		<a class="pictureCard" href="galleryView.jsp?galleryID=<%=list.get(i).getGalleryID()%>">
-			<div class="screen">
-				<div class="hoverTitle"><%=list.get(i).getGalleryTitle() %></div>
-				<div class="hoveruserNickname"><%=list.get(i).getUserNickname() %></div>
-				<div class="hoverLike"><i class="fas fa-heart"><%=list.get(i).getGalleryLikeCount() %></i></div>
-				<img id="pictureCard" class="cardImage" src="<%=request.getContextPath() %>/upload/<%=list.get(i).getFileRealName()%>">
-			</div>
-		</a>
-<%
-		}
-	}
-%>
-	</div>
+		
+    </div>
 </div>        
 </body>
 </html>

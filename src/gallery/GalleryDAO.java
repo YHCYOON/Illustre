@@ -335,14 +335,14 @@ public class GalleryDAO {
 	}
 	
 	// Ranking 페이지 gallery가져오는 메서드
-	public ArrayList<Gallery> getRanking(String category) {
+	public ArrayList<Gallery> getRanking(String galleryCategory) {
 		PreparedStatement pstmt;
 		ResultSet rs;
 		String SQL_ALL = "SELECT * FROM gallery WHERE galleryAvailable = 1 ORDER BY galleryLikeCount DESC LIMIT ? , ?"; 
 		String SQL = "SELECT * FROM gallery WHERE galleryCategory = ? AND galleryAvailable = 1 ORDER BY galleryLikeCount DESC LIMIT ? , ?";
 		ArrayList<Gallery> list = new ArrayList<Gallery>();
 		try {
-			if(category.equals("전체보기")) {
+			if(galleryCategory.equals("전체보기")) {
 				pstmt = conn.prepareStatement(SQL_ALL);
 				pstmt.setInt(1, 0);
 				pstmt.setInt(2, 28);		// likeCount가 높은 순으로 28개 가져옴
@@ -364,7 +364,7 @@ public class GalleryDAO {
 				}
 			}else {
 				pstmt = conn.prepareStatement(SQL);
-				pstmt.setString(1, category);
+				pstmt.setString(1, galleryCategory);
 				pstmt.setInt(2, 0);
 				pstmt.setInt(3, 28);		// likeCount가 높은 순으로 28개 가져옴
 				rs = pstmt.executeQuery();
@@ -391,8 +391,148 @@ public class GalleryDAO {
 		return list;
 	}
 	
+	// galleryMine 페이지
 	
+	// galleryMine 그림 가져오는 메서드
+	public ArrayList<Gallery> getGalleryMine(String userID, String galleryCategory, int pageNumber){
+		PreparedStatement pstmt;
+		ResultSet rs;
+		String SQL_ALL = "SELECT * FROM gallery WHERE galleryAvailable = 1 AND userID = ? ORDER BY galleryID DESC LIMIT ?, ?";
+		String SQL = "SELECT * FROM gallery WHERE galleryAvailable = 1 AND userID = ? AND galleryCategory = ? ORDER BY galleryID DESC LIMIT ?, ?";
+		ArrayList<Gallery> list = new ArrayList<Gallery>();
+		try {
+			if(galleryCategory.equals("전체보기")) {
+				pstmt = conn.prepareStatement(SQL_ALL);
+				pstmt.setString(1, userID);
+				pstmt.setInt(2, (pageNumber - 1)*25);
+				pstmt.setInt(3, 25);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					Gallery gallery = new Gallery();
+					gallery.setGalleryID(rs.getInt(1));
+					gallery.setUserID(rs.getString(2));
+					gallery.setUserNickname(rs.getString(3));
+					gallery.setGalleryCategory(rs.getString(4));
+					gallery.setGalleryTitle(rs.getString(5));
+					gallery.setGalleryContent(rs.getString(6));
+					gallery.setGalleryDate(rs.getString(7));
+					gallery.setFileName(rs.getString(8));
+					gallery.setFileRealName(rs.getString(9));
+					gallery.setGalleryLikeCount(rs.getInt(10));
+					gallery.setGalleryAvailable(rs.getInt(11));
+					list.add(gallery);
+				}
+			}else if(galleryCategory.equals("캐릭터 일러스트") || galleryCategory.equals("배경 일러스트") || galleryCategory.equals("스케치")) {
+				pstmt = conn.prepareStatement(SQL);
+				pstmt.setString(1,  userID);
+				pstmt.setString(2, galleryCategory);
+				pstmt.setInt(3, (pageNumber - 1)*25);
+				pstmt.setInt(4, 25);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					Gallery gallery = new Gallery();
+					gallery.setGalleryID(rs.getInt(1));
+					gallery.setUserID(rs.getString(2));
+					gallery.setUserNickname(rs.getString(3));
+					gallery.setGalleryCategory(rs.getString(4));
+					gallery.setGalleryTitle(rs.getString(5));
+					gallery.setGalleryContent(rs.getString(6));
+					gallery.setGalleryDate(rs.getString(7));
+					gallery.setFileName(rs.getString(8));
+					gallery.setFileRealName(rs.getString(9));
+					gallery.setGalleryLikeCount(rs.getInt(10));
+					gallery.setGalleryAvailable(rs.getInt(11));
+					list.add(gallery);
+				}	
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;	// 데이터가 없거나 잘못된 galleryCategory 파라미터를 받았을때 
+		}return list;
+	}
 	
+	// galleryMine 총 게시글 개수를 가져오는 메서드
+		public int countGalleryMineTotalPage(String galleryCategory, String userID) {
+			PreparedStatement pstmt;
+			ResultSet rs;
+			String SQL_ALL = "SELECT COUNT(*) FROM GALLERY WHERE userID = ? AND galleryAvailable = 1";
+			String SQL = "SELECT COUNT(*) FROM GALLERY WHERE galleryCategory = ? AND userID = ? AND galleryAvailable = 1";
+			try {
+				if(galleryCategory.equals("전체보기")) {
+					pstmt = conn.prepareStatement(SQL_ALL);
+					pstmt.setString(1, userID);
+					rs = pstmt.executeQuery();
+					if(rs.next()) {
+						return rs.getInt(1);
+					}
+				}else {
+					pstmt = conn.prepareStatement(SQL);
+					pstmt.setString(1, galleryCategory);
+					pstmt.setString(2, userID);
+					rs = pstmt.executeQuery();
+					if(rs.next()) {
+						return rs.getInt(1);
+					}
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return -1;	// 데이터베이스 오류 
+		}
+		
+		// galleryMine 총 페이지 수를 반환하는 메서드 
+		public int getGalleryMineTotalPage(String galleryCategory, String userID) {
+			PreparedStatement pstmt;
+			ResultSet rs;
+			int countList = 25;	// 한 페이지에 나타내는 그림이 25개
+			String SQL_ALL = "SELECT COUNT(*) FROM GALLERY WHERE userID = ? AND galleryAvailable = 1";
+			String SQL = "SELECT COUNT(*) FROM GALLERY WHERE galleryCategory = ? AND userID = ? AND galleryAvailable = 1";
+			try {
+				if(galleryCategory.equals("전체보기")) {
+					pstmt = conn.prepareStatement(SQL_ALL);
+					pstmt.setString(1, userID);
+					rs = pstmt.executeQuery();
+					if(rs.next()) {
+						if(rs.getInt(1) % countList == 0 ) {
+							return rs.getInt(1) / countList;
+						}else {
+							return rs.getInt(1) / countList + 1;
+						}
+					}
+				}else {
+					pstmt = conn.prepareStatement(SQL);
+					pstmt.setString(1, galleryCategory);
+					pstmt.setString(2, userID);
+					rs = pstmt.executeQuery();
+					if(rs.next()) {
+						if(rs.getInt(1) % countList == 0 ) {
+							return rs.getInt(1) / countList;
+						}else {
+							return rs.getInt(1) / countList + 1;
+						}
+					}
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+			return -1;	// 데이터베이스 오류 
+		}
+		
+		// startPage 가져오는 메서드
+		public int getGalleryMineStartPage(int pageNumber) {
+			int startPage = ((pageNumber - 1) / 10) * 10 + 1 ;
+			return startPage;
+		}
+		
+		// endPage 가져오는 메서드
+		public int getGalleryMineEndPage(int pageNumber, String galleryCategory, String userID) {
+			int endPage = getStartPage(pageNumber) + 9;
+			int totalPage = getGalleryMineTotalPage(galleryCategory, userID);
+			if(endPage > totalPage) {
+				return totalPage;
+			}
+			return endPage;
+		}
 	
 	
 	
