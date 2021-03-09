@@ -26,7 +26,7 @@ public class UserDAO {
 	
 	// 회원가입 메서드
 	public int join(User user) {
-		String SQL = "INSERT INTO USER VALUES (?, ?, ?, ?, ?, ?)";
+		String SQL = "INSERT INTO USER VALUES (?, ?, ?, ?, ?)";
 		try {	
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, user.getUserID());
@@ -34,7 +34,6 @@ public class UserDAO {
 			pstmt.setString(3, user.getUserName()); 
 			pstmt.setString(4, user.getUserNickname());
 			pstmt.setString(5, user.getUserEmail());
-			pstmt.setInt(6, user.getUserLikeCount());
 			
 			return pstmt.executeUpdate();		// 회원가입 완료 - 0이상의 값을 리턴
 			
@@ -139,13 +138,14 @@ public class UserDAO {
 	
 	// 회원정보 수정 메서드
 	public int updateUserInfo(User user) {
-		String SQL = "UPDATE USER SET userPassword = ?, userName = ?, userNickname = ?, userEmail = ?";
+		String SQL = "UPDATE USER SET userPassword = ?, userName = ?, userNickname = ?, userEmail = ? WHERE userID = ?";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, user.getUserPassword());
 			pstmt.setString(2, user.getUserName());
 			pstmt.setString(3, user.getUserNickname());
 			pstmt.setString(4, user.getUserEmail());
+			pstmt.setString(5, user.getUserID());
 			int result = pstmt.executeUpdate();
 			if ( result != 0) {
 				return 1;	// 수정 완료

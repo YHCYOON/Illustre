@@ -1,3 +1,14 @@
+User Table
+
+create table user(
+	userID VARCHAR(20),
+	userPassword VARCHAR(20),
+	userName VARCHAR(20),
+	userNickname VARCHAR(50),
+	userEmail VARCHAR(50),
+	PRIMARY KEY (userID));
+
+
 Gallery Table
 
 create table gallery(
