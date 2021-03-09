@@ -18,7 +18,7 @@ request.setCharacterEncoding("UTF-8");
 <meta name="viewport" content="width=device-width">
 <link rel="stylesheet" href="css/customBootstrap.css">
 <link rel="stylesheet" href="css/community.css">
-<title></title>
+<title>일러스트리 - 내가 그린 세상</title>
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="js/bootstrap.js"></script>
 </head>
@@ -64,6 +64,7 @@ request.setCharacterEncoding("UTF-8");
 		script.println("location.href='bbs.jsp'");
 		script.println("</script>");
 	}
+	UserDAO userDAO = new UserDAO();
 	%>
 	<div class="wrap">
 		<nav class="navBar">
@@ -233,7 +234,7 @@ request.setCharacterEncoding("UTF-8");
 							<%	// 아이디 세션이 있고 게시글의 userID와 일치할때
 							if (userID != null && userID.equals(list.get(i).getUserID())) {
 							%>
-							<td colspan="1" style="padding: 14px;"><%=list.get(i).getUserID()%></td>
+							<td colspan="1" style="padding: 14px;"><%=userDAO.getUserInfo(list.get(i).getUserID()).getUserNickname()%></td>
 							<td style="padding-top: 10px; width: 60px;"><a
 								href="commentUpdate.jsp?bbsID=<%=bbsID%>&bbsCommentID=<%=list.get(i).getBbsCommentID()%>"><button
 										type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
@@ -245,7 +246,7 @@ request.setCharacterEncoding("UTF-8");
 							<%
 							} else {
 							%>
-							<td colspan="3" style="padding: 14px;"><%=list.get(i).getUserID()%></td>
+							<td colspan="3" style="padding: 14px;"><%=userDAO.getUserInfo(list.get(i).getUserID()).getUserNickname()%></td>
 							<%
 							}
 							%>

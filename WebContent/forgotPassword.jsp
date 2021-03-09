@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width">
 <link rel="stylesheet" href="css/forgotPassword.css">
 <link rel="stylesheet" href="css/bootstrap.css">
-<title>일러스트리 - 내가 그려가는 세상</title>
+<title>일러스트리 - 내가 그린 세상</title>
 <script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="js/bootstrap.js"></script>
 

@@ -17,7 +17,7 @@
 	<link rel="stylesheet" href="css/customBootstrap.css">
 	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
-	<title></title>
+	<title>일러스트리 - 내가 그린 세상</title>
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 </head>
@@ -29,7 +29,7 @@
 	if(session.getAttribute("UserID") != null){
 		userID = (String) session.getAttribute("UserID");
 		UserDAO userDAO = new UserDAO();
-		userNickname = userDAO.getNickname(userID);
+		userNickname = userDAO.getUserInfo(userID).getUserNickname();
 	}
 	int pageNumber = 1;
 	try{
@@ -42,6 +42,25 @@
 		script.println("alert('올바르지 않은 페이지입니다');");
 		script.println("location.href='bbs.jsp'");
 		script.println("</script>");
+	}
+	BbsDAO bbsDAO = new BbsDAO();
+	// 존재하는 게시글이 있는데 pageNumber 가 존재하는 페이지를 초과하면
+	if(bbsDAO.getTotalPage() != 0){
+		if(pageNumber > bbsDAO.getTotalPage()){
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('존재하지 않는 페이지입니다');");
+			script.println("history.back()");
+			script.println("</script>");
+		}
+	}else{	// 존재하는 게시글이 없는데 pageNumber 가 1이상이면 에러
+		if(pageNumber > 1){
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('존재하지 않는 페이지입니다');");
+			script.println("history.back()");
+			script.println("</script>");
+		}
 	}
 	UserDAO userDAO = new UserDAO();
 %>
@@ -114,7 +133,6 @@
 				</thead>
 				<tbody>
 				<%
-					BbsDAO bbsDAO = new BbsDAO();
 					ArrayList<Bbs> list = bbsDAO.getBbsList(pageNumber);
 					for(int i = 0; i < list.size(); i++){
 				%>
@@ -131,7 +149,7 @@
 								}
 							%>
 						<td><%=userDAO.getUserInfo(list.get(i).getUserID()).getUserNickname() %></td>
-						<td><%=list.get(i).getBbsDate() %></td>
+						<td><%=list.get(i).getBbsDate().substring(0, 11) + list.get(i).getBbsDate().substring(11, 13) + "시 " + list.get(i).getBbsDate().substring(14, 16) + "분" %></td>
 					</tr>
 				<%
 					}
@@ -175,17 +193,9 @@
 					}else{
 		    	%>
 		    		<li class="page-item"><a class="page-link" href="bbs.jsp?pageNumber=<%=pageNumber +1%>">다음</a></li>
-				<%
+		    	<%
 					}
-		    		if(pageNumber > totalPage || pageNumber < 1 ){
-		    			PrintWriter script = response.getWriter();
-		    			script.println("<script>");
-		    			script.println("alert('올바르지 않은 페이지 번호입니다');");
-		    			script.println("history.back()");
-		    			script.println("</script>");
-		    		}
-				%>
-					
+		    	%>	
 			</ul>
 		</div>
 	</div>

@@ -10,7 +10,7 @@
 	<meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" href="css/customBootstrap.css">
 	<link rel="stylesheet" href="css/main.css">
-	<title>일러스트리 - 내가 그려가는 세상</title>
+	<title>일러스트리 - 내가 그린 세상</title>
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 </head>
@@ -84,7 +84,7 @@
     <!-- 일러스트리 설명 점보트론 -->
 	<div class="container">
 			<div class="jumbotron" style="background-color:white; margin:0px; padding: 20px 40px 40px 20px;">
-				<div class="illustre">일러스트리 - 내가 그려가는 세상</div>
+				<div class="illustre">일러스트리 - 내가 그린 세상</div>
 				<div class="illustreInfo">자유롭게 그림을 공유하고 다른 사용자들과 소통할 수 있는 일러스트 공유 커뮤니티입니다</div>
 				<button type="button" class="btn btn-Skyblue btn-lg" data-toggle="modal" data-target="#myModal">자세히 알아보기</button>
 			</div>

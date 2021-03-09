@@ -20,7 +20,7 @@
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
-	<title></title>
+	<title>일러스트리 - 내가 그린 세상</title>
 	
 </head>
 <body>
@@ -210,7 +210,7 @@
 							%>
 							</tr>
 							<tr>
-								<td colspan="3"><%=list.get(i).getGalleryCommentDate() %></td>
+								<td colspan="3"><%=list.get(i).getGalleryCommentDate().substring(0, 11) + list.get(i).getGalleryCommentDate().substring(11, 13) + "시 " + list.get(i).getGalleryCommentDate().substring(14, 16) + "분" %></td>
 							</tr>
 							<%
 								if(galleryCommentID == list.get(i).getGalleryCommentID()){	// 수정하기 누른 galleryCommentID 값이 등록되어있는 galleryCommentID값과 같을때

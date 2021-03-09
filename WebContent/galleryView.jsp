@@ -21,7 +21,7 @@
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
-	<title></title>
+	<title>일러스트리 - 내가 그린 세상</title>
 	
 </head>
 <body>
@@ -60,6 +60,7 @@
 		script.println("</script>");
 		return;
 	}
+	UserDAO userDAO = new UserDAO();
 	
 %>
 <div class="wrap">
@@ -180,20 +181,20 @@
 							<%	// 로그인중인 회원일때 수정,삭제 버튼 표시
 								if(userID != null && userID.equals(list.get(i).getUserID())){
 							%>
-							<td colspan="1" style="padding: 14px;"><%=list.get(i).getUserID()%></td>
+							<td colspan="1" style="padding: 14px;"><%=userDAO.getUserInfo(list.get(i).getUserID()).getUserNickname()%></td>
 							<td style="padding-top:10px; width:60px;"><a href="galleryCommentUpdate.jsp?galleryID=<%=list.get(i).getGalleryID() %>&galleryCommentID=<%=list.get(i).getGalleryCommentID()%>"><button type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
 							<td style="padding-top:10px; width:60px;"><a onclick="return confirm('정말로 삭제하시겠습니까?')" href="galleryCommentDeleteAction.jsp?galleryID=<%=list.get(i).getGalleryID() %>&galleryCommentID=<%=list.get(i).getGalleryCommentID()%>">
 							<button type="button" class="btn btn-Red btn-sm">삭제</button></a></td>
 							<%
 								}else{// 비회원은 수정,삭제 표시하지 않음
 							%>
-							<td colspan="3" style="padding: 14px;"><%=list.get(i).getUserID() %></td>
+							<td colspan="3" style="padding: 14px;"><%=userDAO.getUserInfo(list.get(i).getUserID()).getUserNickname() %></td>
 							<%
 								}
 							%>
 						</tr>
 						<tr>
-							<td colspan="3"><%=list.get(i).getGalleryCommentDate() %></td>
+							<td colspan="3"><%=list.get(i).getGalleryCommentDate().substring(0, 11) + list.get(i).getGalleryCommentDate().substring(11, 13) + "시 " + list.get(i).getGalleryCommentDate().substring(14, 16) + "분" %></td>
 						</tr>
 						<tr>
 							<td colspan="3"><%=list.get(i).getGalleryComment() %></td>

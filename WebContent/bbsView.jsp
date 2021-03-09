@@ -17,7 +17,7 @@
 	<meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" href="css/customBootstrap.css">
 	<link rel="stylesheet" href="css/community.css">
-	<title></title>
+	<title>일러스트리 - 내가 그린 세상</title>
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 </head>
@@ -189,14 +189,14 @@
 							<%	// 로그인중인 회원일때 수정,삭제 버튼 표시
 								if(userID != null && userID.equals(list.get(i).getUserID())){
 							%>
-							<td colspan="1" style="padding: 14px;"><%=userDAO.getNickname(list.get(i).getUserID()) %></td>
+							<td colspan="1" style="padding: 14px;"><%=userDAO.getUserInfo(list.get(i).getUserID()).getUserNickname() %></td>
 							<td style="padding-top:10px; width:60px;"><a href="commentUpdate.jsp?bbsID=<%=list.get(i).getBbsID() %>&bbsCommentID=<%=list.get(i).getBbsCommentID()%>"><button type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
 							<td style="padding-top:10px; width:60px;"><a onclick="return confirm('정말로 삭제하시겠습니까?')" href="commentDeleteAction.jsp?bbsID=<%=list.get(i).getBbsID() %>&bbsCommentID=<%=list.get(i).getBbsCommentID()%>">
 							<button type="button" class="btn btn-Red btn-sm">삭제</button></a></td>
 							<%
 								}else{	// 비회원은 수정,삭제 표시하지 않음
 							%>
-							<td colspan="3" style="padding: 14px;"><%=userDAO.getNickname(list.get(i).getUserID()) %></td>
+							<td colspan="3" style="padding: 14px;"><%=userDAO.getUserInfo(list.get(i).getUserID()).getUserNickname() %></td>
 							<%
 								}
 							%>

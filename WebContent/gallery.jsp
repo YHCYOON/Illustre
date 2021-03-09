@@ -15,7 +15,7 @@
 	<meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" href="css/customBootstrap.css">
 	<link rel="stylesheet" href="css/gallery.css">
-	<title>일러스트리 - 내가 그려가는 세상</title>
+	<title>일러스트리 - 내가 그린 세상</title>
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
@@ -40,14 +40,25 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('올바르지 않은 페이지입니다');");
-			script.println("location.href='bbs.jsp'");
+			script.println("location.href='gallery.jsp'");
 			script.println("</script>");
 		}
 		
 		GalleryDAO galleryDAO = new GalleryDAO();
     	String galleryCategory = "전체보기";
-    	if(request.getParameter("galleryCategory") != null){
-    		galleryCategory = (String) request.getParameter("galleryCategory");
+    	try{
+	    	if(request.getParameter("galleryCategory") != null){
+	    		if(request.getParameter("galleryCategory").equals("캐릭터 일러스트") || request.getParameter("galleryCategory").equals("배경 일러스트") || 
+		    		request.getParameter("galleryCategory").equals("스케치")){
+		    		galleryCategory = (String) request.getParameter("galleryCategory");
+		    	}
+	    	}
+    	}catch(Exception e){
+    		PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('올바르지 않은 카테고리입니다');");
+			script.println("history.back()");
+			script.println("</script>");
     	}
     	// keyWord , searchWord 값이 default 일때 모든 파일을 보여줌
     	String keyWord = "fileName";
@@ -284,7 +295,7 @@
 				<%
 						}
 					}
-		    		if(pageNumber > totalPage || pageNumber < 0 ){
+		    		if(pageNumber > totalPage){
 		    			PrintWriter script = response.getWriter();
 		    			script.println("<script>");
 		    			script.println("alert('올바르지 않은 접근입니다');");

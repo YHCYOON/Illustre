@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 	<meta charset="UTF-8">
-	<title></title>
+	<title>일러스트리 - 내가 그린 세상</title>
 </head>
 <body>
 	<%

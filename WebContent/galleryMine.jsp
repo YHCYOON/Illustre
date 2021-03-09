@@ -14,7 +14,7 @@
 	<meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" href="css/customBootstrap.css">
 	<link rel="stylesheet" href="css/gallery.css">
-	<title>일러스트리 - 내가 그려가는 세상</title>
+	<title>일러스트리 - 내가 그린 세상</title>
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
@@ -41,7 +41,10 @@
     	String galleryCategory = "전체보기";
     	try{
 	    	if(request.getParameter("galleryCategory") != null){
-	    		galleryCategory = (String) request.getParameter("galleryCategory");
+	    		if(request.getParameter("galleryCategory").equals("캐릭터 일러스트") || request.getParameter("galleryCategory").equals("배경 일러스트") || 
+		    		request.getParameter("galleryCategory").equals("스케치")){
+		    		galleryCategory = (String) request.getParameter("galleryCategory");
+		    	}
 	    	}
     	}catch(Exception e){
     		PrintWriter script = response.getWriter();

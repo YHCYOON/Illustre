@@ -7,7 +7,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title></title>
+	<title>일러스트리 - 내가 그린 세상</title>
 </head>
 <body>
 	<%
@@ -36,7 +36,7 @@
 			return;
 		}
 		GalleryDAO galleryDAO = new GalleryDAO();
-		if(!userID.equals(galleryDAO.getGalleryUserID(galleryID))){
+		if(!userID.equals(galleryDAO.getGalleryView(galleryID).getUserID())){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('권한이 없습니다');");
