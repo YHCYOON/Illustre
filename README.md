@@ -4,7 +4,7 @@
 - www.drawell.shop
 - 나와 다른 사용자들의 그림을 공유할 수 있고 자유롭게 의견을 나눌 수 있는 일러스트 공유 사이트입니다
 
-## 사용한 언어와 기술
+## 사용 언어
 - Front-End : HTML, CSS, JAVASCRIPT, JQUERY
 - BACK-END : JAVA, JSP, MYSQL
 
@@ -24,7 +24,6 @@
 - 회원 관리 창에서 회원 정보 수정을 할 수 있습니다.
 - 비밀번호 찾기 기능을 구현했습니다.
 
-## Contributing
-- Thanks to 양시영님
+
 
 

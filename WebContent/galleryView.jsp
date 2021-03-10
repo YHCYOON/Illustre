@@ -66,7 +66,7 @@
 <div class="wrap">
     <nav class="navBar">
         <div class="navBarContent">
-            <a href="main.jsp" onclick="onClickMain()" class="navBarLogo">
+            <a href="main.jsp" class="navBarLogo">
                 <img src="images/illustre_logo.png" alt="illustre">
             </a>
             <div class="navContent">
@@ -197,7 +197,7 @@
 							<td colspan="3"><%=list.get(i).getGalleryCommentDate().substring(0, 11) + list.get(i).getGalleryCommentDate().substring(11, 13) + "시 " + list.get(i).getGalleryCommentDate().substring(14, 16) + "분" %></td>
 						</tr>
 						<tr>
-							<td colspan="3"><%=list.get(i).getGalleryComment() %></td>
+							<td colspan="3"><%=list.get(i).getGalleryComment().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %></td>
 						</tr>
 					</tbody>
 				</table>
@@ -222,19 +222,19 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text">제목</label>
                     </div>
-                    <input type="text" class="custom-viewContent" value="<%=gallery.getGalleryTitle() %>" readonly>
+                    <input type="text" class="custom-viewContent" value="<%=gallery.getGalleryTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %>" readonly>
                 </div>
                 <div class="pictureCategory">
                     <div class="input-group-prepend">
                         <label class="input-group-text">작성일자</label>
                     </div>
-                    <input type="text" class="custom-viewContent" value="<%=gallery.getGalleryDate() %>" readonly>
+                    <input type="text" class="custom-viewContent" value="<%=gallery.getGalleryDate().substring(0, 11) + gallery.getGalleryDate().substring(11, 13) + "시 " + gallery.getGalleryDate().substring(14, 16) + "분" %>" readonly>
                 </div>
                 <div class="pictureContent">
                     <div class="input-group-prepend">
                         <label class="input-group-text">작품설명</label>
                     </div>
-                    <textarea id="galleryContent" name="galleryContent" class="form-control" rows="26" readonly><%=gallery.getGalleryContent() %></textarea>
+                    <textarea id="galleryContent" name="galleryContent" class="form-control" rows="26" readonly><%=gallery.getGalleryContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %></textarea>
                 </div>
                 <%
                 if(userID == null){	// userID 가 없을때 아무것도 수정/삭제 표시하지 않음

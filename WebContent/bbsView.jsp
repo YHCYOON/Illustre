@@ -49,7 +49,7 @@
 <div class="wrap">
     <nav class="navBar">
         <div class="navBarContent">
-            <a href="main.jsp" onclick="onClickMain()" class="navBarLogo">
+            <a href="main.jsp" class="navBarLogo">
                 <img src="images/illustre_logo.png" alt="illustre">
             </a>
             <div class="navContent">
@@ -190,9 +190,12 @@
 								if(userID != null && userID.equals(list.get(i).getUserID())){
 							%>
 							<td colspan="1" style="padding: 14px;"><%=userDAO.getUserInfo(list.get(i).getUserID()).getUserNickname() %></td>
-							<td style="padding-top:10px; width:60px;"><a href="commentUpdate.jsp?bbsID=<%=list.get(i).getBbsID() %>&bbsCommentID=<%=list.get(i).getBbsCommentID()%>"><button type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
+							<td style="padding-top:10px; width:60px;"><a href="commentUpdate.jsp?bbsID=<%=list.get(i).getBbsID() %>&bbsCommentID=<%=list.get(i).getBbsCommentID()%>">
+								<button type="button" class="btn btn-Skyblue btn-sm">수정</button></a>
+							</td>
 							<td style="padding-top:10px; width:60px;"><a onclick="return confirm('정말로 삭제하시겠습니까?')" href="commentDeleteAction.jsp?bbsID=<%=list.get(i).getBbsID() %>&bbsCommentID=<%=list.get(i).getBbsCommentID()%>">
-							<button type="button" class="btn btn-Red btn-sm">삭제</button></a></td>
+								<button type="button" class="btn btn-Red btn-sm">삭제</button></a>
+							</td>
 							<%
 								}else{	// 비회원은 수정,삭제 표시하지 않음
 							%>
@@ -205,7 +208,7 @@
 							<td colspan="3"><%=list.get(i).getBbsCommentDate().substring(0, 11) + list.get(i).getBbsCommentDate().substring(11, 13) + "시 " + list.get(i).getBbsCommentDate().substring(14, 16) + "분" %></td>
 						</tr>
 						<tr>
-							<td colspan="3"><%=list.get(i).getBbsComment() %></td>
+							<td colspan="3"><%=list.get(i).getBbsComment().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %></td>
 						</tr>
 					</tbody>
 				</table>

@@ -69,7 +69,7 @@ request.setCharacterEncoding("UTF-8");
 	<div class="wrap">
 		<nav class="navBar">
 			<div class="navBarContent">
-				<a href="main.jsp" onclick="onClickMain()" class="navBarLogo"> <img
+				<a href="main.jsp" class="navBarLogo"> <img
 					src="images/illustre_logo.png" alt="illustre">
 				</a>
 				<div class="navContent">
@@ -143,8 +143,7 @@ request.setCharacterEncoding("UTF-8");
 					<tbody>
 						<tr>
 							<td style="width: 20%;">글 제목</td>
-							<td colspan="2"><%=bbs.getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n",
-		"<br>")%></td>
+							<td colspan="2"><%=bbs.getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>")%></td>
 						</tr>
 						<tr>
 							<td>작성자</td>
@@ -152,15 +151,12 @@ request.setCharacterEncoding("UTF-8");
 						</tr>
 						<tr>
 							<td>작성일자</td>
-							<td colspan="2"><%=bbs.getBbsDate().substring(0, 11) + bbs.getBbsDate().substring(11, 13) + "시 "
-		+ bbs.getBbsDate().substring(14, 16) + "분"%></td>
+							<td colspan="2"><%=bbs.getBbsDate().substring(0, 11) + bbs.getBbsDate().substring(11, 13) + "시 "+ bbs.getBbsDate().substring(14, 16) + "분"%></td>
 						</tr>
-
 						<tr>
 							<td style="width: 20%;">내용</td>
-							<td colspan="2" style="min-height: 200px; text-align: left;"><%=bbs.getBbsContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n",
-		"<br>")%></td>
-
+							<td colspan="2" style="min-height: 200px; text-align: left;"><%=bbs.getBbsContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>")%>
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -184,15 +180,13 @@ request.setCharacterEncoding("UTF-8");
 					style="text-align: center; border: 1px solid #dddddd; margin-top: 20px;">
 					<tbody>
 						<tr>
-							<td colspan="2"><textarea class="form-control"
-									placeholder="<%=userNickname%>님의 생각은 어떠신가요?"
-									name="bbsCommentContent" maxlength="2048"
-									style="height: 100px; resize: none;"></textarea></td>
+							<td colspan="2">
+								<textarea class="form-control" placeholder="<%=userNickname%>님의 생각은 어떠신가요?" name="bbsCommentContent" maxlength="2048" style="height: 100px; resize: none;"></textarea>
+							</td>
 						</tr>
 					</tbody>
 				</table>
-				<input type="submit" class="btn btn-Skyblue pull-right"
-					value="댓글 작성하기">
+				<input type="submit" class="btn btn-Skyblue pull-right" value="댓글 작성하기">
 			</form>
 		</div>
 		<%
@@ -203,9 +197,9 @@ request.setCharacterEncoding("UTF-8");
 				style="text-align: center; border: 1px solid #dddddd; margin-top: 20px;">
 				<tbody>
 					<tr>
-						<td colspan="2"><textarea class="form-control"
-								placeholder="로그인이 필요합니다" name="bbsContent" maxlength="2048"
-								style="height: 100px; resize: none;"></textarea></td>
+						<td colspan="2">
+							<textarea class="form-control" 	placeholder="로그인이 필요합니다" name="bbsContent" maxlength="2048" style="height: 100px; resize: none;"></textarea>
+						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -234,26 +228,31 @@ request.setCharacterEncoding("UTF-8");
 							<%	// 아이디 세션이 있고 게시글의 userID와 일치할때
 							if (userID != null && userID.equals(list.get(i).getUserID())) {
 							%>
-							<td colspan="1" style="padding: 14px;"><%=userDAO.getUserInfo(list.get(i).getUserID()).getUserNickname()%></td>
-							<td style="padding-top: 10px; width: 60px;"><a
-								href="commentUpdate.jsp?bbsID=<%=bbsID%>&bbsCommentID=<%=list.get(i).getBbsCommentID()%>"><button
-										type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
-							<td style="padding-top: 10px; width: 60px;"><a
-								onclick="return confirm('정말로 삭제하시겠습니까?')"
-								href="commentDeleteAction.jsp">
+							<td colspan="1" style="padding: 14px;"><%=userDAO.getUserInfo(list.get(i).getUserID()).getUserNickname().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>")%>
+							</td>
+							<td style="padding-top: 10px; width: 60px;">
+								<a href="commentUpdate.jsp?bbsID=<%=bbsID%>&bbsCommentID=<%=list.get(i).getBbsCommentID()%>">
+									<button type="button" class="btn btn-Skyblue btn-sm">수정</button>
+								</a>
+							</td>
+							<td style="padding-top: 10px; width: 60px;">
+								<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="commentDeleteAction.jsp">
 									<button type="button" class="btn btn-Red btn-sm">삭제</button>
-							</a></td>
+								</a>
+							</td>
 							<%
 							} else {
 							%>
-							<td colspan="3" style="padding: 14px;"><%=userDAO.getUserInfo(list.get(i).getUserID()).getUserNickname()%></td>
+							<td colspan="3" style="padding: 14px;"><%=userDAO.getUserInfo(list.get(i).getUserID()).getUserNickname().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>")%>
+							</td>
 							<%
 							}
 							%>
 						</tr>
 						<tr>
 							<td colspan="3"><%=list.get(i).getBbsCommentDate().substring(0, 11) + list.get(i).getBbsCommentDate().substring(11, 13) + "시 "
-		+ list.get(i).getBbsCommentDate().substring(14, 16) + "분"%></td>
+								+ list.get(i).getBbsCommentDate().substring(14, 16) + "분"%>
+							</td>
 						</tr>
 
 						<%
@@ -267,15 +266,15 @@ request.setCharacterEncoding("UTF-8");
 										style="text-align: center; border: 1px solid #dddddd; margin-top: 20px;">
 										<tbody>
 											<tr>
-												<td colspan="2"><textarea class="form-control"
-														placeholder="<%=list.get(i).getBbsComment()%>"
-														name="bbsCommentContent" maxlength="2048"
-														style="height: 100px; resize: none;"></textarea></td>
+												<td colspan="2">
+													<textarea class="form-control"	 placeholder="<%=list.get(i).getBbsComment().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>")%>" name="bbsCommentContent" maxlength="2048"
+														style="height: 100px; resize: none;">
+													</textarea>
+												</td>
 											</tr>
 										</tbody>
 									</table>
-									<input type="submit" class="btn btn-Skyblue pull-right"
-										value="댓글 수정하기">
+									<input type="submit" class="btn btn-Skyblue pull-right" value="댓글 수정하기">
 								</form>
 							</td>
 						</tr>
@@ -283,7 +282,7 @@ request.setCharacterEncoding("UTF-8");
 						} else {
 						%>
 						<tr>
-							<td colspan="3"><%=list.get(i).getBbsComment()%></td>
+							<td colspan="3"><%=list.get(i).getBbsComment().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>")%></td>
 						</tr>
 						<%
 						}

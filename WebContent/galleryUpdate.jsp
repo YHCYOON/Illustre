@@ -155,7 +155,7 @@ function galleryRegist(){
 <div class="wrap">
     <nav class="navBar">
         <div class="navBarContent">
-            <a href="main.jsp" onclick="onClickMain()" class="navBarLogo">
+            <a href="main.jsp" class="navBarLogo">
                 <img src="images/illustre_logo.png" alt="illustre">
             </a>
             <div class="navContent">
@@ -250,7 +250,7 @@ function galleryRegist(){
 								if(userID != null && userID.equals(list.get(i).getUserID())){
 							%>
 							<td colspan="1" style="padding: 14px;"><%=userDAO.getUserInfo(list.get(i).getUserID()).getUserNickname()%></td>
-							<td style="padding-top:10px; width:60px;"><a href="galleryCommentUpdate.jsp?"><button type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
+							<td style="padding-top:10px; width:60px;"><a href="galleryCommentUpdate.jsp?galleryID=<%=list.get(i).getGalleryID() %>&galleryCommentID=<%=list.get(i).getGalleryCommentID()%>"><button type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
 							<td style="padding-top:10px; width:60px;"><a onclick="return confirm('정말로 삭제하시겠습니까?')" href="galleryCommentDeleteAction.jsp?galleryID=<%=list.get(i).getGalleryID() %>&galleryCommentID=<%=list.get(i).getGalleryCommentID()%>">
 							<button type="button" class="btn btn-Red btn-sm">삭제</button></a></td>
 							<%
@@ -265,7 +265,7 @@ function galleryRegist(){
 							<td colspan="3"><%=list.get(i).getGalleryCommentDate().substring(0, 11) + list.get(i).getGalleryCommentDate().substring(11, 13) + "시 " + list.get(i).getGalleryCommentDate().substring(14, 16) + "분" %></td>
 						</tr>
 						<tr>
-							<td colspan="3"><%=list.get(i).getGalleryComment() %></td>
+							<td colspan="3"><%=list.get(i).getGalleryComment().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %></td>
 						</tr>
 					</tbody>
 				</table>
@@ -295,19 +295,19 @@ function galleryRegist(){
                     <div class="input-group-prepend">
                         <label class="input-group-text">제목</label>
                     </div>
-                    <input type="text" class="custom-viewContent" name="galleryTitle" id="galleryTitle" value="<%=gallery.getGalleryTitle() %>" >
+                    <input type="text" class="custom-viewContent" name="galleryTitle" id="galleryTitle" value="<%=gallery.getGalleryTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %>" >
                 </div>
                 <div class="pictureCategory">
                     <div class="input-group-prepend">
                         <label class="input-group-text">작성일자</label>
                     </div>
-                    <input type="text" class="custom-viewContent" value="<%=gallery.getGalleryDate() %>" readonly >
+                    <input type="text" class="custom-viewContent" value="<%=gallery.getGalleryDate().substring(0, 11) + gallery.getGalleryDate().substring(11, 13) + "시 " + gallery.getGalleryDate().substring(14, 16) + "분" %>" readonly >
                 </div>
                 <div class="pictureContent">
                     <div class="input-group-prepend">
                         <label class="input-group-text">작품설명</label>
                     </div>
-                    <textarea id="galleryContent" name="galleryContent" class="form-control" rows="26" ><%=gallery.getGalleryContent() %></textarea>
+                    <textarea id="galleryContent" name="galleryContent" class="form-control" rows="26" ><%=gallery.getGalleryContent().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %></textarea>
                 </div>
                 <%
                 if(userID.equals(galleryDAO.getGalleryView(galleryID).getUserID())){	// 이 갤러리 게시글을 작성한 사람일때 수정/삭제 표시

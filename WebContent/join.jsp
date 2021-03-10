@@ -36,7 +36,7 @@
 				},
 				success : function(result) {
 					var blank_pattern = /^\s+|\s+$/g;
-					var special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+					var special_pattern = /[`~!@#$%><^&*|\\\'\";:\/?]/gi;
 					if (userID == "" || userID == null) {
 						$('#idCheck').css('color', 'red');
 						$('#idCheck').text("아이디를 입력해주세요!");
@@ -78,18 +78,19 @@
 				},
 				success : function(result) {
 					var blank_pattern = /^\s+|\s+$/g;
-					var special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+					var special_pattern = /[`~!@#><$%^&*|\\\'\";:\/?]/gi;
 					if (userNickname == "" || userNickname == null) {
 						$('#nicknameCheck').css('color', 'red');
 						$('#nicknameCheck').text("닉네임을 입력해주세요!");
-
+						return;
 					} else if (blank_pattern.test(userNickname) == true) {
 						$('#nicknameCheck').css('color', 'red');
 						$('#nicknameCheck').text("공백은 사용할수 없습니다!");
+						return;
 					} else if (special_pattern.test(userNickname) == true) {
 						$('#nicknameCheck').css('color', 'red');
 						$('#nicknameCheck').text("특수문자는 사용할수 없습니다!");
-
+						return;
 					} else {
 						if (result == 1) {
 							$('#nicknameCheck').css('color', 'red');
@@ -115,7 +116,7 @@
 		var userNickname = $('#userNickname').val();
 		var userEmail = $('#userEmail').val();
 		var blank_pattern = /^\s+|\s+$/g;
-		var special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+		var special_pattern = /[`~!@#><$%^&*|\\\'\";:\/?]/gi;
 
 		if (userID == "" || userID == null) {
 			alert("아이디를 입력해주세요");

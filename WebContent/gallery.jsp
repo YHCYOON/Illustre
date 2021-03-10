@@ -179,7 +179,7 @@
     %>
 				<a class="pictureCard" href="galleryView.jsp?galleryID=<%=list.get(i).getGalleryID()%>">
 					<div class="screen">
-						<div class="hoverTitle"><%=list.get(i).getGalleryTitle() %></div>
+						<div class="hoverTitle"><%=list.get(i).getGalleryTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %></div>
 						<div class="hoveruserNickname"><%=list.get(i).getUserNickname() %></div>
 						<div class="hoverLike">
 						<i class="fas fa-heart"><%=list.get(i).getGalleryLikeCount() %></i>

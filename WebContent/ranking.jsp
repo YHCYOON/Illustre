@@ -153,7 +153,7 @@
 			}
 %>
 				<div class="rankContentWrap">
-					<div class="rankTitle"><%=list.get(i).getGalleryTitle() %>
+					<div class="rankTitle"><%=list.get(i).getGalleryTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %>
 					</div>
 					<div class="rankNicknameLike">
 	    				<div class="rankNickname"><%=list.get(i).getUserNickname() %>
@@ -194,7 +194,7 @@
 			}
 %>
 				<div class="rankContentWrap">
-					<div class="rankTitle"><%=list.get(i).getGalleryTitle() %>
+					<div class="rankTitle"><%=list.get(i).getGalleryTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %>
 					</div>
 					<div class="rankNicknameLike">
 	    				<div class="rankNickname"><%=list.get(i).getUserNickname() %>
@@ -216,7 +216,7 @@
 %>
 		<a class="pictureCard" href="galleryView.jsp?galleryID=<%=list.get(i).getGalleryID()%>">
 			<div class="screen">
-				<div class="hoverTitle"><%=list.get(i).getGalleryTitle() %></div>
+				<div class="hoverTitle"><%=list.get(i).getGalleryTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %></div>
 				<div class="hoveruserNickname"><%=list.get(i).getUserNickname() %></div>
 				<div class="hoverLike"><i class="fas fa-heart"><%=list.get(i).getGalleryLikeCount() %></i></div>
 				<img id="pictureCard" class="cardImage" src="<%=request.getContextPath() %>/upload/<%=list.get(i).getFileRealName()%>">

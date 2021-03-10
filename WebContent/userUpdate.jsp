@@ -37,7 +37,7 @@ $(function(){
 			data:{userNickname : userNickname},
 			success: function(result){
 				var blank_pattern = /^\s+|\s+$/g;
-				var special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+				var special_pattern = /[`~!@><#$%^&*|\\\'\";:\/?]/gi;
 				var userNickname = $('#userNickname').val();
 				if(userNickname == "" || userNickname == null ){
 					$('#nicknameCheck').css('color','red');
@@ -78,7 +78,7 @@ function userUpdateTest(){
 	var userNickname = $('#userNickname').val();
 	var userEmail = $('#userEmail').val();
 	var blank_pattern = /^\s+|\s+$/g;
-	var special_pattern = /[`~!@#$%^&*|\\\'\";:\/?]/gi;
+	var special_pattern = /[`~!@><#$%^&*|\\\'\";:\/?]/gi;
 	
 	if(userPassword == "" || userPassword == null){
 		alert("비밀번호를 입력해주세요");

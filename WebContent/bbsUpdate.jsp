@@ -55,7 +55,7 @@
 			<div class="wrap">
 		    <nav class="navBar">
 		        <div class="navBarContent">
-		            <a href="main.jsp" onclick="onClickMain()" class="navBarLogo">
+		            <a href="main.jsp" class="navBarLogo">
 		                <img src="images/illustre_logo.png" alt="illustre">
 		            </a>
 		            <div class="navContent">
