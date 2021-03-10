@@ -149,7 +149,6 @@ wrap {
 }
 
 .pictureCardSection {
-	height: 1450px;
 	width: 1330px;
     margin: auto;
     list-style: none;
@@ -247,8 +246,6 @@ a:hover .screen::after {
 
 /* ranking 페이지 */
 /* TOP */
-.rankSectionWrap {
-}
 
 .rankSectionTop {
     height: 528px;

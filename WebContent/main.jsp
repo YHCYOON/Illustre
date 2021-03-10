@@ -83,7 +83,7 @@
     </nav>
     <!-- 일러스트리 설명 점보트론 -->
 	<div class="container">
-			<div class="jumbotron" style="background-color:white; margin:0px; padding: 20px 40px 40px 20px;">
+			<div class="jumbotron" style="background-color:white; margin:0px; padding: 20px 40px 15px 20px;">
 				<div class="illustre">일러스트리 - 내가 그린 세상</div>
 				<div class="illustreInfo">자유롭게 그림을 공유하고 다른 사용자들과 소통할 수 있는 일러스트 공유 커뮤니티입니다</div>
 				<button type="button" class="btn btn-Skyblue btn-lg" data-toggle="modal" data-target="#myModal">자세히 알아보기</button>
@@ -123,7 +123,7 @@
 	        		<h4 class="modal-title" id="myModalLabel">일러스트리 소개</h4>
 	      		</div>
 	     	 	<div class="modal-body">
-	       	 	안녕하세요
+	       	 	안녕하세요 
 	      		</div>
 	      		<div class="modal-footer">
 	        		<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>

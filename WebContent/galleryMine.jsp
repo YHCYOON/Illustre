@@ -149,9 +149,18 @@
     </div>
     <!-- CardSection -->
 	<!-- CardSection -->
-    <div class="pictureCardSection">
+    
     <%
-    	try{
+    	if(list.size() == 0){
+    %>		
+    <div class="pictureCardSection" style="text-align:center;">	
+    	<img src="images/lion.png" alt="lion">
+    
+    <%
+    	}try{
+    %>
+    	<div class="pictureCardSection">
+    <%		
     		for(int i = 0; i < list.size(); i++){
     %>
 				<a class="pictureCard" href="galleryView.jsp?galleryID=<%=list.get(i).getGalleryID()%>">
