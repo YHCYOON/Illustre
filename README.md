@@ -1,4 +1,4 @@
-<img src="images/illustre_logo_underline.png" height="100"/>
+<img src="/WebContent/images/illustre_logo_underline.png" height="100"/>
 
 > 일러스트리 - 내가 그린 세상 
 - www.drawell.shop
