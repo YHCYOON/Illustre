@@ -6,7 +6,7 @@
 
 ## 사용 언어
 - Front-End : HTML, CSS, JAVASCRIPT, JQUERY
-- BACK-END : JAVA, JSP, MYSQL
+- Back-End : JAVA, JSP, MYSQL
 
 ## Links
 - Project homepage: https://drawell.shop
@@ -15,6 +15,7 @@
 ## 핵심 기능
 - 이미지 파일을 포함하는 게시글을 등록할 수 있습니다.
 - 게시글을 카테고리 별로 볼 수 있으며 검색기능을 구현했습니다.
+- 갤러리 게시판과 커뮤니티 게시판에 페이지네이션 기능을 구현했습니다.
 - 게시글에 사용자마다 한번씩 좋아요를 할 수 있습니다.
 - 게시글마다 댓글 기능을 구현했습니다.
 - 좋아요가 많은 순서대로 그림을 볼 수 있는 랭킹 페이지를 구현했습니다.

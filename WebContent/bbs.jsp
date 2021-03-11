@@ -31,6 +31,7 @@
 		UserDAO userDAO = new UserDAO();
 		userNickname = userDAO.getUserInfo(userID).getUserNickname();
 	}
+	// pageNumber 가 정수가 아닐때 예외처리
 	int pageNumber = 1;
 	try{
 		if(request.getParameter("pageNumber") != null){
