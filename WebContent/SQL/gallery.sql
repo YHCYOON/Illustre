@@ -6,8 +6,9 @@ create table user(
 	userName VARCHAR(20),
 	userNickname VARCHAR(50),
 	userEmail VARCHAR(50),
-	PRIMARY KEY (userID));
+	UNIQUE userIndex (userID, userNickname));
 
+	
 
 Gallery Table
 

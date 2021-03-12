@@ -67,9 +67,9 @@ public class UserDAO {
 			pstmt.setString(1, userNickname);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				return 1;	// 이미 있는 닉네임
+				return 1;	// 이미 있는 닉네임 - 수정불가
 			}
-			return 0;	// 사용 가능한 닉네임
+			return 0;	// 사용 가능한 닉네임 - 수정가능
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -153,7 +153,7 @@ public class UserDAO {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return -1;	// 데이터베이스 오류
+		return -1;	// 데이터베이스 오류 - 이미 존재하는 닉네임
 	}
 	// 비밀번호 찾기 메서드
 	public String getPassword(String userID, String userName, String userEmail) {

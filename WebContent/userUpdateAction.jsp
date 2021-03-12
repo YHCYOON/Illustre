@@ -32,7 +32,6 @@
 			UserDAO userDAO = new UserDAO();
 			int result = userDAO.updateUserInfo(user);
 			if(result == 1){
-				session.setAttribute("UserNickname", user.getUserNickname());
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('수정이 완료되었습니다');");
@@ -41,7 +40,7 @@
 			}else{
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
-				script.println("alert('수정이 실패하였습니다');");
+				script.println("alert('이미 존재하는 닉네임입니다');");
 				script.println("history.back()");
 				script.println("</script>");
 			}
