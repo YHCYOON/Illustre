@@ -14,39 +14,46 @@
 	<meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" href="css/customBootstrap.css">
 	<link rel="stylesheet" href="css/gallery.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 	<title>일러스트리 - 내가 그린 세상</title>
 	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 </head>
 <body>
-<%
+	<%
+		// UserID 세션값이 있으면 userID 에 대입
 		String userID = null;
 		String userNickname = null;
 		if (session.getAttribute("UserID") != null){
 			userID = (String) session.getAttribute("UserID");
 			UserDAO userDAO = new UserDAO();
+			// 해당 userID 의 user 객체를 가져옴
 			User user = userDAO.getUserInfo(userID);
+			// userNickname 에 해당 객체의 userNickname 값을 대입
 			userNickname = user.getUserNickname();
 		}
 		
+		// 디폴트 galleryCategory 값은 전체보기
 		GalleryDAO galleryDAO = new GalleryDAO();
     	String galleryCategory = "전체보기";
     	try{
+    		// 넘어오는 galleryCategory 파라미터가 있을때
 	    	if(request.getParameter("galleryCategory") != null){
+	    		// 파라미터가 캐릭터 일러스트, 배경 일러스트, 스케치 일때 galleryCategory 에 대입
 	    		if(request.getParameter("galleryCategory").equals("캐릭터 일러스트") || request.getParameter("galleryCategory").equals("배경 일러스트") || 
 		    		request.getParameter("galleryCategory").equals("스케치")){
 		    		galleryCategory = (String) request.getParameter("galleryCategory");
 		    	}
 	    	}
     	}catch(Exception e){
+    		// 예외처리
     		PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('올바르지 않은 카테고리입니다');");
 			script.println("history.back()");
 			script.println("</script>");
     	}
-%>
+	%>
 <div class="wrap">
     <nav class="navBar">
         <div class="navBarContent">
@@ -124,8 +131,10 @@
     <!-- CardSection -->
 	<div class="rankSectionTop">
 <%
+	// galleryCategory 별로 getRanking 메서드를 이용해 Gallery 객체의 배열을 가져옴
 	ArrayList<Gallery> list = galleryDAO.getRanking(galleryCategory);
-	if(list.size() <= 3 ){		//  list 가 3개 이하일때
+	//list 가 3개 이하일때
+	if(list.size() <= 3 ){		
 		for(int i = 0; i < list.size(); i++){
 			Gallery gallery = new Gallery();
 %>

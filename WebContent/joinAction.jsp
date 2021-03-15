@@ -19,14 +19,25 @@
 	<%
 		String userID = null;
 		String userNickname = null;
-		if(request.getParameter("userID") != null){
-			userID = (String) request.getParameter("userID");
+		// UserID 세션값이 있으면 userID 에 대입
+		if(session.getAttribute("UserID") != null){
+			userID = (String) session.getAttribute("UserID");
 		}
+		// UserID 세션값이 있으면 회원가입 할수 없음
+		if(userID != null){
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('이미 로그인 되어있습니다')");
+			script.println("history.back()");
+			script.println("</script>");
+			return;
+		}
+		// userNickname 값이 넘어오면 userNickname 에 대입
 		if(request.getParameter("userNickname") != null){
 			userNickname = (String) request.getParameter("userNickname");
 		}
-		// URL 로 joinAction 접근하는 거 방지
-		if(userID == null || userNickname == null){
+		// URL 로 joinAction 접근하는 거 방지 - 넘어오는 userNickname 값이 있어야함
+		if(userNickname == null){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('올바르지 않은 접근입니다')");

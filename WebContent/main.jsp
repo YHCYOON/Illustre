@@ -16,12 +16,15 @@
 </head>
 <body>
 	<%
+		// UserID 세션값이 있으면 userID 에 대입
 		String userID = null;
 		String userNickname = null;
 		if (session.getAttribute("UserID") != null){
 			userID = (String) session.getAttribute("UserID");
 			UserDAO userDAO = new UserDAO();
+			// 해당 userID 의 user 객체를 가져옴
 			User user = userDAO.getUserInfo(userID);
+			// userNickname 에 해당 객체의 userNickname 값을 대입
 			userNickname = user.getUserNickname();
 		}
 	%>

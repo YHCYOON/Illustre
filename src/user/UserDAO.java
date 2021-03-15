@@ -153,7 +153,7 @@ public class UserDAO {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return -1;	// 데이터베이스 오류 - 이미 존재하는 닉네임
+		return -1;	// 데이터베이스 오류
 	}
 	// 비밀번호 찾기 메서드
 	public String getPassword(String userID, String userName, String userEmail) {
