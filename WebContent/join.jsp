@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@page import="java.io.PrintWriter" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -181,6 +181,20 @@
 </script>
 </head>
 <body>
+	<%
+		// UserID 세션값 있을때 접근시 이미 로그인되어있음 처리
+		String userID = null;
+		if(session.getAttribute("UserID") != null){
+			userID = (String) session.getAttribute("UserID");
+		}
+		if(userID != null){
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('이미 로그인 되어있습니다');");
+			script.println("history.back()");
+			script.println("</script>");
+		}
+	%>
 	<a href="main.jsp" id="navLogo"> <img
 		src="images/illustre_logo_white.png" alt="illustre"></a>
 	<div class="wrapper fadeInDown">
