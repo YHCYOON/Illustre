@@ -67,9 +67,9 @@ public class UserDAO {
 			pstmt.setString(1, userNickname);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				return 1;	// 이미 있는 닉네임 - 수정불가
+				return 1;	// 이미 있는 닉네임 
 			}
-			return 0;	// 사용 가능한 닉네임 - 수정가능
+			return 0;	// 사용 가능한 닉네임 
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

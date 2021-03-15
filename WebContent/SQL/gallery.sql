@@ -6,7 +6,7 @@ create table user(
 	userName VARCHAR(20),
 	userNickname VARCHAR(50),
 	userEmail VARCHAR(50),
-	UNIQUE userIndex (userID, userNickname));
+	PRIMARY KEY (userID));
 
 	
 
