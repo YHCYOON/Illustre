@@ -24,6 +24,7 @@
 <body>
 
 <%
+
 	String userID = null;
 	String userNickname = null;
 	if(session.getAttribute("UserID") != null){
@@ -45,6 +46,7 @@
 		script.println("</script>");
 	}
 	BbsDAO bbsDAO = new BbsDAO();
+	
 	// 존재하는 게시글이 있는데 pageNumber 가 존재하는 페이지를 초과하면
 	if(bbsDAO.getTotalPage() != 0){
 		if(pageNumber > bbsDAO.getTotalPage()){
