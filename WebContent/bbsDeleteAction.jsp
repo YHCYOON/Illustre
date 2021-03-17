@@ -15,7 +15,6 @@
 		if(session.getAttribute("UserID") != null){
 			userID = (String) session.getAttribute("UserID");
 		}
-		
 		if(userID == null ){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
@@ -27,7 +26,6 @@
 		if(request.getParameter("bbsID") != null){
 			bbsID = Integer.parseInt(request.getParameter("bbsID"));
 		}
-		
 		if(bbsID == 0){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
