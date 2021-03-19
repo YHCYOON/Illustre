@@ -51,6 +51,7 @@
 			script.println("location.href='bbs.jsp'");
 			script.println("</script>");
 		}else{
+	
 	%>
 			<div class="wrap">
 		    <nav class="navBar">
