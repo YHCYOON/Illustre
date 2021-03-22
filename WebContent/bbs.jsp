@@ -24,7 +24,7 @@
 <body>
 
 <%
-
+	// 세션에서 userID 와 userNickname 을 가져옴
 	String userID = null;
 	String userNickname = null;
 	if(session.getAttribute("UserID") != null){
@@ -32,22 +32,23 @@
 		UserDAO userDAO = new UserDAO();
 		userNickname = userDAO.getUserInfo(userID).getUserNickname();
 	}
-	// pageNumber 가 정수가 아닐때 예외처리
+	// 넘어온 pageNumber 파라미터를 pageNumber에 대입
 	int pageNumber = 1;
 	try{
 		if(request.getParameter("pageNumber") != null){
 			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 		}
 	}catch(Exception e){
+		// pageNumber 가 정수가 아닐때 예외처리
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('올바르지 않은 페이지입니다');");
 		script.println("location.href='bbs.jsp'");
 		script.println("</script>");
 	}
-	BbsDAO bbsDAO = new BbsDAO();
 	
 	// 존재하는 게시글이 있는데 pageNumber 가 존재하는 페이지를 초과하면
+	BbsDAO bbsDAO = new BbsDAO();
 	if(bbsDAO.getTotalPage() != 0){
 		if(pageNumber > bbsDAO.getTotalPage()){
 			PrintWriter script = response.getWriter();

@@ -17,6 +17,7 @@
 </head>
 <body>
 	<%
+		// UserID 세션이 있으면 userID 에 대입
 		String userID = null;
 		String userNickname = null;
 		if(session.getAttribute("UserID") != null){
@@ -24,36 +25,51 @@
 			UserDAO userDAO = new UserDAO();
 			userNickname = userDAO.getNickname(userID);
 		}
+		// userID 가 없으면 로그인이 필요함
 		if(userID == null){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다');");
 			script.println("location.href='login.jsp'");
 			script.println("</script>");
+			return;
 		}
-		
+		// 넘어온 bbsID 파라미터를 bbsID 에 대입
 		int bbsID = 0;
-		if(request.getParameter("bbsID") != null){
-			bbsID = Integer.parseInt(request.getParameter("bbsID"));
+		try{
+			if(request.getParameter("bbsID") != null){
+				bbsID = Integer.parseInt(request.getParameter("bbsID"));
+			}
+		}catch(Exception e){
+			// bbsID 가 정수가 아닐때 예외처리
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('유효하지 않은 페이지입니다');");
+			script.println("history.back()");
+			script.println("</script>");
+			return;
 		}
+		// 넘어온 bbsID 가 없으면 접근 에러 alert
 		if(bbsID == 0){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('유효하지 않은 글입니다');");
-			script.println("location.href='bbs.jsp'");
+			script.println("alert('올바르지 않은 접근입니다');");
+			script.println("history.back()");
 			script.println("</script>");
+			return;
 		}
-		Bbs bbs = new BbsDAO().getBbs(bbsID);
-		if(! userID.equals(bbs.getUserID())){
-			PrintWriter script = response.getWriter();
-			script.println("<script>");
-			script.println("alert('글 수정 권한이 없습니다');");
-			script.println("location.href='bbs.jsp'");
-			script.println("</script>");
-		}else{
-	
+		// 해당 게시글의 userID 와 현재 접속중인 userID 가 일치하지 않으면 권한이 없음
+		try{
+			Bbs bbs = new BbsDAO().getBbs(bbsID);
+			if(! userID.equals(bbs.getUserID())){
+				PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('글 수정 권한이 없습니다');");
+				script.println("history.back()");
+				script.println("</script>");
+			}else{
 	%>
-			<div class="wrap">
+		<div class="wrap">
 		    <nav class="navBar">
 		        <div class="navBarContent">
 		            <a href="main.jsp" class="navBarLogo">
@@ -117,6 +133,14 @@
 			</div>
     </div>
 	<%
+			}
+		}catch(Exception e){
+				// 존재하지 않는 bbsID 일때 예외처리
+				PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('존재하지 않는 페이지입니다');");
+				script.println("history.back()");
+				script.println("</script>");
 		}
 	%>
 	

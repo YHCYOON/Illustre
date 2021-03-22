@@ -24,6 +24,7 @@ request.setCharacterEncoding("UTF-8");
 </head>
 <body>
 	<%
+	// 세션에서 userID와 userNickname를 가져옴
 	String userID = null;
 	String userNickname = null;
 	if (session.getAttribute("UserID") != null) {
@@ -31,40 +32,66 @@ request.setCharacterEncoding("UTF-8");
 		UserDAO userDAO = new UserDAO();
 		userNickname = userDAO.getNickname(userID);
 	}
+	// userID 가 없으면 로그인 페이지로 이동
 	if (userID == null) {
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('로그인이 필요합니다');");
 		script.println("location.href='login.jsp'");
 		script.println("</script>");
+		return;
 	}
-
+	// 넘어온 bbsID 파라미터를 bbsID에 대입
 	int bbsID = 0;
-	if (request.getParameter("bbsID") != null) {
-		bbsID = Integer.parseInt(request.getParameter("bbsID"));
+	try{
+		if (request.getParameter("bbsID") != null) {
+			bbsID = Integer.parseInt(request.getParameter("bbsID"));
+		}
+	}catch(Exception e){
+		// bbsID가 정수가 아닐때 예외처리
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('유효하지 않은 페이지입니다');");
+		script.println("history.back()");
+		script.println("</script>");
+		return;
 	}
+	// 넘어온 bbsID 파라미터가 없을 때 접근에러 alert
 	if (bbsID == 0) {
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
-		script.println("alert('유효하지 않은 글입니다');");
-		script.println("location.href='bbs.jsp'");
+		script.println("alert('올바르지 않은 접근입니다');");
+		script.println("history.back()");
 		script.println("</script>");
+		return;
 	}
 	Bbs bbs = new BbsDAO().getBbs(bbsID);
-
+	// 넘어온 bbsCommentID 파라미터를 bbsCommentID 에 대입
 	int bbsCommentID = 0;
-	if (request.getParameter("bbsCommentID") != null) {
-		bbsCommentID = Integer.parseInt(request.getParameter("bbsCommentID"));
-	}
-
-	if (bbsCommentID == 0) {
+	try{
+		if (request.getParameter("bbsCommentID") != null) {
+			bbsCommentID = Integer.parseInt(request.getParameter("bbsCommentID"));
+		}
+	}catch(Exception e){
+		// bbsCommentID 가 정수가 아닐때 예외처리
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('유효하지 않은 댓글입니다');");
-		script.println("location.href='bbs.jsp'");
+		script.println("history.back()");
 		script.println("</script>");
+		return;
+	}
+	// 넘어온 bbsCommentID 가 없을 때 접근에러 alert
+	if (bbsCommentID == 0) {
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('올바르지 않은 접근입니다');");
+		script.println("history.back()");
+		script.println("</script>");
+		return;
 	}
 	UserDAO userDAO = new UserDAO();
+	try{
 	%>
 	<div class="wrap">
 		<nav class="navBar">
@@ -114,7 +141,7 @@ request.setCharacterEncoding("UTF-8");
 					</div>
 				</div>
 				<%
-				} else {
+				}else{
 				%>
 				<div class="helloUser">
 					<div class="hello">안녕하세요</div>
@@ -135,9 +162,7 @@ request.setCharacterEncoding("UTF-8");
 					style="text-align: center; border: 1px solid #dddddd;">
 					<thead>
 						<tr>
-							<td colspan="3"
-								style="background-color: #eeeeee; text-align: center;">게시판
-								글 보기</td>
+							<td colspan="3" style="background-color: #eeeeee; text-align: center;">게시판 글 보기</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -291,8 +316,15 @@ request.setCharacterEncoding("UTF-8");
 				</table>
 				<%
 				}
+	}catch(Exception e){
+		// 존재하지 않는 게시글일때 예외처리
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('존재하지 않는 페이지입니다');");
+		script.println("history.back()");
+		script.println("</script>");
+	}
 				%>
-
 			</div>
 		</div>
 	</div>

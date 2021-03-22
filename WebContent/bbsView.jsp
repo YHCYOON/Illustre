@@ -7,7 +7,6 @@
 <%@page import="user.UserDAO" %>
 <%@page import="bbsComment.BbsComment" %>
 <%@page import="bbsComment.BbsCommentDAO" %>
-
 <%@page import="java.util.ArrayList" %>
 <%request.setCharacterEncoding("UTF-8"); %>
 <!DOCTYPE html>
@@ -23,6 +22,7 @@
 </head>
 <body>
 <%
+	//UserID 세션이 있으면 userID 에 대입
 	String userID = null;
 	String userNickname= null;
 	if(session.getAttribute("UserID") != null){
@@ -30,21 +30,34 @@
 		UserDAO userDAO = new UserDAO();
 		userNickname = userDAO.getNickname(userID);
 	}
-	
+	// 넘어온 bbsID 파라미터를 bbsID 에 대입
 	int bbsID = 0;
-	if(request.getParameter("bbsID") != null){
-		bbsID = Integer.parseInt(request.getParameter("bbsID"));
+	try{
+		if(request.getParameter("bbsID") != null){
+			bbsID = Integer.parseInt(request.getParameter("bbsID"));
+		}
+	}catch(Exception e){
+		// bbsID 가 정수가 아닐때 예외처리
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('유효하지 않은 페이지입니다');");
+		script.println("history.back()");
+		script.println("</script>");
+		return;
 	}
+	// 넘어온 bbsID 파라미터가 없으면 접근에러 alert
 	if(bbsID == 0){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
-		script.println("alert('유효하지 않은 글입니다');");
-		script.println("location.href='bbs.jsp'");
+		script.println("alert('올바르지 않은 접근입니다');");
+		script.println("history.back()");
 		script.println("</script>");
+		return;
 	}
 	Bbs bbs = new BbsDAO().getBbs(bbsID);
 	UserDAO userDAO = new UserDAO();
 	
+	try{
 %>
 <div class="wrap">
     <nav class="navBar">
@@ -134,6 +147,7 @@
 				</table>
 				<a href="bbs.jsp" class="btn btn-Green">목록</a>
 				<%
+					// 해당 글을 작성한 사용자일때 수정, 삭제 버튼 표시
 					if(userID != null && userID.equals(bbs.getUserID())){
 				%>
 					<a href="bbsUpdate.jsp?bbsID=<%=bbsID%>" class="btn btn-Skyblue">수정</a>
@@ -144,6 +158,7 @@
 		</div>
 		
 		<% 
+			// 접속중인 userID 일때
 			if(userID != null){
 		%>
 		<form method="post" action="commentWriteAction.jsp?bbsID=<%=bbsID %>">
@@ -219,6 +234,15 @@
 			</div>
 		</div>
 	</div>
-    	
+<%
+	}catch(Exception e){
+		// 존재하지 않는 bbsID 일때 예외처리
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		script.println("alert('존재하지 않는 페이지입니다');");
+		script.println("history.back()");
+		script.println("</script>");
+	}
+%>  	
 </body>
 </html>

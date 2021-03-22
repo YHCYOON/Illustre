@@ -15,6 +15,7 @@
 </head>
 <body>
 	<%
+		//UserID 세션이 있으면 userID 에 대입
 		String userID = null;
 		String userNickname = null;
 		if(session.getAttribute("UserID") != null){
@@ -22,7 +23,7 @@
 			UserDAO userDAO = new UserDAO();
 			userNickname = userDAO.getNickname(userID);
 		}
-		
+		// userID 가 없으면 로그인이 필요함
 		if(userID == null){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
