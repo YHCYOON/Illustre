@@ -22,6 +22,7 @@
 </head>
 <body>
 <%
+		// 세션이 존재하면 해당 사용자의 userID와 userNickname를 가져옴
 		String userID = null;
 		String userNickname = null;
 		if (session.getAttribute("UserID") != null){
@@ -30,30 +31,34 @@
 			User user = userDAO.getUserInfo(userID);
 			userNickname = user.getUserNickname();
 		}
-		
+		// 넘어온 pageNumber 파라미터를 pageNumber에 대입
 		int pageNumber = 1;
 		try{
 			if(request.getParameter("pageNumber") != null){
 				pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
 			}
 		}catch(Exception e){
+			// 넘어온 pageNumber 파라미터가 정수가 아닐때 예외처리
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("alert('올바르지 않은 페이지입니다');");
-			script.println("location.href='gallery.jsp'");
+			script.println("alert('유효하지 않은 페이지입니다');");
+			script.println("history.back()");
 			script.println("</script>");
 		}
-		
+		// 기본 galleryCategory 를 전체보기로 설정
 		GalleryDAO galleryDAO = new GalleryDAO();
     	String galleryCategory = "전체보기";
     	try{
+    		// 넘어온 파라미터가 있을때
 	    	if(request.getParameter("galleryCategory") != null){
+	    		// 그 파라미터가 캐릭터 일러스트 , 배경 일러스트, 스케치이면 galleryCategory 에 대입
 	    		if(request.getParameter("galleryCategory").equals("캐릭터 일러스트") || request.getParameter("galleryCategory").equals("배경 일러스트") || 
 		    		request.getParameter("galleryCategory").equals("스케치")){
 		    		galleryCategory = (String) request.getParameter("galleryCategory");
 		    	}
 	    	}
     	}catch(Exception e){
+    		// 셋중에 하나가 아니면 예외처리
     		PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('올바르지 않은 카테고리입니다');");
@@ -63,7 +68,7 @@
     	// keyWord , searchWord 값이 default 일때 모든 파일을 보여줌
     	String keyWord = "fileName";
     	String searchWord = ".";
-    	
+    	// 넘어온 keyWord, searchWord 를 대입
     	if(request.getParameter("keyWord") != null){
     		keyWord = (String) request.getParameter("keyWord");
     	}
