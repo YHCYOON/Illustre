@@ -12,10 +12,12 @@
 </head>
 <body>
 	<%
+	// UserID 세션값이 있으면 userID 에 대입
 	String userID = null;
 	if(session.getAttribute("UserID") != null){
 		userID = (String) session.getAttribute("UserID");
 	}
+	// UserID 세션값이 없을때 로그인 페이지로 이동
 	if(userID == null){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
@@ -33,7 +35,7 @@
 	}catch(Exception e){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
-		script.println("alert('올바르지 않은 접근입니다. 다시 시도해주세요');");
+		script.println("alert('올바르지 않은 접근입니다');");
 		script.println("history.back()");
 		script.println("</script>");
 		return;
@@ -44,7 +46,7 @@
 	if(galleryID < 1 || galleryID > galleryDAO.getGalleryID()-1 || checkGalleryAvailable == 0){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
-		script.println("alert('존재하지 않는 게시글입니다. 다시 시도해주세요');");
+		script.println("alert('존재하지 않는 게시글입니다');");
 		script.println("history.back()");
 		script.println("</script>");
 		return;
