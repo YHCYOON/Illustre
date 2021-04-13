@@ -12,6 +12,7 @@
 </head>
 <body>
 	<%
+		// 로그인 되어있는지 검사
 		String userID = null;
 		if(session.getAttribute("UserID") != null){
 			userID = (String) session.getAttribute("UserID");
@@ -20,7 +21,7 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다');");
-			script.println("location.href='login.jsp'");
+			script.println("location.href='login'");
 			script.println("</script>");
 		}
 		int galleryID = 0;
@@ -48,6 +49,7 @@
 			script.println("</script>");
 			return;
 		}
+		// 넘어온 galleryCommentContent가 공백이거나 없으면 댓글작성 alert
 		String galleryComment = request.getParameter("galleryCommentContent");
 		if(galleryComment.equals(null) || galleryComment.equals("") || galleryComment.equals(" ")){
 			PrintWriter script = response.getWriter();
@@ -57,13 +59,14 @@
 			script.println("</script>");
 			return;
 		}else{
+			// 공백이 아니면 writeGalleryComment 메서드 실행
 			GalleryCommentDAO galleryCommentDAO = new GalleryCommentDAO();
 			int result = galleryCommentDAO.writeGalleryComment(galleryID, userID, galleryComment);
 			if(result == 1){
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('댓글이 등록되었습니다');");
-				script.println("location.href='galleryView.jsp?galleryID="+galleryID+"'");
+				script.println("location.href='galleryView?galleryID="+galleryID+"'");
 				script.println("</script>");
 			}else{
 				PrintWriter script = response.getWriter();

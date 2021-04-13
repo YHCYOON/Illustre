@@ -24,8 +24,6 @@
 			return true;
 		}
 	}
-
-
 	// 비밀번호 반환
 	function findPassword(){
 		var userID = $('#userID').val();
@@ -73,7 +71,7 @@
 </script>
 </head>
 <body>
-	<a href="main.jsp" id="navLogo"> <img
+	<a href="main" id="navLogo"> <img
 		src="images/illustre_logo_white.png" alt="illustre"></a>
 	<div class="wrapper fadeInDown">
 		<div id="formContent">
@@ -100,7 +98,7 @@
 
 			<!-- 비밀번호 찾기 -->
 			<div id="formFooter">
-				<a class="underlineHover"href="login.jsp">로그인</a>
+				<a class="underlineHover"href="login">로그인</a>
 			</div>
 
 			

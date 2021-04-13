@@ -1,12 +1,337 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
-  <display-name>Illustre</display-name>
+  <display-name>illustre</display-name>
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>bbs.jsp</welcome-file>
+    <welcome-file>bbsDeleteAction.jsp</welcome-file>
+    <welcome-file>bbsUpdate.jsp</welcome-file>
+    <welcome-file>bbsView.jsp</welcome-file>
+    <welcome-file>bbsWrite.jsp</welcome-file>
+    <welcome-file>bbsWriteAction.jsp</welcome-file>
+    <welcome-file>commentDeleteAction.jsp</welcome-file>
+    <welcome-file>commentUpdate.jsp</welcome-file>
+    <welcome-file>commentUpdateAction.jsp</welcome-file>
+    <welcome-file>commentWriteAction.jsp</welcome-file>
+    <welcome-file>forgotPassword.jsp</welcome-file>
+    <welcome-file>gallery.jsp</welcome-file>
+    <welcome-file>galleryCommentDeleteAction.jsp</welcome-file>
+    <welcome-file>galleryCommentUpdate.jsp</welcome-file>
+    <welcome-file>galleryCommentUpdateAction.jsp</welcome-file>
+    <welcome-file>galleryCommentWriteAction.jsp</welcome-file>
+    <welcome-file>galleryDeleteAction.jsp</welcome-file>
+    <welcome-file>galleryLikeAction.jsp</welcome-file>
+    <welcome-file>galleryMine.jsp</welcome-file>
+    <welcome-file>galleryRegist.jsp</welcome-file>
+    <welcome-file>galleryRegistAction.jsp</welcome-file>
+    <welcome-file>galleryUpdate.jsp</welcome-file>
+    <welcome-file>galleryUpdateAction.jsp</welcome-file>
+    <welcome-file>galleryView.jsp</welcome-file>
+    <welcome-file>join.jsp</welcome-file>
+    <welcome-file>joinAction.jsp</welcome-file>
+    <welcome-file>login.jsp</welcome-file>
+    <welcome-file>loginAction.jsp</welcome-file>
+    <welcome-file>logoutAction.jsp</welcome-file>
+    <welcome-file>main.jsp</welcome-file>
+    <welcome-file>ranking.jsp</welcome-file>
+    <welcome-file>userUpdate.jsp</welcome-file>
+    <welcome-file>userUpdateAction.jsp</welcome-file>
   </welcome-file-list>
+  
+	<servlet>
+		<servlet-name>bbs.jsp</servlet-name>
+		<jsp-file>/bbs.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>bbs.jsp</servlet-name>
+		<url-pattern>/bbs</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>bbsDeleteAction.jsp</servlet-name>
+		<jsp-file>/bbsDeleteAction.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>bbsDeleteAction.jsp</servlet-name>
+		<url-pattern>/bbsDeleteAction</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>bbsUpdate.jsp</servlet-name>
+		<jsp-file>/bbsUpdate.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>bbsUpdate.jsp</servlet-name>
+		<url-pattern>/bbsUpdate</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>bbsUpdateAction.jsp</servlet-name>
+		<jsp-file>/bbsUpdateAction.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>bbsUpdateAction.jsp</servlet-name>
+		<url-pattern>/bbsUpdateAction</url-pattern>
+	</servlet-mapping>	
+	
+	<servlet>
+		<servlet-name>bbsView.jsp</servlet-name>
+		<jsp-file>/bbsView.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>bbsView.jsp</servlet-name>
+		<url-pattern>/bbsView</url-pattern>
+	</servlet-mapping>
+		
+	<servlet>
+		<servlet-name>bbsWrite.jsp</servlet-name>
+		<jsp-file>/bbsWrite.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>bbsWrite.jsp</servlet-name>
+		<url-pattern>/bbsWrite</url-pattern>
+	</servlet-mapping>
+		
+	<servlet>
+		<servlet-name>bbsWriteAction.jsp</servlet-name>
+		<jsp-file>/bbsWriteAction.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>bbsWriteAction.jsp</servlet-name>
+		<url-pattern>/bbsWriteAction</url-pattern>
+	</servlet-mapping>
+		
+	<servlet>
+		<servlet-name>commentDeleteAction.jsp</servlet-name>
+		<jsp-file>/commentDeleteAction.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>commentDeleteAction.jsp</servlet-name>
+		<url-pattern>/commentDeleteAction</url-pattern>
+	</servlet-mapping>
+		
+	<servlet>
+		<servlet-name>commentUpdate.jsp</servlet-name>
+		<jsp-file>/commentUpdate.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>commentUpdate.jsp</servlet-name>
+		<url-pattern>/commentUpdate</url-pattern>
+	</servlet-mapping>
+		
+	<servlet>
+		<servlet-name>commentUpdateAction.jsp</servlet-name>
+		<jsp-file>/commentUpdateAction.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>commentUpdateAction.jsp</servlet-name>
+		<url-pattern>/commentUpdateAction</url-pattern>
+	</servlet-mapping>
+		
+	<servlet>
+		<servlet-name>commentWriteAction.jsp</servlet-name>
+		<jsp-file>/commentWriteAction.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>commentWriteAction.jsp</servlet-name>
+		<url-pattern>/commentWriteAction</url-pattern>
+	</servlet-mapping>
+		
+	<servlet>
+		<servlet-name>forgotPassword.jsp</servlet-name>
+		<jsp-file>/forgotPassword.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>forgotPassword.jsp</servlet-name>
+		<url-pattern>/forgotPassword</url-pattern>
+	</servlet-mapping>
+		
+	<servlet>
+		<servlet-name>gallery.jsp</servlet-name>
+		<jsp-file>/gallery.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>gallery.jsp</servlet-name>
+		<url-pattern>/gallery</url-pattern>
+	</servlet-mapping>
+		
+	<servlet>
+		<servlet-name>galleryCommentDeleteAction.jsp</servlet-name>
+		<jsp-file>/galleryCommentDeleteAction.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>galleryCommentDeleteAction.jsp</servlet-name>
+		<url-pattern>/galleryCommentDeleteAction</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>galleryCommentUpdate.jsp</servlet-name>
+		<jsp-file>/galleryCommentUpdate.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>galleryCommentUpdate.jsp</servlet-name>
+		<url-pattern>/galleryCommentUpdate</url-pattern>
+	</servlet-mapping>
+		
+	<servlet>
+		<servlet-name>galleryCommentWriteAction.jsp</servlet-name>
+		<jsp-file>/galleryCommentWriteAction.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>galleryCommentWriteAction.jsp</servlet-name>
+		<url-pattern>/galleryCommentWriteAction</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>galleryDeleteAction.jsp</servlet-name>
+		<jsp-file>/galleryDeleteAction.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>galleryDeleteAction.jsp</servlet-name>
+		<url-pattern>/galleryDeleteAction</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>galleryLikeAction.jsp</servlet-name>
+		<jsp-file>/galleryLikeAction.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>galleryLikeAction.jsp</servlet-name>
+		<url-pattern>/galleryLikeAction</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>galleryMine.jsp</servlet-name>
+		<jsp-file>/galleryMine.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>galleryMine.jsp</servlet-name>
+		<url-pattern>/galleryMine</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>galleryRegist.jsp</servlet-name>
+		<jsp-file>/galleryRegist.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>galleryRegist.jsp</servlet-name>
+		<url-pattern>/galleryRegist</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>galleryRegistAction.jsp</servlet-name>
+		<jsp-file>/galleryRegistAction.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>galleryRegistAction.jsp</servlet-name>
+		<url-pattern>/galleryRegistAction</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>galleryUpdate.jsp</servlet-name>
+		<jsp-file>/galleryUpdate.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>galleryUpdate.jsp</servlet-name>
+		<url-pattern>/galleryUpdate</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>galleryUpdateAction.jsp</servlet-name>
+		<jsp-file>/galleryUpdateAction.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>galleryUpdateAction.jsp</servlet-name>
+		<url-pattern>/galleryUpdateAction</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>galleryView.jsp</servlet-name>
+		<jsp-file>/galleryView.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>galleryView.jsp</servlet-name>
+		<url-pattern>/galleryView</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>join.jsp</servlet-name>
+		<jsp-file>/join.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>join.jsp</servlet-name>
+		<url-pattern>/join</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>joinAction.jsp</servlet-name>
+		<jsp-file>/joinAction.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>joinAction.jsp</servlet-name>
+		<url-pattern>/joinAction</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>login.jsp</servlet-name>
+		<jsp-file>/login.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>login.jsp</servlet-name>
+		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>loginAction.jsp</servlet-name>
+		<jsp-file>/loginAction.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>loginAction.jsp</servlet-name>
+		<url-pattern>/loginAction</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>logoutAction.jsp</servlet-name>
+		<jsp-file>/logoutAction.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>logoutAction.jsp</servlet-name>
+		<url-pattern>/logoutAction</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>main.jsp</servlet-name>
+		<jsp-file>/main.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>main.jsp</servlet-name>
+		<url-pattern>/main</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>ranking.jsp</servlet-name>
+		<jsp-file>/ranking.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ranking.jsp</servlet-name>
+		<url-pattern>/ranking</url-pattern>
+	</servlet-mapping>	
+	
+	<servlet>
+		<servlet-name>userUpdate.jsp</servlet-name>
+		<jsp-file>/userUpdate.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>userUpdate.jsp</servlet-name>
+		<url-pattern>/userUpdate</url-pattern>
+	</servlet-mapping>	
+		
+	<servlet>
+		<servlet-name>userUpdateAction.jsp</servlet-name>
+		<jsp-file>/userUpdateAction.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>userUpdateAction.jsp</servlet-name>
+		<url-pattern>/userUpdateAction</url-pattern>
+	</servlet-mapping>	
+
 </web-app>

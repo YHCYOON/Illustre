@@ -86,7 +86,7 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('댓글이 수정되었습니다');");
-			script.println("location.href='galleryView.jsp?galleryID="+galleryID+"'");
+			script.println("location.href='galleryView?galleryID="+galleryID+"'");
 			script.println("</script>");
 		}else{
 			PrintWriter script = response.getWriter();

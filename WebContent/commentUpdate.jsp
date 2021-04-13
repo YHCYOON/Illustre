@@ -37,7 +37,7 @@ request.setCharacterEncoding("UTF-8");
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('로그인이 필요합니다');");
-		script.println("location.href='login.jsp'");
+		script.println("location.href='login'");
 		script.println("</script>");
 		return;
 	}
@@ -96,24 +96,24 @@ request.setCharacterEncoding("UTF-8");
 	<div class="wrap">
 		<nav class="navBar">
 			<div class="navBarContent">
-				<a href="main.jsp" class="navBarLogo"> <img
+				<a href="main" class="navBarLogo"> <img
 					src="images/illustre_logo.png" alt="illustre">
 				</a>
 				<div class="navContent">
 					<div class="gallery">
-						<a href="gallery.jsp">갤러리</a>
+						<a href="gallery">갤러리</a>
 					</div>
 					<div class="ranking">
-						<a href="ranking.jsp">랭킹</a>
+						<a href="ranking">랭킹</a>
 					</div>
 					<div class="pictureRegist">
-						<a href="regist.jsp">그림등록</a>
+						<a href="regist">그림등록</a>
 					</div>
 					<div class="myPicture">
-						<a href="galleryMine.jsp">나의그림</a>
+						<a href="galleryMine">나의그림</a>
 					</div>
 					<div class="community">
-						<a href="bbs.jsp">커뮤니티</a>
+						<a href="bbs">커뮤니티</a>
 					</div>
 				</div>
 				<%
@@ -132,10 +132,10 @@ request.setCharacterEncoding("UTF-8");
 						</button>
 						<ul class="dropdown-menu" role="menu"
 							aria-labelledby="dropdownMenu1">
-							<li role="presentation"><a href="userUpdate.jsp"
+							<li role="presentation"><a href="userUpdate"
 								role="menuitem" tabindex="-1">회원정보 수정</a></li>
 							<li role="presentation" class="divider"></li>
-							<li role="presentation"><a href="logoutAction.jsp"
+							<li role="presentation"><a href="logoutAction"
 								role="menuitem" tabindex="-1">로그아웃</a></li>
 						</ul>
 					</div>
@@ -148,7 +148,7 @@ request.setCharacterEncoding("UTF-8");
 					<div class="user">로그인이 필요합니다</div>
 				</div>
 				<div class="logOutBtn">
-					<a href="login.jsp" class="btn btn-Skyblue btn-sm">로그인</a>
+					<a href="login" class="btn btn-Skyblue btn-sm">로그인</a>
 				</div>
 				<%
 				}
@@ -185,13 +185,13 @@ request.setCharacterEncoding("UTF-8");
 						</tr>
 					</tbody>
 				</table>
-				<a href="bbs.jsp" class="btn btn-Skyblue">목록</a>
+				<a href="bbs" class="btn btn-Skyblue">목록</a>
 				<%
 				if (userID != null && userID.equals(bbs.getUserID())) {
 				%>
-				<a href="bbsUpdate.jsp?bbsID=<%=bbsID%>" class="btn btn-Skyblue">수정</a>
+				<a href="bbsUpdate?bbsID=<%=bbsID%>" class="btn btn-Skyblue">수정</a>
 				<a onclick="return confirm('정말로 삭제하시겠습니까?')"
-					href="deleteAction.jsp?bbsID=<%=bbsID%>" class="btn btn-Red">삭제</a>
+					href="deleteAction?bbsID=<%=bbsID%>" class="btn btn-Red">삭제</a>
 				<%
 				}
 				%>
@@ -200,7 +200,7 @@ request.setCharacterEncoding("UTF-8");
 			<%
 			if (userID != null) {
 			%>
-			<form method="post" action="commentWriteAction.jsp?bbsID=<%=bbsID%>">
+			<form method="post" action="commentWriteAction?bbsID=<%=bbsID%>">
 				<table class="table"
 					style="text-align: center; border: 1px solid #dddddd; margin-top: 20px;">
 					<tbody>
@@ -217,7 +217,7 @@ request.setCharacterEncoding("UTF-8");
 		<%
 		} else {
 		%>
-		<form action="login.jsp">
+		<form action="login">
 			<table class="table"
 				style="text-align: center; border: 1px solid #dddddd; margin-top: 20px;">
 				<tbody>
@@ -256,12 +256,12 @@ request.setCharacterEncoding("UTF-8");
 							<td colspan="1" style="padding: 14px;"><%=userDAO.getUserInfo(list.get(i).getUserID()).getUserNickname().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>")%>
 							</td>
 							<td style="padding-top: 10px; width: 60px;">
-								<a href="commentUpdate.jsp?bbsID=<%=bbsID%>&bbsCommentID=<%=list.get(i).getBbsCommentID()%>">
+								<a href="commentUpdate?bbsID=<%=bbsID%>&bbsCommentID=<%=list.get(i).getBbsCommentID()%>">
 									<button type="button" class="btn btn-Skyblue btn-sm">수정</button>
 								</a>
 							</td>
 							<td style="padding-top: 10px; width: 60px;">
-								<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="commentDeleteAction.jsp">
+								<a onclick="return confirm('정말로 삭제하시겠습니까?')" href="commentDeleteAction">
 									<button type="button" class="btn btn-Red btn-sm">삭제</button>
 								</a>
 							</td>
@@ -286,7 +286,7 @@ request.setCharacterEncoding("UTF-8");
 						<tr>
 							<td colspan="3">
 								<form method="post"
-									action="commentUpdateAction.jsp?bbsID=<%=bbsID%>&bbsCommentID=<%=bbsCommentID%>">
+									action="commentUpdateAction?bbsID=<%=bbsID%>&bbsCommentID=<%=bbsCommentID%>">
 									<table class="table"
 										style="text-align: center; border: 1px solid #dddddd; margin-top: 20px;">
 										<tbody>

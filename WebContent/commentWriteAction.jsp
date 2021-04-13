@@ -11,18 +11,21 @@
 </head>
 <body>
 	<%
+		// 현재 로그인 되어있는 userID인지 검사
 		String userID = null;
 		if(session.getAttribute("UserID") != null){
 			userID = (String) session.getAttribute("UserID");
 		}
 		int bbsID = 0;
+		// 로그인 안되어 있으면 로그인페이지로 이동
 		if(userID == null){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다');");
-			script.println("location.href='login.jsp'");
+			script.println("location.href='login'");
 			script.println("</script>");
 		}else{
+			// 로그인 되어있으면 넘어온 파라미터들 유효성검사
 			if(request.getParameter("bbsCommentContent") == null || request.getParameter("bbsCommentContent") == " "){
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
@@ -30,6 +33,7 @@
 				script.println("history.back()");
 				script.println("</script>");
 			}else{
+				// 유효성 검사 후 writeBbsComment 메서드 실행
 				BbsCommentDAO bbsCommentDAO = new BbsCommentDAO();
 					bbsID = Integer.parseInt(request.getParameter("bbsID"));
 					int result = bbsCommentDAO.writeBbsComment(bbsID, userID, request.getParameter("bbsCommentContent"));
@@ -37,7 +41,7 @@
 						PrintWriter script = response.getWriter();
 						script.println("<script>");
 						script.println("alert('댓글이 등록되었습니다');");
-						script.println("location.href='bbsView.jsp?bbsID="+bbsID+"'");
+						script.println("location.href='bbsView?bbsID="+bbsID+"'");
 						script.println("</script>");
 					}else{
 						PrintWriter script = response.getWriter();

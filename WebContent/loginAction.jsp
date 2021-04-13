@@ -50,7 +50,7 @@
 			session.setAttribute("UserID", user.getUserID());
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
-			script.println("location.href='main.jsp'");
+			script.println("location.href='main'");
 			script.println("</script>");
 		}else if(result == 0){
 			PrintWriter script = response.getWriter();

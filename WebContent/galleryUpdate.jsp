@@ -155,24 +155,24 @@ function galleryRegist(){
 <div class="wrap">
     <nav class="navBar">
         <div class="navBarContent">
-            <a href="main.jsp" class="navBarLogo">
+            <a href="main" class="navBarLogo">
                 <img src="images/illustre_logo.png" alt="illustre">
             </a>
             <div class="navContent">
                 <div class="gallery">
-                    <a href="gallery.jsp">갤러리</a>
+                    <a href="gallery">갤러리</a>
                 </div>
                 <div class="ranking">
-                    <a href="ranking.jsp">랭킹</a>
+                    <a href="ranking">랭킹</a>
                 </div>
                 <div class="pictureRegist">
-                    <a href="galleryRegist.jsp">그림등록</a>
+                    <a href="galleryRegist">그림등록</a>
                 </div>
                 <div class="myPicture">
-                    <a href="galleryMine.jsp">나의그림</a>
+                    <a href="galleryMine">나의그림</a>
                 </div>
                 <div class="community">
-                    <a href="bbs.jsp">커뮤니티</a>
+                    <a href="bbs">커뮤니티</a>
                 </div>
             </div>
             <%
@@ -187,9 +187,9 @@ function galleryRegist(){
   						<button class="btn btn-Skyblue dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
   						회원관리<span class="caret"></span></button>
 		  				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-						    <li role="presentation"><a href="userUpdate.jsp" role="menuitem" tabindex="-1">회원정보 수정</a></li>
+						    <li role="presentation"><a href="userUpdate" role="menuitem" tabindex="-1">회원정보 수정</a></li>
 						    <li role="presentation" class="divider"></li>
-						    <li role="presentation"><a href="logoutAction.jsp" role="menuitem" tabindex="-1">로그아웃</a></li>
+						    <li role="presentation"><a href="logoutAction" role="menuitem" tabindex="-1">로그아웃</a></li>
 						</ul>
 					</div>
 	            </div>
@@ -201,7 +201,7 @@ function galleryRegist(){
 	                <div class="user">로그인이 필요합니다</div>
 	            </div>
 	            <div class="logOutBtn">
-	                <a href="login.jsp" class="btn btn-Skyblue btn-sm">로그인</a>
+	                <a href="login" class="btn btn-Skyblue btn-sm">로그인</a>
 	            </div>
             <%
             	}
@@ -218,7 +218,7 @@ function galleryRegist(){
 	
     <div class="pictureRegistSectionWrap">
     	<!-- galleryView Form  -->
-       	<form id="galleryRegistForm" class="pictureRegistSection" action="galleryUpdateAction.jsp" method="post" enctype="multipart/form-data">
+       	<form id="galleryRegistForm" class="pictureRegistSection" action="galleryUpdateAction" method="post" enctype="multipart/form-data">
             <div>
             	<img class="galleryImage" src="<%=request.getContextPath() %>/upload/<%=gallery.getFileRealName()%>">
             	<div class="filebox preview-image" style="margin-top:10px;">
@@ -250,8 +250,8 @@ function galleryRegist(){
 								if(userID != null && userID.equals(list.get(i).getUserID())){
 							%>
 							<td colspan="1" style="padding: 14px;"><%=userDAO.getUserInfo(list.get(i).getUserID()).getUserNickname()%></td>
-							<td style="padding-top:10px; width:60px;"><a href="galleryCommentUpdate.jsp?galleryID=<%=list.get(i).getGalleryID() %>&galleryCommentID=<%=list.get(i).getGalleryCommentID()%>"><button type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
-							<td style="padding-top:10px; width:60px;"><a onclick="return confirm('정말로 삭제하시겠습니까?')" href="galleryCommentDeleteAction.jsp?galleryID=<%=list.get(i).getGalleryID() %>&galleryCommentID=<%=list.get(i).getGalleryCommentID()%>">
+							<td style="padding-top:10px; width:60px;"><a href="galleryCommentUpdate?galleryID=<%=list.get(i).getGalleryID() %>&galleryCommentID=<%=list.get(i).getGalleryCommentID()%>"><button type="button" class="btn btn-Skyblue btn-sm">수정</button></a></td>
+							<td style="padding-top:10px; width:60px;"><a onclick="return confirm('정말로 삭제하시겠습니까?')" href="galleryCommentDeleteAction?galleryID=<%=list.get(i).getGalleryID() %>&galleryCommentID=<%=list.get(i).getGalleryCommentID()%>">
 							<button type="button" class="btn btn-Red btn-sm">삭제</button></a></td>
 							<%
 								}else{// 비회원은 수정,삭제 표시하지 않음
@@ -316,7 +316,7 @@ function galleryRegist(){
                 	<input type="button" style="margin:0 10px 0 0;" onclick="galleryRegist()" class="btn btn-Skyblue btn-block" value="수정하기">
                 	<!-- url로 파라미터를 보낼수 없기떄문에 hidden 타입으로 변수 전달 -->
                 	<input type="hidden" name="galleryID" value=<%=galleryID %>>
-                	<a onclick="return confirm('정말 삭제하시겠습니까?')" href="galleryDeleteAction.jsp?galleryID=<%=galleryID %>" class="btn btn-Skyblue btn-block"  style="margin:0 0 0 10px;">삭제</a>
+                	<a onclick="return confirm('정말 삭제하시겠습니까?')" href="galleryDeleteAction?galleryID=<%=galleryID %>" class="btn btn-Skyblue btn-block"  style="margin:0 0 0 10px;">삭제</a>
                 </div>
                 <%
                 }
@@ -327,11 +327,11 @@ function galleryRegist(){
                 		int checkLike = galleryLikeDAO.checkLikeCount(userID, galleryID);
                 		if(checkLike == 0){
                 	%>
-                	<a href="galleryLikeAction.jsp?galleryID=<%=gallery.getGalleryID() %>" class="btn btn-Red btn-block">좋아요 <i class="fas fa-heart"> <%=gallery.getGalleryLikeCount() %></i></a>
+                	<a href="galleryLikeAction?galleryID=<%=gallery.getGalleryID() %>" class="btn btn-Red btn-block">좋아요 <i class="fas fa-heart"> <%=gallery.getGalleryLikeCount() %></i></a>
                 	<%
                 		}else if(checkLike == 1){
                 	%>
-                	<a onclick="return confirm('좋아요를 취소하시겠습니까?')" href="galleryLikeAction.jsp?galleryID=<%=gallery.getGalleryID() %>" class="btn btn-noneHoverRed btn-block">좋아요 취소 <i class="fas fa-heart"> <%=gallery.getGalleryLikeCount() %></i></a>
+                	<a onclick="return confirm('좋아요를 취소하시겠습니까?')" href="galleryLikeAction?galleryID=<%=gallery.getGalleryID() %>" class="btn btn-noneHoverRed btn-block">좋아요 취소 <i class="fas fa-heart"> <%=gallery.getGalleryLikeCount() %></i></a>
                 	<%
                 		}else{
                 		PrintWriter script = response.getWriter();

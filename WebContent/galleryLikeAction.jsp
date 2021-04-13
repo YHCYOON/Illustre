@@ -20,7 +20,7 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다');");
-			script.println("location.href='login.jsp'");
+			script.println("location.href='login'");
 			script.println("</script>");
 		}
 		int galleryID = 0;
@@ -60,7 +60,7 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('좋아해 주셔서 감사합니다!');");
-			script.println("location.href='galleryView.jsp?galleryID="+galleryID+"'");
+			script.println("location.href='galleryView?galleryID="+galleryID+"'");
 			script.println("</script>");
 		}else if(checkLike == 1){		// 이미 좋아요가 되어있는 상태
 			galleryLikeDAO.galleryMinusLike(userID, galleryID);		// galleryLike 테이블에서 delete
@@ -68,7 +68,7 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('좋아요가 취소되었습니다');");
-			script.println("location.href='galleryView.jsp?galleryID="+galleryID+"'");
+			script.println("location.href='galleryView?galleryID="+galleryID+"'");
 			script.println("</script>");
 		}else{
 			PrintWriter script = response.getWriter();

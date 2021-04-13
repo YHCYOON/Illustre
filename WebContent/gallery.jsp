@@ -81,24 +81,24 @@
 <div class="wrap">
     <nav class="navBar">
         <div class="navBarContent">
-            <a href="main.jsp" class="navBarLogo">
+            <a href="main" class="navBarLogo">
                 <img src="images/illustre_logo.png" alt="illustre">
             </a>
             <div class="navContent">
                 <div class="gallery">
-                    <a href="gallery.jsp">갤러리</a>
+                    <a href="gallery">갤러리</a>
                 </div>
                 <div class="ranking">
-                    <a href="ranking.jsp">랭킹</a>
+                    <a href="ranking">랭킹</a>
                 </div>
                 <div class="pictureRegist">
-                    <a href="galleryRegist.jsp">그림등록</a>
+                    <a href="galleryRegist">그림등록</a>
                 </div>
                 <div class="myPicture">
-                    <a href="galleryMine.jsp">나의그림</a>
+                    <a href="galleryMine">나의그림</a>
                 </div>
                 <div class="community">
-                    <a href="bbs.jsp">커뮤니티</a>
+                    <a href="bbs">커뮤니티</a>
                 </div>
             </div>
             <%
@@ -113,9 +113,9 @@
   						<button class="btn btn-Skyblue dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
   						회원관리<span class="caret"></span></button>
 		  				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-						    <li role="presentation"><a href="userUpdate.jsp" role="menuitem" tabindex="-1">회원정보 수정</a></li>
+						    <li role="presentation"><a href="userUpdate" role="menuitem" tabindex="-1">회원정보 수정</a></li>
 						    <li role="presentation" class="divider"></li>
-						    <li role="presentation"><a href="logoutAction.jsp" role="menuitem" tabindex="-1">로그아웃</a></li>
+						    <li role="presentation"><a href="logoutAction" role="menuitem" tabindex="-1">로그아웃</a></li>
 						</ul>
 					</div>
 	            </div>
@@ -127,7 +127,7 @@
 	                <div class="user">로그인이 필요합니다</div>
 	            </div>
 	            <div class="logOutBtn">
-	                <a href="login.jsp" class="btn btn-Skyblue btn-sm">로그인</a>
+	                <a href="login" class="btn btn-Skyblue btn-sm">로그인</a>
 	            </div>
             <%
             	}
@@ -138,12 +138,12 @@
     <div class="searchBar">
         <div class="searchBarContent">
             <div class="category">
-            	<a href="gallery.jsp?galleryCategory=전체보기" class="btn btn-Skyblue">전체보기</a>
-            	<a href="gallery.jsp?galleryCategory=캐릭터 일러스트" class="btn btn-Skyblue">캐릭터 일러스트</a>
-            	<a href="gallery.jsp?galleryCategory=배경 일러스트" class="btn btn-Skyblue">배경 일러스트</a>
-            	<a href="gallery.jsp?galleryCategory=스케치" class="btn btn-Skyblue">스케치</a>
+            	<a href="gallery?galleryCategory=전체보기" class="btn btn-Skyblue">전체보기</a>
+            	<a href="gallery?galleryCategory=캐릭터 일러스트" class="btn btn-Skyblue">캐릭터 일러스트</a>
+            	<a href="gallery?galleryCategory=배경 일러스트" class="btn btn-Skyblue">배경 일러스트</a>
+            	<a href="gallery?galleryCategory=스케치" class="btn btn-Skyblue">스케치</a>
             </div>
-            <form class="search" method="get" action="gallery.jsp?keyWord=<%=request.getParameter("keyWord")%>&searchWord=<%=request.getParameter("searchWord")%>">
+            <form class="search" method="get" action="gallery?keyWord=<%=request.getParameter("keyWord")%>&searchWord=<%=request.getParameter("searchWord")%>">
                 <div class="searchCategory">
                     <select id="searchCategory" class="custom-select" name="keyWord">
                         <!--<option id="searchAll" value="all">전체</option>-->
@@ -182,7 +182,7 @@
     	try{
     		for(int i = 0; i < list.size(); i++){
     %>
-				<a class="pictureCard" href="galleryView.jsp?galleryID=<%=list.get(i).getGalleryID()%>">
+				<a class="pictureCard" href="galleryView?galleryID=<%=list.get(i).getGalleryID()%>">
 					<div class="screen">
 						<div class="hoverTitle"><%=list.get(i).getGalleryTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %></div>
 						<div class="hoveruserNickname"><%=list.get(i).getUserNickname() %></div>
@@ -227,16 +227,16 @@
 						if(keyWord.equals("fileName") && searchWord.equals(".")){	// 검색값이 없을때
 							if(galleryCategory.equals("전체보기")){	// 카테고리가 전체보기(default)일때
 				%>				
-								<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=pageNumber -1%>">이전</a></li>
+								<li class="page-item"><a class="page-link" href="gallery?pageNumber=<%=pageNumber -1%>">이전</a></li>
 				<%
 							}else{	// 카테고리가 default가 아니면 galleryCategory를 파라미터로 전달
 				%>
-								<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=pageNumber -1%>&galleryCategory=<%=galleryCategory%>">이전</a></li>
+								<li class="page-item"><a class="page-link" href="gallery?pageNumber=<%=pageNumber -1%>&galleryCategory=<%=galleryCategory%>">이전</a></li>
 				<% 			
 							}
 						}else{	// 검색값이 있으면 keyWord, searchWord를 파라미터로 전달
 				%>
-						<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=pageNumber -1%>&keyWord=<%=keyWord%>&searchWord=<%=searchWord%>">이전</a></li>
+						<li class="page-item"><a class="page-link" href="gallery?pageNumber=<%=pageNumber -1%>&keyWord=<%=keyWord%>&searchWord=<%=searchWord%>">이전</a></li>
 				<%
 						}
 					}
@@ -247,32 +247,32 @@
     						if(keyWord.equals("fileName") && searchWord.equals(".")){	// 검색값이 없을때
     							if(galleryCategory.equals("전체보기")){	// 카테고리가 전체보기(default)일때
 		    	%>
-		    					<li class="page-item active"><a class="page-link" href="gallery.jsp?pageNumber=<%=iCount%>"><%=iCount %></a></li>
+		    					<li class="page-item active"><a class="page-link" href="gallery?pageNumber=<%=iCount%>"><%=iCount %></a></li>
 		    	<%
     							}else{	// 카테고리가 default가 아니면 galleryCategory를 파라미터로 전달
     			%>				
-    							<li class="page-item active"><a class="page-link" href="gallery.jsp?pageNumber=<%=iCount%>&galleryCategory=<%=galleryCategory%>"><%=iCount %></a></li>
+    							<li class="page-item active"><a class="page-link" href="gallery?pageNumber=<%=iCount%>&galleryCategory=<%=galleryCategory%>"><%=iCount %></a></li>
 		    	<%
 		    					}
     						}else{	// 검색값이 있으면 keyWord, searchWord를 파라미터로 전달
 		    	%>		
-    							<li class="page-item active"><a class="page-link" href="gallery.jsp?pageNumber=<%=iCount%>&keyWord=<%=keyWord%>&searchWord=<%=searchWord%>"><%=iCount %></a></li>
+    							<li class="page-item active"><a class="page-link" href="gallery?pageNumber=<%=iCount%>&keyWord=<%=keyWord%>&searchWord=<%=searchWord%>"><%=iCount %></a></li>
 		    	<%
 		    				}
 		    			}else{	// 해당 페이지가 아닐때
 		    				if(keyWord.equals("fileName") && searchWord.equals(".")){	// 검색값이 없을때
     							if(galleryCategory.equals("전체보기")){	// 카테고리가 전체보기(default)일때
 		    	%>
-		    					<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=iCount%>"><%=iCount %></a></li>
+		    					<li class="page-item"><a class="page-link" href="gallery?pageNumber=<%=iCount%>"><%=iCount %></a></li>
 		    	<%
     							}else{	// 카테고리가 default가 아니면 galleryCategory를 파라미터로 전달
     			%>				
-    							<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=iCount%>&galleryCategory=<%=galleryCategory%>"><%=iCount %></a></li>
+    							<li class="page-item"><a class="page-link" href="gallery?pageNumber=<%=iCount%>&galleryCategory=<%=galleryCategory%>"><%=iCount %></a></li>
 		    	<%
 		    					}
     						}else{	// 검색값이 있으면 keyWord, searchWord를 파라미터로 전달
 		    	%>		
-    							<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=iCount%>&keyWord=<%=keyWord%>&searchWord=<%=searchWord%>"><%=iCount %></a></li>
+    							<li class="page-item"><a class="page-link" href="gallery?pageNumber=<%=iCount%>&keyWord=<%=keyWord%>&searchWord=<%=searchWord%>"><%=iCount %></a></li>
 		    	<%	
 		    				}
 						}
@@ -287,16 +287,16 @@
 						if(keyWord.equals("fileName") && searchWord.equals(".")){	// 검색값이 없을때
 							if(galleryCategory.equals("전체보기")){
 				%>				
-								<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=pageNumber +1%>">다음</a></li>
+								<li class="page-item"><a class="page-link" href="gallery?pageNumber=<%=pageNumber +1%>">다음</a></li>
 				<%
 							}else{
 				%>
-								<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=pageNumber +1%>&galleryCategory=<%=galleryCategory%>">다음</a></li>
+								<li class="page-item"><a class="page-link" href="gallery?pageNumber=<%=pageNumber +1%>&galleryCategory=<%=galleryCategory%>">다음</a></li>
 				<% 			
 							}
 						}else{
 				%>
-						<li class="page-item"><a class="page-link" href="gallery.jsp?pageNumber=<%=pageNumber +1%>&keyWord=<%=keyWord%>&searchWord=<%=searchWord%>">다음</a></li>
+						<li class="page-item"><a class="page-link" href="gallery?pageNumber=<%=pageNumber +1%>&keyWord=<%=keyWord%>&searchWord=<%=searchWord%>">다음</a></li>
 				<%
 						}
 					}

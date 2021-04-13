@@ -48,7 +48,7 @@
 			script.println("</script>");
 		}
 	%>
-	<a href="main.jsp"  id="navLogo">
+	<a href="main"  id="navLogo">
 		<img src="images/illustre_logo_white.png" alt="illustre">
 	</a>
 	<div class="wrapper fadeInDown">
@@ -61,15 +61,15 @@
 				<div id="comment">내가 그려가는 세상</div>
 			</div>
 			<!-- 로그인 Form -->
-			<form id="loginForm" action="loginAction.jsp" method="POST">
+			<form id="loginForm" action="loginAction" method="POST">
 				<input type="text" id="userID" class="fadeIn third" name="userID" placeholder="ID"> 
 				<input type="password" id="userPassword"	class="fadeIn fourth" name="userPassword" placeholder="Password">
 				<input type="button" id="loginBtn" onclick="loginTest()" class="fadeIn fifth" value="로그인"> 
-				<input type="button" id="joinBtn" onclick="location.href='join.jsp'" class="fadeIn fifth" value="회원가입">
+				<input type="button" id="joinBtn" onclick="location.href='join'" class="fadeIn fifth" value="회원가입">
 			</form>
 			<!-- 비밀번호 찾기 -->
 			<div id="formFooter">
-				<a class="underlineHover"  href="forgotPassword.jsp">Forgot Password?</a>
+				<a class="underlineHover"  href="forgotPassword">Forgot Password?</a>
 			</div>
 		</div>
 	</div>

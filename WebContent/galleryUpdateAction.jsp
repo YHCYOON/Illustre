@@ -27,7 +27,7 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다');");
-			script.println("location.href='login.jsp'");
+			script.println("location.href='login'");
 			script.println("</script>");
 			
 		}
@@ -76,7 +76,7 @@
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('그림을 성공적으로 수정했습니다');");
-				script.println("location.href='galleryView.jsp?galleryID="+galleryID+"'");
+				script.println("location.href='galleryView?galleryID="+galleryID+"'");
 				script.println("</script>");
 				return;
 			}

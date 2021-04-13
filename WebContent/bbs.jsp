@@ -43,7 +43,7 @@
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('올바르지 않은 페이지입니다');");
-		script.println("location.href='bbs.jsp'");
+		script.println("location.href='bbs'");
 		script.println("</script>");
 	}
 	
@@ -71,24 +71,24 @@
 <div class="wrap">
     <nav class="navBar">
         <div class="navBarContent">
-            <a href="main.jsp" class="navBarLogo">
+            <a href="main" class="navBarLogo">
                 <img src="images/illustre_logo.png" alt="illustre">
             </a>
             <div class="navContent">
                 <div class="gallery">
-                    <a href="gallery.jsp">갤러리</a>
+                    <a href="gallery">갤러리</a>
                 </div>
                 <div class="ranking">
-                    <a href="ranking.jsp">랭킹</a>
+                    <a href="ranking">랭킹</a>
                 </div>
                 <div class="pictureRegist">
-                    <a href="galleryRegist.jsp">그림등록</a>
+                    <a href="galleryRegist">그림등록</a>
                 </div>
                 <div class="myPicture">
-                    <a href="galleryMine.jsp">나의그림</a>
+                    <a href="galleryMine">나의그림</a>
                 </div>
                 <div class="community">
-                    <a href="bbs.jsp">커뮤니티</a>
+                    <a href="bbs">커뮤니티</a>
                 </div>
             </div>
             <%
@@ -103,9 +103,9 @@
   						<button class="btn btn-Skyblue dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
   						회원관리<span class="caret"></span></button>
 		  				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-						    <li role="presentation"><a href="userUpdate.jsp" role="menuitem" tabindex="-1" >회원정보 수정</a></li>
+						    <li role="presentation"><a href="userUpdate" role="menuitem" tabindex="-1" >회원정보 수정</a></li>
 						    <li role="presentation" class="divider"></li>
-						    <li role="presentation"><a href="logoutAction.jsp" role="menuitem" tabindex="-1">로그아웃</a></li>
+						    <li role="presentation"><a href="logoutAction" role="menuitem" tabindex="-1">로그아웃</a></li>
 						</ul>
 					</div>
 	            </div>
@@ -117,7 +117,7 @@
 	                <div class="user">로그인이 필요합니다</div>
 	            </div>
 	            <div class="logOutBtn">
-	                <a href="login.jsp" class="btn btn-Skyblue btn-sm">로그인</a>
+	                <a href="login" class="btn btn-Skyblue btn-sm">로그인</a>
 	            </div>
             <%
             	}
@@ -142,7 +142,7 @@
 				%>
 					<tr>
 						<td><%=list.get(i).getBbsID() %></td>
-						<td><a href="bbsView.jsp?bbsID=<%=list.get(i).getBbsID() %>"><%=list.get(i).getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %>
+						<td><a href="bbsView?bbsID=<%=list.get(i).getBbsID() %>"><%=list.get(i).getBbsTitle().replaceAll(" ", "&nbsp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("\n","<br>") %>
 							<%
 								BbsCommentDAO bbsCommentDAO = new BbsCommentDAO();
 								int countComment = bbsCommentDAO.countBbsComment(list.get(i).getBbsID());
@@ -160,7 +160,7 @@
 				%>
 				</tbody>
 			</table>
-			<a href="bbsWrite.jsp" class="btn btn-Skyblue pull-right">글쓰기</a>
+			<a href="bbsWrite" class="btn btn-Skyblue pull-right">글쓰기</a>
 		</div>
 		
 		<!-- 페이징 처리  -->
@@ -176,17 +176,17 @@
 		    	<%
 					}else{	
 		    	%>
-		    		<li class="page-item"><a class="page-link" href="bbs.jsp?pageNumber=<%=pageNumber -1 %> " tabindex="-1">이전</a></li>
+		    		<li class="page-item"><a class="page-link" href="bbs?pageNumber=<%=pageNumber -1 %> " tabindex="-1">이전</a></li>
 		    	<%
 					}
 		    		for(int iCount = startPage; iCount <= endPage; iCount++){
     					if(pageNumber == iCount){
 		    	%>
-		    				<li class="page-item active"><a class="page-link" href="bbs.jsp?pageNumber=<%=iCount%>"><%=iCount %></a></li>
+		    				<li class="page-item active"><a class="page-link" href="bbs?pageNumber=<%=iCount%>"><%=iCount %></a></li>
 		    	<%
 		    			}else{
 		    	%>		
-		    				<li class="page-item"><a class="page-link" href="bbs.jsp?pageNumber=<%=iCount%>"><%=iCount %></a></li>
+		    				<li class="page-item"><a class="page-link" href="bbs?pageNumber=<%=iCount%>"><%=iCount %></a></li>
 		    	<%
 		    			}
 		    		}
@@ -196,7 +196,7 @@
 		    	<%
 					}else{
 		    	%>
-		    		<li class="page-item"><a class="page-link" href="bbs.jsp?pageNumber=<%=pageNumber +1%>">다음</a></li>
+		    		<li class="page-item"><a class="page-link" href="bbs?pageNumber=<%=pageNumber +1%>">다음</a></li>
 		    	<%
 					}
 		    	%>	

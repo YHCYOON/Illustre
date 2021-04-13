@@ -21,7 +21,7 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다');");
-			script.println("location.href='login.jsp'");
+			script.println("location.href='login'");
 			script.println("</script>");
 		}
 		// 넘어온 bbsCommentID 파라미터를 bbsCommentID 에 대입
@@ -70,7 +70,7 @@
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('권한이 없습니다');");
-				script.println("location.href='bbs.jsp'");
+				script.println("location.href='bbs'");
 				script.println("</script>");
 			}else{
 				// 게시글 삭제 메서드 실행
@@ -85,7 +85,7 @@
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
 					script.println("alert('댓글이 삭제되었습니다');");
-					script.println("location.href='bbsView.jsp?bbsID="+bbsID+"'");
+					script.println("location.href='bbsView?bbsID="+bbsID+"'");
 					script.println("</script>");
 				}
 			}

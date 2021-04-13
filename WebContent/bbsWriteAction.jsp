@@ -22,7 +22,7 @@
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다');");
-			script.println("location.href='login.jsp'");
+			script.println("location.href='login'");
 			script.println("</script>");
 		}else{
 			// 넘어온 파라미터가 없을 때 
@@ -47,7 +47,7 @@
 					PrintWriter script = response.getWriter();
 					script.println("<script>");
 					script.println("alert('글을 성공적으로 등록했습니다');");
-					script.println("location.href='bbs.jsp'");
+					script.println("location.href='bbs'");
 					script.println("</script>");
 				}
 			}

@@ -151,7 +151,7 @@ function userUpdateTest(){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('로그인이 필요합니다');");
-			script.println("location.href='login.jsp'");
+			script.println("location.href='login'");
 			script.println("</script>");
 			return;
 		}
@@ -159,7 +159,7 @@ function userUpdateTest(){
 		// 매개변수가 userID 인 getUserInfo 메서드를 호출해 user 객체를 생성
 		User user = userDAO.getUserInfo(userID);
 	%>
-	<a href="main.jsp" id="navLogo"> 
+	<a href="main" id="navLogo"> 
 		<img src="images/illustre_logo_white.png" alt="illustre"></a>
 	<div class="wrapper fadeInDown">
 		<div id="formContent">
@@ -171,7 +171,7 @@ function userUpdateTest(){
 				<div id="comment">내가 그려가는 세상</div>
 			</div>
 			<!-- 회원가입 Form -->
-			<form id="userUpdateForm" action="userUpdateAction.jsp" method="POST">
+			<form id="userUpdateForm" action="userUpdateAction" method="POST">
 				<input type="text" id="userID" class="fadeIn third" name="userID" value="<%=user.getUserID() %>" readonly> 
 				<div id="idCheck"></div> 
 				<input type="password" id="userPassword" class="fadeIn fourth" name="userPassword" placeholder="비밀번호" value="<%=user.getUserPassword() %>">
