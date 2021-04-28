@@ -152,7 +152,6 @@
         </div>
     </div>
     <!-- CardSection -->
-	<!-- CardSection -->
     
     <%
     	if(list.size() == 0){
