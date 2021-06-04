@@ -16,6 +16,9 @@ Connection conn;
 			String dbURL = "jdbc:mysql://localhost:3306/Illustre";
 			String dbID = "root";
 			String dbPassword = "root";
+			//String dbURL = "jdbc:mysql://localhost/yhcyoon";
+			//String dbID = "yhcyoon";
+			//String dbPassword = "gmlcks5631!";
 			Class.forName("com.mysql.jdbc.Driver");	
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		}catch(Exception e) {
@@ -62,7 +65,7 @@ Connection conn;
 	// 커뮤니티 댓글 등록 메서드
 	public int writeBbsComment(int bbsID, String userID, String bbsComment) {
 		PreparedStatement pstmt;
-		String SQL = "INSERT INTO BBSCOMMENT VALUES (?, ?, ?, ?, ?, ?)";
+		String SQL = "INSERT INTO bbsComment VALUES (?, ?, ?, ?, ?, ?)";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, getBbsCommentID());

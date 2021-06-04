@@ -1,4 +1,8 @@
-User Table
+GRANT ALL PRIVILEGES ON *.* TO 'yhcyoon'@'localhost' IDENTIFIED BY 'gmlcks5631!';
+
+create database illustre;
+
+use illustre;
 
 create table user(
 	userID VARCHAR(20),
@@ -7,10 +11,6 @@ create table user(
 	userNickname VARCHAR(50),
 	userEmail VARCHAR(50),
 	PRIMARY KEY (userID));
-
-	
-
-Gallery Table
 
 create table gallery(
 	galleryID int,
@@ -26,16 +26,10 @@ create table gallery(
 	galleryAvailable int,
 	PRIMARY KEY (galleryID));
 	
-	
-GalleryLike Table
-
 create table galleryLike(
 	userID VARCHAR(20),
 	galleryID int);
 	
-	
-GalleryComment Table
-
 create table galleryComment(
 	galleryCommentID int,	
 	galleryID int,	
@@ -44,6 +38,25 @@ create table galleryComment(
 	galleryCommentDate DATETIME,
 	galleryCommentAvailable int,
 	PRIMARY KEY (galleryCommentID));
+	
+CREATE TABLE bbs(
+	bbsID INT,
+	bbsTitle VARCHAR(50),
+	bbsContent VARCHAR(2048),
+	userID VARCHAR(20),
+	bbsDate DATETIME,
+	bbsLikeCount INT,
+	bbsAvailable INT,
+	PRIMARY KEY (bbsID));
+	
+CREATE TABLE bbsComment(
+	bbsCommentID INT,
+	bbsID INT,
+	userID VARCHAR(20),
+	bbsComment VARCHAR(2048),
+	bbsCommentDate DATETIME,
+	bbsAvailable INT,
+	PRIMARY KEY (bbsCommentID));
 	
 	
 	

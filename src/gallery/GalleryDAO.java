@@ -16,6 +16,9 @@ public class GalleryDAO {
 			String dbURL = "jdbc:mysql://localhost:3306/Illustre";
 			String dbID = "root";
 			String dbPassword = "root";
+			//String dbURL = "jdbc:mysql://localhost/yhcyoon";
+			//String dbID = "yhcyoon";
+			//String dbPassword = "gmlcks5631!";
 			Class.forName("com.mysql.jdbc.Driver");	
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		}catch(Exception e) {
@@ -44,7 +47,7 @@ public class GalleryDAO {
 		public int getGalleryID() {
 			PreparedStatement pstmt;
 			ResultSet rs;
-			String SQL = "SELECT galleryID FROM GALLERY ORDER BY galleryID DESC LIMIT 1";
+			String SQL = "SELECT galleryID FROM gallery ORDER BY galleryID DESC LIMIT 1";
 			try {
 				pstmt = conn.prepareStatement(SQL);
 				rs = pstmt.executeQuery();
@@ -61,7 +64,7 @@ public class GalleryDAO {
 	// galleryRegist 메서드
 	public int upload(String userID, String userNickname, String galleryCategory, String galleryTitle, String galleryContent, String fileName, String fileRealName) {
 		PreparedStatement pstmt;
-		String SQL = "INSERT INTO GALLERY VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String SQL = "INSERT INTO gallery VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, getGalleryID());
@@ -85,8 +88,8 @@ public class GalleryDAO {
 		public int countTotalPage(String galleryCategory, String keyWord, String searchWord) {
 			PreparedStatement pstmt;
 			ResultSet rs;
-			String SQL_all = "SELECT COUNT(*) FROM GALLERY WHERE " + keyWord + " LIKE ? AND galleryAvailable = 1";
-			String SQL_category = "SELECT COUNT(*) FROM GALLERY WHERE " + keyWord + " LIKE ? AND galleryCategory = ? AND galleryAvailable = 1";
+			String SQL_all = "SELECT COUNT(*) FROM gallery WHERE " + keyWord + " LIKE ? AND galleryAvailable = 1";
+			String SQL_category = "SELECT COUNT(*) FROM gallery WHERE " + keyWord + " LIKE ? AND galleryCategory = ? AND galleryAvailable = 1";
 			try {
 				if(galleryCategory.equals("전체보기")) {
 					pstmt = conn.prepareStatement(SQL_all);
@@ -115,8 +118,8 @@ public class GalleryDAO {
 		PreparedStatement pstmt;
 		ResultSet rs;
 		int countList = 25;	// 한 페이지에 나타내는 그림이 25개
-		String SQL_all = "SELECT COUNT(*) FROM GALLERY WHERE " + keyWord + " LIKE ? AND galleryAvailable = 1";
-		String SQL_category = "SELECT COUNT(*) FROM GALLERY WHERE " + keyWord + " LIKE ? AND galleryCategory = ? AND galleryAvailable = 1";
+		String SQL_all = "SELECT COUNT(*) FROM gallery WHERE " + keyWord + " LIKE ? AND galleryAvailable = 1";
+		String SQL_category = "SELECT COUNT(*) FROM gallery WHERE " + keyWord + " LIKE ? AND galleryCategory = ? AND galleryAvailable = 1";
 		try {
 			if(galleryCategory.equals("전체보기")) {
 				pstmt = conn.prepareStatement(SQL_all);
@@ -170,8 +173,8 @@ public class GalleryDAO {
 		ResultSet rs;
 		ArrayList<Gallery> list = new ArrayList<Gallery>();
 		
-		String SQL_all = "SELECT * FROM GALLERY WHERE galleryAvailable = 1 AND " + keyWord + " LIKE ? ORDER BY galleryID DESC LIMIT ?, ?";
-		String SQL_category = "SELECT * FROM GALLERY WHERE galleryAvailable = 1 AND galleryCategory = ? AND " + keyWord + " LIKE ? ORDER BY galleryID DESC LIMIT ?, ?";
+		String SQL_all = "SELECT * FROM gallery WHERE galleryAvailable = 1 AND " + keyWord + " LIKE ? ORDER BY galleryID DESC LIMIT ?, ?";
+		String SQL_category = "SELECT * FROM gallery WHERE galleryAvailable = 1 AND galleryCategory = ? AND " + keyWord + " LIKE ? ORDER BY galleryID DESC LIMIT ?, ?";
 		
 		try {
 			if(galleryCategory.equals("전체보기")) {
@@ -228,7 +231,7 @@ public class GalleryDAO {
 	public Gallery getGalleryView(int galleryID) {
 		PreparedStatement pstmt;
 		ResultSet rs;
-		String SQL = "SELECT * FROM GALLERY WHERE galleryID = ?";
+		String SQL = "SELECT * FROM gallery WHERE galleryID = ?";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, galleryID);
@@ -257,7 +260,7 @@ public class GalleryDAO {
 	// 좋아요 눌렀을때 galleryLikeCount + 1 하는 메서드
 	public int galleryPlusLike(int galleryID) {
 		PreparedStatement pstmt;
-		String SQL = "UPDATE GALLERY SET galleryLikeCount = galleryLikeCount+1 WHERE galleryID = ?";
+		String SQL = "UPDATE gallery SET galleryLikeCount = galleryLikeCount+1 WHERE galleryID = ?";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, galleryID);
@@ -271,7 +274,7 @@ public class GalleryDAO {
 	// 좋아요 눌렀을때 galleryLikeCount - 1 하는 메서드
 	public int galleryMinusLike(int galleryID) {
 		PreparedStatement pstmt;
-		String SQL = "UPDATE GALLERY SET galleryLikeCount = galleryLikeCount-1 WHERE galleryID = ?";
+		String SQL = "UPDATE gallery SET galleryLikeCount = galleryLikeCount-1 WHERE galleryID = ?";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, galleryID);
@@ -303,7 +306,7 @@ public class GalleryDAO {
 	// gallery 수정 메서드
 	public int updateGallery(int galleryID, String galleryCategory, String galleryTitle, String galleryContent, String fileName, String fileRealName) {
 		PreparedStatement pstmt;
-		String SQL = "UPDATE GALLERY SET galleryCategory = ? , galleryTitle = ?, galleryContent = ? , fileName = ? , fileRealName = ? WHERE galleryID = ?";
+		String SQL = "UPDATE gallery SET galleryCategory = ? , galleryTitle = ?, galleryContent = ? , fileName = ? , fileRealName = ? WHERE galleryID = ?";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setString(1, galleryCategory);
@@ -322,7 +325,7 @@ public class GalleryDAO {
 	// gallery 삭제 메서드 
 	public int deleteGallery(int galleryID) {
 		PreparedStatement pstmt;
-		String SQL = "UPDATE GALLERY SET galleryAvailable = ? WHERE galleryID = ?";
+		String SQL = "UPDATE gallery SET galleryAvailable = ? WHERE galleryID = ?";
 		try {
 			pstmt = conn.prepareStatement(SQL);
 			pstmt.setInt(1, 0);
@@ -455,8 +458,8 @@ public class GalleryDAO {
 		public int countGalleryMineTotalPage(String galleryCategory, String userID) {
 			PreparedStatement pstmt;
 			ResultSet rs;
-			String SQL_ALL = "SELECT COUNT(*) FROM GALLERY WHERE userID = ? AND galleryAvailable = 1";
-			String SQL = "SELECT COUNT(*) FROM GALLERY WHERE galleryCategory = ? AND userID = ? AND galleryAvailable = 1";
+			String SQL_ALL = "SELECT COUNT(*) FROM gallery WHERE userID = ? AND galleryAvailable = 1";
+			String SQL = "SELECT COUNT(*) FROM gallery WHERE galleryCategory = ? AND userID = ? AND galleryAvailable = 1";
 			try {
 				if(galleryCategory.equals("전체보기")) {
 					pstmt = conn.prepareStatement(SQL_ALL);
@@ -485,8 +488,8 @@ public class GalleryDAO {
 			PreparedStatement pstmt;
 			ResultSet rs;
 			int countList = 25;	// 한 페이지에 나타내는 그림이 25개
-			String SQL_ALL = "SELECT COUNT(*) FROM GALLERY WHERE userID = ? AND galleryAvailable = 1";
-			String SQL = "SELECT COUNT(*) FROM GALLERY WHERE galleryCategory = ? AND userID = ? AND galleryAvailable = 1";
+			String SQL_ALL = "SELECT COUNT(*) FROM gallery WHERE userID = ? AND galleryAvailable = 1";
+			String SQL = "SELECT COUNT(*) FROM gallery WHERE galleryCategory = ? AND userID = ? AND galleryAvailable = 1";
 			try {
 				if(galleryCategory.equals("전체보기")) {
 					pstmt = conn.prepareStatement(SQL_ALL);

@@ -37,7 +37,7 @@
     <welcome-file>userUpdateAction.jsp</welcome-file>
   </welcome-file-list>
   
-  	<error-page>
+  	<!-- <error-page>
   		<error-code>404</error-code>
   		<location>/404errorPage.jsp</location>
   	</error-page>
@@ -45,7 +45,7 @@
   	<error-page>
   		<error-code>500</error-code>
   		<location>/500errorPage.jsp</location>
-  	</error-page>
+  	</error-page> -->
   	
 	<servlet>
 		<servlet-name>bbs.jsp</servlet-name>

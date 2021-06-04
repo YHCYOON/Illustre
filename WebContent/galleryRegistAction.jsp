@@ -72,11 +72,11 @@
 				}
 			}
 			catch(Exception e){
-			PrintWriter script = response.getWriter();
-			script.println("<script>");
-			script.println("alert('올바르지 않은 접근입니다');");
-			script.println("location.href='galleryRegist'");
-			script.println("</script>");
+				PrintWriter script = response.getWriter();
+				script.println("<script>");
+				script.println("alert('올바르지 않은 접근입니다');");
+				script.println("location.href='galleryRegist'");
+				script.println("</script>");
 			}
 		}
 	%>
