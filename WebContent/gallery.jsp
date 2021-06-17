@@ -169,7 +169,7 @@
            	<%
             }else{
             %>
-            <div class="pictureCount" id="pictureCategoryCount"><%=searchWord %>로 검색한 결과 (<%=galleryDAO.countTotalPage(galleryCategory, keyWord, searchWord)%>) </div>
+            <div class="pictureCount" id="pictureCategoryCount">"<%=searchWord %>" 으로 검색한 결과 (<%=galleryDAO.countTotalPage(galleryCategory, keyWord, searchWord)%>) </div>
             <%
             }
             %>

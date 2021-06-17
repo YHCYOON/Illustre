@@ -125,7 +125,7 @@
     <!-- 카테고리 & 검색결과 -->
     <div class="middleSectionWrap">
         <div class="middleSection">
-            <i class="fas fa-trophy fa-2x"></i><%=galleryCategory %>
+            <i class="fas fa-trophy fa-2x">&nbsp</i><%=galleryCategory %>
         </div>
     </div>
     <!-- CardSection -->
