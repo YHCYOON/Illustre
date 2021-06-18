@@ -8,8 +8,8 @@
 - Front-End : HTML, CSS, JAVASCRIPT, JQUERY, Bootstrap
 - Back-End : JAVA, JSP, TOMCAT v8.5, MYSQL, HeidiSQL, Putty, FileZilla
 
-## Links
-- Project homepage: yhcyoon.cafe24.com
+## 프로젝트 주소
+- Project homepage: http://yhcyoon.cafe24.com/
 - GitHub Repository: https://github.com/YHCYOON/Illustre
 
 ## 핵심 기능
@@ -27,7 +27,3 @@
 - 비밀번호 찾기 기능을 구현했습니다.
 - URL 파라미터 입력시 여러 에러상황에서의 예외처리를 하였습니다.
 - 404, 500 에러를 처리하는 페이지를 구현했습니다.
-
-## 개선 사항
-- 그림을 공유하는 사이트인만큼 여러 그림을 보여주는 갤러리 메인페이지에서 렉 최소화 시키기
-- 데이터베이스를 직접 관리할수 있는 관리자 페이지 구현하기
